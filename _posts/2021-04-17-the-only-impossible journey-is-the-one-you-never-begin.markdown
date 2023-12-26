@@ -7,7 +7,7 @@ author: alfonso
 image: '/images/21.jpg'
 image_caption: 'Photo by [Luigi Estuye](https://unsplash.com/photos/HVK4t3leM1I) on [Unsplash](https://unsplash.com/)'
 tags: [stydy, notes, motivation]
-featured: true
+featured: false
 ---
 Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.
 
