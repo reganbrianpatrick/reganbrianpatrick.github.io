@@ -17,12 +17,12 @@ author:
 # Navigation Settings
 menu__settings:
   menu__items:
-    - title: 'Home'
+    - title: 'Blog'
       url: '/'
-    - title: 'About'
-      url: '/about/'
-    - title: 'Elements'
-      url: '/elements/'
+#    - title: 'About'
+#      url: '/about/'
+#    - title: 'Elements'
+#      url: '/elements/'
     - title: 'Contact'
       url: '/contact/'
 
