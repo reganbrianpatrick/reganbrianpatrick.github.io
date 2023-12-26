@@ -4,7 +4,7 @@ title: The longer I live, the more beautiful life becomes
 description: Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition.
 date: 2021-04-19 15:01:35 +0300
 author: admin
-image: '/images/19.jpg'
+image: '/images/post4.jpg'
 image_caption: 'Photo by [Harley Davidson](https://unsplash.com/photos/BW9ki_tmouE) on [Unsplash](https://unsplash.com/)'
 tags: [travel, hobby]
 featured: true
