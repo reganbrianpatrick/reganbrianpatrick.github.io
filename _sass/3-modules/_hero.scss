@@ -1,7 +1,7 @@
 /* Hero */
 .hero {
-  padding: 80px 0 0;
-  margin-bottom: 96px;
+  padding: 40px 0 0;
+  margin-bottom: 40px;
   color: var(--white);
   background-color: var(--dark);
 
@@ -22,7 +22,7 @@
   margin-bottom: 96px;
 
   @media (max-width: $desktop) {
-    margin-bottom: 80px;
+    margin-bottom: 40px;
   }
 
   @media (max-width: $mobile) {
