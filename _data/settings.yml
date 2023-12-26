@@ -21,8 +21,8 @@ menu__settings:
       url: '/'
     - title: 'About'
       url: '/about/'
-    - title: 'Services'
-      url: '/services/'
+    - title: 'Elements'
+      url: '/elements/'
     #  submenu:
     #  - url: '/authors/'
     #    title: 'Authors'
