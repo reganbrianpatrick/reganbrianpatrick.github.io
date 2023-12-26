@@ -7,7 +7,7 @@ image: '/images/01-2.jpg'
 image_caption: 'Photo by [Roman Shilin](https://unsplash.com/photos/Eg8_37ws7F0) on [Unsplash](https://unsplash.com/)'
 ---
 
-blah blah blah blah blah blah
+To be Determined
 
 <div class="gallery-box">
   <div class="gallery">
