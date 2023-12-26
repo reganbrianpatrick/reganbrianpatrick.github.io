@@ -23,11 +23,6 @@ menu__settings:
       url: '/about/'
     - title: 'Elements'
       url: '/elements/'
-    #  submenu:
-    #  - url: '/authors/'
-    #    title: 'Authors'
-    #  - url: '/elements/'
-    #    title: 'Elements'
     - title: 'Contact'
       url: '/contact/'
 
