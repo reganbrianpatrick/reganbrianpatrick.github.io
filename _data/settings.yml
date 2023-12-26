@@ -30,14 +30,14 @@ menu__settings:
 #-------------------------------
 # Hero Settings
 hero:
-  hero__title: Trusted Business Partners.
+  hero__title:
 
 
 #-------------------------------
 # Blog Settings
 blog:
   blog__title: Blog
-  blog__description: Learn more about what the EightLake team has been researching.
+  blog__description:
 
 
 #-------------------------------
