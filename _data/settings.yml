@@ -78,7 +78,7 @@ footer__menu__settings:
       url: '/elements/'
 
 
- Social Links
+ #Social Links
 social:
 - {icon: "ion-logo-twitter", color: "#55acee", name: Twitter, link: "https://twitter.com"}
 - {icon: "ion-logo-facebook", color: "#3b5999", name: Facebook, link: "https://facebook.com"}
