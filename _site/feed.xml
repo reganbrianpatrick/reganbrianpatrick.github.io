@@ -5,8 +5,8 @@
         <description>EightLake</description>
         <link>http://localhost:4000/</link>
         <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Sat, 30 Dec 2023 14:22:32 -0700</pubDate>
-        <lastBuildDate>Sat, 30 Dec 2023 14:22:32 -0700</lastBuildDate>
+        <pubDate>Sat, 30 Dec 2023 15:32:29 -0700</pubDate>
+        <lastBuildDate>Sat, 30 Dec 2023 15:32:29 -0700</lastBuildDate>
         <generator>Jekyll v4.3.2</generator>
         
             <item>
@@ -31,7 +31,7 @@
 
 &lt;h2 id=&quot;aws-ec2-pricing&quot;&gt;&lt;strong&gt;AWS EC2 Pricing&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;In previous posts on Strake’s blog, including the &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs&quot;&gt;Developer’s Guide to AWS Costs: EC2&lt;/a&gt; and &lt;a href=&quot;https://getstrake.com/blog/what-is-ec2-other&quot;&gt;What is EC2-Other?&lt;/a&gt;, I’ve broken down the different types of charges that come through your AWS bill under the ‘EC2’ service. Today, we will focus on understanding pricing for the hourly running cost of EC2 Instances.&lt;/p&gt;
+&lt;p&gt;In previous posts on Strake’s blog, including the &lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;Developer’s Guide to AWS Costs: EC2&lt;/a&gt; and &lt;a href=&quot;https://eightlake.com/what-is-ec2-other&quot;&gt;What is EC2-Other?&lt;/a&gt;, I’ve broken down the different types of charges that come through your AWS bill under the ‘EC2’ service. Today, we will focus on understanding pricing for the hourly running cost of EC2 Instances.&lt;/p&gt;
 
 &lt;h3 id=&quot;amazon-ec2-instance-types&quot;&gt;&lt;strong&gt;Amazon EC2 Instance Types&lt;/strong&gt;&lt;/h3&gt;
 
@@ -70,7 +70,7 @@
 
 &lt;p&gt;With the AWS Pricing by Strake project, our team has also shared several templates to help users calculate their infrastructure costs. The first template, “AWS Pricing by Strake - EC2 Pricing and Reserved Instances”, makes it simple for any user to calculate the On Demand and Reserved Instance costs for their EC2 instances.&lt;/p&gt;
 
-&lt;p&gt;AWS Pricing: EC2 Template&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.google.com/spreadsheets/d/1_kGiAaWzShNfDuMRF9icCzQotIkaTOu5hex9v7YNL_0/edit?usp=sharing&quot;&gt;AWS Pricing: EC2 Template&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;First&lt;/strong&gt;, If you have not already, you can download &lt;a href=&quot;https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903&quot;&gt;AWS Pricing by Strake&lt;/a&gt; from the Google Workspace Marketplace. Downloading this add-on takes less than 15 seconds!&lt;/p&gt;
 
@@ -92,7 +92,7 @@
 
 &lt;p&gt;&lt;strong&gt;How do the prices for the new c6i instances compare to the c5a instances?&lt;/strong&gt; The price is often lower when AWS releases new instance families compared to the current generation. Engineers must understand the cost and operational benefits of moving to a new instance family before starting the migration.&lt;/p&gt;
 
-&lt;p&gt;&lt;strong&gt;Should we make convertible or reserved instance reservations?&lt;/strong&gt; How do the discount rates compare for different payment options and commitment terms? I discussed this in another blog post, &lt;a href=&quot;https://strake.webflow.io/blog/a-complete-guide-to-aws-reservations&quot;&gt;A Complete Guide to AWS Reservations&lt;/a&gt;. Three key variables determine how large a discount will be: length of commitment, specificity of the commitment, and the amount of money paid upfront. This EC2 template will let your business understand the different discount rates to weigh cost benefits and operational complexity.&lt;/p&gt;
+&lt;p&gt;&lt;strong&gt;Should we make convertible or reserved instance reservations?&lt;/strong&gt; How do the discount rates compare for different payment options and commitment terms? I discussed this in another blog post, &lt;a href=&quot;https://eightlake.com/complete-guide-to-aws-reservations&quot;&gt;A Complete Guide to AWS Reservations&lt;/a&gt;. Three key variables determine how large a discount will be: length of commitment, specificity of the commitment, and the amount of money paid upfront. This EC2 template will let your business understand the different discount rates to weigh cost benefits and operational complexity.&lt;/p&gt;
 
 &lt;p&gt;&lt;strong&gt;We’re starting a new development project. What instance types should we use?&lt;/strong&gt; How does pricing compare across EC2 instance types? When your engineering team starts a new project, it is crucial to estimate your costs from the beginning. Maybe $0.01 per hour doesn’t seem like a big difference, but when you’re running thousands of instances in production, that can be a meaningful cost.&lt;/p&gt;
 
@@ -100,7 +100,7 @@
 
 &lt;p&gt;The second template we have created and shared with the AWS Community, “AWS Pricing by Strake - EC2 &amp;amp; EBS Calculator”, combines the hourly EC2 instance cost with any attached EBS volume cost. These two costs combined give users a much better understanding of what their development project will cost.&lt;/p&gt;
 
-&lt;p&gt;AWS Pricing: EC2 and EBS Template&lt;/p&gt;
+&lt;p&gt;&lt;a href=&quot;https://docs.google.com/spreadsheets/d/1iXmGH55LBAbAy1m-EA_HZyPvMr54EoIfhcOVOIlVrr0/edit?usp=sharing&quot;&gt;AWS Pricing: EC2 and EBS Template&lt;/a&gt;&lt;/p&gt;
 
 &lt;p&gt;To use this template, &lt;strong&gt;First&lt;/strong&gt;, select the details for the EC2 instances. We discussed calculating the cost for different EC2 Instance Types with the “EC2 Pricing and Reserved Instance Template”. The only difference with this template is that the user must also select the payment type and any related selections. For example, if you choose the “Purchase Type” as Reserved, you will be prompted to fill out the Offering Class, Term, and Payment Option.&lt;/p&gt;
 
@@ -126,19 +126,10 @@
 
 &lt;p&gt;&lt;strong&gt;Calculating the total cost impact of changing infrastructure from On Demand to Reserved Instance pricing.&lt;/strong&gt; Total cost reduction from reservations is an important metric to track so the business understands what percentage cost reduction Reservations can actually provide. Unfortunately, Reserved Instances don’t apply to EBS Volumes. This template will allow your team to combine EC2 Reserved Instances and your existing EBS volumes to calculate the total cost reduction to your infrastructure.&lt;/p&gt;
 
-&lt;h2 id=&quot;learn-more&quot;&gt;&lt;strong&gt;Learn More&lt;/strong&gt;&lt;/h2&gt;
-
-&lt;p&gt;If you’re interested in learning more about AWS Pricing by Strake, here are some additional resources:&lt;/p&gt;
-
-&lt;ul&gt;
-  &lt;li&gt;🖥️ &lt;a href=&quot;https://getstrake.com/&quot;&gt;Visit our website&lt;/a&gt; to learn about features and download AWS Pricing templates.&lt;/li&gt;
-  &lt;li&gt;🚀 &lt;a href=&quot;https://github.com/getmacroscope/aws-pricing-sheets-addon/issues&quot;&gt;Create a GitHub Issue&lt;/a&gt; for bugs or if you have ideas to improve the project.&lt;/li&gt;
-  &lt;li&gt;💭 &lt;a href=&quot;https://join.slack.com/t/strake-community/shared_invite/zt-1nisfazzn-uO5O_I28Z7N6sZ6iM2H1xA&quot;&gt;Join the Strake community&lt;/a&gt; if you have questions or want to stay updated with Strake.&lt;/li&gt;
-&lt;/ul&gt;
 </description>
                 <pubDate>Fri, 15 Dec 2023 02:00:00 -0700</pubDate>
-                <link>http://localhost:4000/aws-test-ebs-formulas</link>
-                <guid isPermaLink="true">http://localhost:4000/aws-test-ebs-formulas</guid>
+                <link>http://localhost:4000/aws-ec2-ebs-formulas</link>
+                <guid isPermaLink="true">http://localhost:4000/aws-ec2-ebs-formulas</guid>
                 
                 <category>Cloud</category>
                 
@@ -174,7 +165,7 @@
 
 &lt;ul&gt;
   &lt;li&gt;If you want to learn more about the AWS Pricing project, you can get it for free from the &lt;a href=&quot;https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903&quot;&gt;Google Workspace Marketplace.&lt;/a&gt;&lt;/li&gt;
-  &lt;li&gt;To get in touch with our team, join the &lt;a href=&quot;https://join.slack.com/t/strake-community/shared_invite/zt-1nisfazzn-uO5O_I28Z7N6sZ6iM2H1xA&quot;&gt;Strake Community&lt;/a&gt; on Slack.&lt;/li&gt;
+  &lt;li&gt;To get in touch with our team, &lt;a href=&quot;https://eightlake.com/contact/&quot;&gt;Contact us&lt;/a&gt;.&lt;/li&gt;
 &lt;/ul&gt;
 </description>
                 <pubDate>Thu, 14 Dec 2023 02:00:00 -0700</pubDate>
@@ -203,7 +194,7 @@
   &lt;li&gt;What type of activity are we expecting from this resource? Should we be prepared for high data transfer costs across AWS Regions? How often do we need to perform manual database backups?&lt;/li&gt;
 &lt;/ul&gt;
 
-&lt;p&gt;All of these decisions have a profound impact on your AWS pricing for RDS. The following guide describes how to isolate each main RDS cost category using the &lt;a href=&quot;https://getstrake.com/blog/cost-and-usage-report-setup&quot;&gt;Cost and Usage Report (CUR)&lt;/a&gt; and what these different cost categories mean. If there are any questions about this guide, please let us know in your &lt;a href=&quot;https://github.com/getstrake/developer-cost-guide/discussions/3&quot;&gt;GitHub discussions&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;All of these decisions have a profound impact on your AWS pricing for RDS. The following guide describes how to isolate each main RDS cost category using the &lt;a href=&quot;https://eightlake.com/cost-and-usage-report-setup&quot;&gt;Cost and Usage Report (CUR)&lt;/a&gt; and what these different cost categories mean. If there are any questions about this guide, please let us know in your &lt;a href=&quot;https://github.com/getstrake/developer-cost-guide/discussions/3&quot;&gt;GitHub discussions&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;rds-instance-costs&quot;&gt;&lt;strong&gt;RDS Instance Costs&lt;/strong&gt;&lt;/h2&gt;
 
@@ -216,7 +207,7 @@
 
 &lt;h2 id=&quot;rds-existence-costs&quot;&gt;&lt;strong&gt;RDS Existence Costs&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;RDS Existence Cost categories combine instance running costs (similar to &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs&quot;&gt;EC2 existence cost&lt;/a&gt;) with the provisioned services and capacity required to run your RDS instance. Variables like Database engine, region, and deployment type will impact your existence costs. Existence cost analysis will walk through how to analyze RDS costs in five categories: Instance usage, provisioned I/O, provisioned Storage, Performance Insights, and Database Proxy costs. If you’re looking for RDS pricing you can check out the &lt;a href=&quot;https://aws.amazon.com/rds/pricing/&quot;&gt;Amazon RDS Pricing Page&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;RDS Existence Cost categories combine instance running costs (similar to &lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;EC2 existence cost&lt;/a&gt;) with the provisioned services and capacity required to run your RDS instance. Variables like Database engine, region, and deployment type will impact your existence costs. Existence cost analysis will walk through how to analyze RDS costs in five categories: Instance usage, provisioned I/O, provisioned Storage, Performance Insights, and Database Proxy costs. If you’re looking for RDS pricing you can check out the &lt;a href=&quot;https://aws.amazon.com/rds/pricing/&quot;&gt;Amazon RDS Pricing Page&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h3 id=&quot;rds-instance-usage&quot;&gt;&lt;strong&gt;RDS Instance Usage&lt;/strong&gt;&lt;/h3&gt;
 
@@ -736,7 +727,7 @@ ORDER BY [lineItem/UsageStartDate], [lineItem/LineItemType], [lineItem/Operation
 
 &lt;p&gt;EC2 is entirely usage based, meaning you can turn instances on and off as needed and only pay by the hour. EC2 costs are complicated because of the different pricing models: on-demand, spot, reserved instances, and savings plans. In addition, there are many types of cost for EC2 instances: hourly RunInstance charges, data transfer, and NAT gateway costs.&lt;/p&gt;
 
-&lt;p&gt;This guide walks through the different types of EC2 costs and how to isolate them using SQL analysis on your Cost and Usage Report (CUR). If you don’t have a CUR active in your account, you can check out &lt;a href=&quot;https://getstrake.com/blog/cost-and-usage-report-setup&quot;&gt;the first guide&lt;/a&gt; which walks through permissions and the process of creating a CUR and our blog on &lt;a href=&quot;https://getstrake.com/blog/aws-cost-and-usage-report-documentation&quot;&gt;cost and usage report documentation&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;This guide walks through the different types of EC2 costs and how to isolate them using SQL analysis on your Cost and Usage Report (CUR). If you don’t have a CUR active in your account, you can check out &lt;a href=&quot;https://eightlake.com/cost-and-usage-report-setup&quot;&gt;the first guide&lt;/a&gt; which walks through permissions and the process of creating a CUR and our blog on &lt;a href=&quot;https://eightlake.com/aws-cost-and-usage-report-documentation&quot;&gt;cost and usage report documentation&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;ec2-cost-categories&quot;&gt;&lt;strong&gt;EC2 Cost Categories&lt;/strong&gt;&lt;/h2&gt;
 
@@ -1211,8 +1202,7 @@ ORDER BY sum([lineItem/UnblendedCost]);
                 <title></title>
                 <description>&lt;p&gt;This Cost and Usage Report overview will go through the required IAM permissions for billing analysis, how to create a cost and usage report (CUR), and how to set up a local analysis environment using SQLite3.&lt;/p&gt;
 
-&lt;p&gt;If you have questions, feedback, or other AWS Billing problems you’d like to discuss, you can &lt;a href=&quot;mailto:brian@eightlake.com&quot;&gt;contact our team&lt;/a&gt;. Check out &lt;a href=&quot;https://getstrake.com/&quot;&gt;Strake&lt;/a&gt; to see the product we’re building to solve the ‘cloud cost’ problem.&lt;/p&gt;
-
+&lt;p&gt;If you have questions, feedback, or other AWS Billing problems you’d like to discuss, you can &lt;a href=&quot;mailto:brian@eightlake.com&quot;&gt;contact our team&lt;/a&gt;.&lt;/p&gt;
 &lt;h2 id=&quot;iam-permissions&quot;&gt;&lt;strong&gt;IAM Permissions&lt;/strong&gt;&lt;/h2&gt;
 
 &lt;p&gt;Identity and Access Management (IAM) permissions get complicated very quickly. The advantage of using Sqlite3 and doing local analysis is minimizing permissions and access needed in your AWS Account. The best way to track access to billing is to create an IAM role for engineers with access to billing information. The IAM permissions below practice the ‘least privilege principle’ for anyone in your engineering team that needs to perform billing analysis.&lt;/p&gt;
@@ -1270,7 +1260,7 @@ ORDER BY sum([lineItem/UnblendedCost]);
 
 &lt;h2 id=&quot;cost-and-usage-report-documentation&quot;&gt;&lt;strong&gt;Cost and Usage Report Documentation&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;As part of the Developer’s Guide to AWS Costs, we have added a &lt;a href=&quot;https://getstrake.com/blog/aws-cost-and-usage-report-documentation&quot;&gt;Cost and Usage Report Documentation&lt;/a&gt; blog post to our website. For the over 200 fields in the Cost and Usage Report, this document will describe the field and provide sample values to help developers analyze their specific use cases.&lt;/p&gt;
+&lt;p&gt;As part of the Developer’s Guide to AWS Costs, we have added a &lt;a href=&quot;https://eightlake.com/aws-cost-and-usage-report-documentation&quot;&gt;Cost and Usage Report Documentation&lt;/a&gt; blog post to our website. For the over 200 fields in the Cost and Usage Report, this document will describe the field and provide sample values to help developers analyze their specific use cases.&lt;/p&gt;
 
 &lt;p&gt;This document is always a work in progress. If there are questions or comments on the information in the documentation, please let us know in our &lt;a href=&quot;https://github.com/getstrake/developer-cost-guide/discussions&quot;&gt;GitHub Discussions&lt;/a&gt;!&lt;/p&gt;
 
@@ -1504,7 +1494,7 @@ ORDER BY sum([lineItem/UnblendedCost]);
 
 &lt;h2 id=&quot;the-cost-and-usage-report&quot;&gt;&lt;strong&gt;The Cost and Usage Report&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;The Cost and Usage Report is the standard billing report for AWS Customers. This report is free (except for the S3 storage costs) and can be created by anyone with the proper billing permissions. For more details on the Cost and Usage Report, how to make a report, and getting started with analysis, check out &lt;a href=&quot;https://getstrake.com/blog/cost-and-usage-report-setup&quot;&gt;this guide&lt;/a&gt; on the Strake blog.&lt;/p&gt;
+&lt;p&gt;The Cost and Usage Report is the standard billing report for AWS Customers. This report is free (except for the S3 storage costs) and can be created by anyone with the proper billing permissions. For more details on the Cost and Usage Report, how to make a report, and getting started with analysis, check out &lt;a href=&quot;https://eightlake.com/cost-and-usage-report-setup&quot;&gt;this guide&lt;/a&gt; on the Strake blog.&lt;/p&gt;
 
 &lt;p&gt;This report contains over 200 fields and can be millions of records for a single month of usage. Using the documentation below, we are taking the ~200 fields in the Cost and Usage Report and filtering it down to only 30 of the most critical fields. These 30 fields will answer most of your cost management questions and greatly simplify your cloud cost management practices.&lt;/p&gt;
 
@@ -1878,8 +1868,8 @@ arn:aws:savingsplans::0291987654321:savingsplan/1238a36-4cc8-4dd9-9cf7-937912341
 &lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
 </description>
                 <pubDate>Sun, 10 Dec 2023 02:00:00 -0700</pubDate>
-                <link>http://localhost:4000/complete-guide-to-aws-reservations-copy</link>
-                <guid isPermaLink="true">http://localhost:4000/complete-guide-to-aws-reservations-copy</guid>
+                <link>http://localhost:4000/aws-cost-and-usage-report-documentation</link>
+                <guid isPermaLink="true">http://localhost:4000/aws-cost-and-usage-report-documentation</guid>
                 
                 <category>Cloud</category>
                 
@@ -1920,7 +1910,7 @@ arn:aws:savingsplans::0291987654321:savingsplan/1238a36-4cc8-4dd9-9cf7-937912341
 
 &lt;h3 id=&quot;compute-savings-plan-reservation-calculation&quot;&gt;&lt;strong&gt;Compute Savings Plan Reservation Calculation&lt;/strong&gt;&lt;/h3&gt;
 
-&lt;p&gt;To calculate the compute savings plan commitment your team should make, you need to understand how much for On-Demand usage is in your account. To do that, you can either use the AWS Cost Explorer or query your Cost and Usage Report. For a full walkthrough of how to query your Cost and Usage Report, check out this walkthrough on the &lt;a href=&quot;https://getstrake.com/community/developers-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;.&lt;/p&gt;
+&lt;p&gt;To calculate the compute savings plan commitment your team should make, you need to understand how much for On-Demand usage is in your account. To do that, you can either use the AWS Cost Explorer or query your Cost and Usage Report. For a full walkthrough of how to query your Cost and Usage Report, check out this walkthrough on the &lt;a href=&quot;https://eightlake.com/developer-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;.&lt;/p&gt;
 
 &lt;p&gt;Once you understand the On-Demand usage in your account, you need to calculate what that usage would cost if a Compute Savings Plan covered the usage.&lt;/p&gt;
 
@@ -1950,7 +1940,7 @@ Number of m5.large hours = 10,000
 
 &lt;p&gt;Similar to Compute Savings Plans, an EC2 Savings Plan commitment is made in dollars per hour.&lt;/p&gt;
 
-&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/635c0162e221d2b0fdc8e3fa_money-pile.jpg&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/money.jpg&quot; alt=&quot;Money&quot; /&gt;&lt;/p&gt;
 
 &lt;h3 id=&quot;ec2-savings-plan-options&quot;&gt;&lt;strong&gt;EC2 Savings Plan Options&lt;/strong&gt;&lt;/h3&gt;
 
@@ -2086,7 +2076,7 @@ Number of m5.large hours = 10,000
                 <title></title>
                 <description>&lt;h2 id=&quot;introduction-to-awscosts&quot;&gt;Introduction to AWS Costs&lt;/h2&gt;
 
-&lt;p&gt;The &lt;a href=&quot;https://getstrake.com/community/developers-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt; is a project created and maintained by the team here at Strake. This project provides engineers with the code and insights to answer the most common AWS Cost questions using the Cost and Usage Report (CUR). The analysis is formatted as a series of ‘guides’ that focus on key AWS services and cost problems.&lt;/p&gt;
+&lt;p&gt;The &lt;a href=&quot;https://eightlake.com/developer-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt; is a project created and maintained by the team here at Strake. This project provides engineers with the code and insights to answer the most common AWS Cost questions using the Cost and Usage Report (CUR). The analysis is formatted as a series of ‘guides’ that focus on key AWS services and cost problems.&lt;/p&gt;
 
 &lt;p&gt;AWS Billing is seriously overcomplicated. Our goal with this series of guides is to remove the confusion around AWS Cost Analysis and help engineers expedite cloud cost reduction.&lt;/p&gt;
 
@@ -2112,7 +2102,7 @@ Number of m5.large hours = 10,000
 
 &lt;h2 id=&quot;cost-and-usage-report&quot;&gt;&lt;strong&gt;Cost and Usage Report&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;The main data source we will use for this analysis is the &lt;a href=&quot;https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html&quot;&gt;AWS Cost and Usage Report (CUR)&lt;/a&gt;. This is the most detailed billing report offered by AWS and the ‘source of truth’ for what shows up on your bill.  In the &lt;a href=&quot;https://getstrake.com/blog/cost-and-usage-report-setup&quot;&gt;first guide&lt;/a&gt;, I go through the setup and IAM policies required for creating this data source. There is a pretty good &lt;a href=&quot;https://docs.aws.amazon.com/cur/latest/userguide/data-dictionary.html&quot;&gt;data dictionary&lt;/a&gt; for the cost and usage report on the AWS documentation, but I will go into more detail about the fields used for analysis in each guide.&lt;/p&gt;
+&lt;p&gt;The main data source we will use for this analysis is the &lt;a href=&quot;https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html&quot;&gt;AWS Cost and Usage Report (CUR)&lt;/a&gt;. This is the most detailed billing report offered by AWS and the ‘source of truth’ for what shows up on your bill.  In the &lt;a href=&quot;https://eightlake.com/cost-and-usage-report-setup&quot;&gt;first guide&lt;/a&gt;, I go through the setup and IAM policies required for creating this data source. There is a pretty good &lt;a href=&quot;https://docs.aws.amazon.com/cur/latest/userguide/data-dictionary.html&quot;&gt;data dictionary&lt;/a&gt; for the cost and usage report on the AWS documentation, but I will go into more detail about the fields used for analysis in each guide.&lt;/p&gt;
 
 &lt;p&gt;The CUR is free, but you will have to pay S3 charges to store the billing data (yes, AWS makes you pay to store your bill). This should be an insignificant amount of money, less than $5 per month for storing a year of billing data for most customers.&lt;/p&gt;
 
@@ -2254,8 +2244,8 @@ Number of m5.large hours = 10,000
 &lt;p&gt;If your team is in the process of negotiating an EDP agreement and you’d like some support, here are a few resources to help you get started:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;&lt;a href=&quot;https://getstrake.com/community/developers-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;: This guide explains the cost structures of AWS services using the &lt;a href=&quot;https://getstrake.com/blog/cost-and-usage-report-setup&quot;&gt;AWS Cost and Usage Report (CUR)&lt;/a&gt;. The first guide explains how to create and analyze the Cost and Usage Report using SQL.&lt;/li&gt;
-  &lt;li&gt;If your team is struggling to get an alignment or analyze your usage, please &lt;a href=&quot;mailto:developer-relations@getstrake.com&quot;&gt;contact our team&lt;/a&gt; for a free consultation&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eightlake.com/developer-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;: This guide explains the cost structures of AWS services using the &lt;a href=&quot;https://eightlake.com/cost-and-usage-report-setup&quot;&gt;AWS Cost and Usage Report (CUR)&lt;/a&gt;. The first guide explains how to create and analyze the Cost and Usage Report using SQL.&lt;/li&gt;
+  &lt;li&gt;If your team is struggling to get an alignment or analyze your usage, please &lt;a href=&quot;mailto:brian@eightlake.com&quot;&gt;contact our team&lt;/a&gt; for a free consultation&lt;/li&gt;
 &lt;/ol&gt;
 </description>
                 <pubDate>Thu, 07 Dec 2023 02:00:00 -0700</pubDate>
@@ -2269,11 +2259,11 @@ Number of m5.large hours = 10,000
         
             <item>
                 <title></title>
-                <description>&lt;p&gt;EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within ‘EC2-Other’. All the code in this blog post is included in the &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs&quot;&gt;Developer’s Guide to AWS Costs guide for EC2&lt;/a&gt;.&lt;/p&gt;
+                <description>&lt;p&gt;EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within ‘EC2-Other’. All the code in this blog post is included in the &lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;Developer’s Guide to AWS Costs guide for EC2&lt;/a&gt;.&lt;/p&gt;
 
 &lt;h2 id=&quot;understanding-ec2-costs&quot;&gt;&lt;strong&gt;Understanding EC2 Costs&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;Before we can unpack what costs live in the ‘EC2-Other’ category, you have to understand what this category means to &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs&quot;&gt;total EC2 costs&lt;/a&gt; and how EC2 costs are calculated in various AWS reporting tools.&lt;/p&gt;
+&lt;p&gt;Before we can unpack what costs live in the ‘EC2-Other’ category, you have to understand what this category means to &lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;total EC2 costs&lt;/a&gt; and how EC2 costs are calculated in various AWS reporting tools.&lt;/p&gt;
 
 &lt;p&gt;After researching this problem, I put together the table below for how different AWS reporting tools display total EC2 costs. Below the table, I summarize the different reporting methodologies and how these values relate. Please note that this is only true for on-demand EC2 usage.&lt;/p&gt;
 
@@ -2372,12 +2362,12 @@ Number of m5.large hours = 10,000
 
 &lt;h2 id=&quot;visibility-into-ec2-other-costs&quot;&gt;&lt;strong&gt;Visibility into EC2-Other Costs&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;In the &lt;a href=&quot;https://getstrake.com/community/developers-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;, the first service I posted a guide for was EC2. In this guide, I broke EC2 costs into three logical categories:&lt;/p&gt;
+&lt;p&gt;In the &lt;a href=&quot;https://eightlake.com/developer-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;, the first service I posted a guide for was EC2. In this guide, I broke EC2 costs into three logical categories:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#existence&quot;&gt;Existence Cost&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;EC2-Instances&lt;/em&gt; in cost explorer - This identifies the cost of having an EC2 instance running regardless of the resource activity. This cost is based on an hourly rate determined by your instance type, region, and whether you’re using contractual reservations or spot instances.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#utilization&quot;&gt;Utilization Cost&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;part of&lt;/em&gt; &lt;em&gt;EC2 - Other&lt;/em&gt; in cost explorer - On top of the flat rate for having an instance running, some costs come from how an EC2 instance is utilized. These costs are driven by a usage-based metric such as $ per GB-month. The most common Utilization cost for EC2 is data transfer.&lt;/li&gt;
-  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#subresource&quot;&gt;Subresource Cost&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;the second part of&lt;/em&gt; &lt;em&gt;EC2 - Other&lt;/em&gt; in cost explorer - This is incurred for resources attached to or directly interacting with your EC2 instance. An easy example of EC2 is EBS Volumes used for EC2 instance storage.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;Existence Cost&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;EC2-Instances&lt;/em&gt; in cost explorer - This identifies the cost of having an EC2 instance running regardless of the resource activity. This cost is based on an hourly rate determined by your instance type, region, and whether you’re using contractual reservations or spot instances.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;Utilization Cost&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;part of&lt;/em&gt; &lt;em&gt;EC2 - Other&lt;/em&gt; in cost explorer - On top of the flat rate for having an instance running, some costs come from how an EC2 instance is utilized. These costs are driven by a usage-based metric such as $ per GB-month. The most common Utilization cost for EC2 is data transfer.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;Subresource Cost&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;the second part of&lt;/em&gt; &lt;em&gt;EC2 - Other&lt;/em&gt; in cost explorer - This is incurred for resources attached to or directly interacting with your EC2 instance. An easy example of EC2 is EBS Volumes used for EC2 instance storage.&lt;/li&gt;
 &lt;/ol&gt;
 
 &lt;p&gt;I broke down the ‘EC2-Other’ category from Cost Explorer into Utilization and Subresource costs. Utilization focuses on how your EC2 resources are used, while Subresources isolates other resources (NAT Gateways or EBS Volumes, for example) that contribute to your total EC2 cost.&lt;/p&gt;
@@ -2386,7 +2376,7 @@ Number of m5.large hours = 10,000
 
 &lt;h3 id=&quot;utilization-costs&quot;&gt;&lt;strong&gt;Utilization Costs&lt;/strong&gt;&lt;/h3&gt;
 
-&lt;p&gt;To isolate &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#utilization&quot;&gt;Utilization Costs&lt;/a&gt; by Operation, use the query below. This query isolates your EC2 instances using the &lt;strong&gt;[lineItem/ResourceId]&lt;/strong&gt; field and filters out types &lt;strong&gt;[lineItem/UsageType]&lt;/strong&gt; and &lt;strong&gt;[lineItem/Operation]&lt;/strong&gt; fields that indicate Existence cost.&lt;/p&gt;
+&lt;p&gt;To isolate &lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;Utilization Costs&lt;/a&gt; by Operation, use the query below. This query isolates your EC2 instances using the &lt;strong&gt;[lineItem/ResourceId]&lt;/strong&gt; field and filters out types &lt;strong&gt;[lineItem/UsageType]&lt;/strong&gt; and &lt;strong&gt;[lineItem/Operation]&lt;/strong&gt; fields that indicate Existence cost.&lt;/p&gt;
 
 &lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-Utilization Costs
 --Utilization costs for EC2 by line item operation
@@ -2418,12 +2408,12 @@ ORDER BY	sum([lineItem/UnblendedCost]);`
 
 &lt;h2 id=&quot;subresource-cost&quot;&gt;&lt;strong&gt;‍Subresource Cost&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;There are three main categories of &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#subresource&quot;&gt;Subresources&lt;/a&gt; customers should have the ability to analyze in more detail:&lt;/p&gt;
+&lt;p&gt;There are three main categories of &lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;Subresources&lt;/a&gt; customers should have the ability to analyze in more detail:&lt;/p&gt;
 
 &lt;h3 id=&quot;ebs-volumes&quot;&gt;&lt;strong&gt;EBS Volumes&lt;/strong&gt;&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#ebs&quot;&gt;EBS volumes&lt;/a&gt; are identified by filtering the &lt;strong&gt;[lineItem/ResourceID]&lt;/strong&gt; field for items that contain &lt;em&gt;vol-%&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;EBS volumes&lt;/a&gt; are identified by filtering the &lt;strong&gt;[lineItem/ResourceID]&lt;/strong&gt; field for items that contain &lt;em&gt;vol-%&lt;/em&gt;.&lt;/li&gt;
   &lt;li&gt;There are two main types of costs for EBS Volumes that show up in the &lt;strong&gt;[lineItem/Operation]&lt;/strong&gt; field: IO Usage: read and write costs and CreateVolume: costs for creating provisioned EBS Volumes.&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-Subresource Costs
 --Subresource costs for EBS Volumes
@@ -2437,7 +2427,7 @@ ORDER BY	sum([lineItem/UnblendedCost]);&lt;/code&gt;&lt;/li&gt;
 &lt;h3 id=&quot;ebs-volume-snapshots&quot;&gt;&lt;strong&gt;‍EBS Volume Snapshots&lt;/strong&gt;&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#snapshots&quot;&gt;EBS Volume Snapshots&lt;/a&gt; are identified by filtering the &lt;strong&gt;[lineItem/ResourceID]&lt;/strong&gt; field for items that contain &lt;em&gt;%snapshot%&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;EBS Volume Snapshots&lt;/a&gt; are identified by filtering the &lt;strong&gt;[lineItem/ResourceID]&lt;/strong&gt; field for items that contain &lt;em&gt;%snapshot%&lt;/em&gt;.&lt;/li&gt;
   &lt;li&gt;Only one main cost category for EBS Volume Snapshots shows up in the &lt;strong&gt;[lineItem/Operation]&lt;/strong&gt; field: CreateSnapshot, which captures the cost per GB for storing snapshots.&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-Subresource Costs
 --Subresource costs for EBS Volume Snapshots
@@ -2451,7 +2441,7 @@ ORDER BY	sum([lineItem/UnblendedCost]);&lt;/code&gt;&lt;/li&gt;
 &lt;h3 id=&quot;nat-gateways&quot;&gt;&lt;strong&gt;‍NAT Gateways&lt;/strong&gt;&lt;/h3&gt;
 
 &lt;ul&gt;
-  &lt;li&gt;&lt;a href=&quot;https://strake.webflow.io/blog/aws-cost-analysis-amazon-ec2-costs#nat-gateway&quot;&gt;NAT Gateways&lt;/a&gt; are identified by filtering the &lt;strong&gt;[lineItem/ResourceID]&lt;/strong&gt; field for items that contain &lt;em&gt;%natgateway%&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;NAT Gateways&lt;/a&gt; are identified by filtering the &lt;strong&gt;[lineItem/ResourceID]&lt;/strong&gt; field for items that contain &lt;em&gt;%natgateway%&lt;/em&gt;.&lt;/li&gt;
   &lt;li&gt;There are many different cost categories for NAT Gateways, but they are primarily driven by data transfer or data processing fees.&lt;/li&gt;
   &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-Subresource Costs
 --Subresource costs for NAT Gateways
@@ -2464,12 +2454,12 @@ ORDER BY	sum([lineItem/UnblendedCost]);&lt;/code&gt;&lt;/li&gt;
 
 &lt;h2 id=&quot;further-reading&quot;&gt;&lt;strong&gt;Further Reading&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;Thank you for reading! If you are looking for more information on EC2 Costs, you can read the full &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs&quot;&gt;EC2 Cost Guide&lt;/a&gt; on the &lt;a href=&quot;https://getstrake.com/community/developers-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;. If your team is working to understand your AWS costs, here are some additional resources for you:&lt;/p&gt;
+&lt;p&gt;Thank you for reading! If you are looking for more information on EC2 Costs, you can read the full &lt;a href=&quot;https://eightlake.com/aws-ec2-cost-analysis&quot;&gt;EC2 Cost Guide&lt;/a&gt; on the &lt;a href=&quot;https://eightlake.com/developer-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;. If your team is working to understand your AWS costs, here are some additional resources for you:&lt;/p&gt;
 
 &lt;ol&gt;
-  &lt;li&gt;A &lt;a href=&quot;https://getstrake.com/blog/cost-and-usage-report-setup&quot;&gt;Cost and Usage Report Setup Guide&lt;/a&gt; including IAM Permissions&lt;/li&gt;
-  &lt;li&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-rds-costs&quot;&gt;Relational Database Service Cost Guide&lt;/a&gt; to understand your RDS costs&lt;/li&gt;
-  &lt;li&gt;To get in touch with our team with additional questions, &lt;a href=&quot;mailto:developer-relations@getstrake.com&quot;&gt;email us&lt;/a&gt; or leave us a message on our &lt;a href=&quot;https://github.com/getstrake/developer-cost-guide/discussions&quot;&gt;GitHub Discussions page&lt;/a&gt;!&lt;/li&gt;
+  &lt;li&gt;A &lt;a href=&quot;https://eightlake.com/cost-and-usage-report-setup&quot;&gt;Cost and Usage Report Setup Guide&lt;/a&gt; including IAM Permissions&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://eightlake.com/aws-rds-cost-analysis&quot;&gt;Relational Database Service Cost Guide&lt;/a&gt; to understand your RDS costs&lt;/li&gt;
+  &lt;li&gt;To get in touch with our team with additional questions, &lt;a href=&quot;mailto:brian@eightlake.com&quot;&gt;email us&lt;/a&gt; or leave us a message on our &lt;a href=&quot;https://github.com/getstrake/developer-cost-guide/discussions&quot;&gt;GitHub Discussions page&lt;/a&gt;!&lt;/li&gt;
 &lt;/ol&gt;
 </description>
                 <pubDate>Wed, 06 Dec 2023 02:00:00 -0700</pubDate>

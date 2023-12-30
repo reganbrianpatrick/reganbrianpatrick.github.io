@@ -7,7 +7,7 @@ author: admin
 image: '/images/aws-pricing.jpg'
 image_caption: 'AWS Pricing for Google Sheets'
 tags: [Cloud, AWS Pricing]
-featured: false
+featured: true
 ---
 Strake, the AWS cost management platform built for engineers, is excited to announce that we have entered into an agreement with Mike Heffner to assume ownership and maintenance of the AWS Pricing add-on for Google Sheets. This project is available for free from the [Google Workspace Marketplace](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903).
 
@@ -31,4 +31,4 @@ In its current state, there are functions for Elastic Compute Cloud (EC2) and El
 Strake is committed to maintaining the AWS Pricing add-on as an open-source project and expanding the project with feedback from the open-source community. Here are some ways to stay up to date on the project and get in touch with our team:
 
 - If you want to learn more about the AWS Pricing project, you can get it for free from the [Google Workspace Marketplace.](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903)
-- To get in touch with our team, join the [Strake Community](https://join.slack.com/t/strake-community/shared_invite/zt-1nisfazzn-uO5O_I28Z7N6sZ6iM2H1xA) on Slack.
+- To get in touch with our team, [Contact us](https://eightlake.com/contact/).

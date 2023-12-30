@@ -15,7 +15,7 @@ featured: false
 
 EC2 is entirely usage based, meaning you can turn instances on and off as needed and only pay by the hour. EC2 costs are complicated because of the different pricing models: on-demand, spot, reserved instances, and savings plans. In addition, there are many types of cost for EC2 instances: hourly RunInstance charges, data transfer, and NAT gateway costs.
 
-This guide walks through the different types of EC2 costs and how to isolate them using SQL analysis on your Cost and Usage Report (CUR). If you don’t have a CUR active in your account, you can check out [the first guide](https://getstrake.com/blog/cost-and-usage-report-setup) which walks through permissions and the process of creating a CUR and our blog on [cost and usage report documentation](https://getstrake.com/blog/aws-cost-and-usage-report-documentation).
+This guide walks through the different types of EC2 costs and how to isolate them using SQL analysis on your Cost and Usage Report (CUR). If you don’t have a CUR active in your account, you can check out [the first guide](https://eightlake.com/cost-and-usage-report-setup) which walks through permissions and the process of creating a CUR and our blog on [cost and usage report documentation](https://eightlake.com/aws-cost-and-usage-report-documentation).
 
 ## **EC2 Cost Categories**
 

@@ -80,7 +80,7 @@ Continuously decreasing unit metric values are a good thing: this implies your c
 
 ### **5. Allocate unallocatable spend**
 
-Finally, you will inevitably find cost groups that can’t be tagged or assigned to a specific business category. These include [volume discounts due to AWS Reservations](https://getstrake.com/blog/a-complete-guide-to-aws-reservations) like Reserved Instances or Savings Plans. You can use amortized costs in AWS cost reports to help you allocate these rogue items. But you might find other scenarios too. Therefore, it is relevant to define how you will manage them upfront, so you can deal with them appropriately when they present themselves.
+Finally, you will inevitably find cost groups that can’t be tagged or assigned to a specific business category. These include [volume discounts due to AWS Reservations](https://eightlake.com/complete-guide-to-aws-reservations) like Reserved Instances or Savings Plans. You can use amortized costs in AWS cost reports to help you allocate these rogue items. But you might find other scenarios too. Therefore, it is relevant to define how you will manage them upfront, so you can deal with them appropriately when they present themselves.
 
 ## **Implementing Cost Allocation Tagging**
 
@@ -145,7 +145,7 @@ With **AWS Budgets**, it is just as easy. You can create a new custom cost budg
 
 AWS Budget example filtering by cost allocation tags
 
-We’ve previously explained how to get the most from [AWS Cost and Usage Report](https://getstrake.com/blog/aws-cost-and-usage-report-documentation). Cost allocation tags will also be available for said reports and are another way to handle the detailed cost information presented there.
+We’ve previously explained how to get the most from [AWS Cost and Usage Report](https://eightlake.com/aws-cost-and-usage-report-documentation). Cost allocation tags will also be available for said reports and are another way to handle the detailed cost information presented there.
 
 Finally, there is another convenient feature called **AWS Cost Categories.** This service allows you to group your spending into meaningful cost categories based on multiple criteria. One of the grouping dimensions you can use is cost allocation tags, but you can also group by account, region, and service, among others.
 

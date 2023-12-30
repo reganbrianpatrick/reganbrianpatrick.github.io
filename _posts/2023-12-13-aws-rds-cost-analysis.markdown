@@ -20,7 +20,7 @@ Customers using RDS in their AWS environment have many different variables to co
 - Is this a Single-AZ or Multi-AZ deployment? Using a Multi-AZ deployment reduces the risk of infrastructure failures but will double your costs.
 - What type of activity are we expecting from this resource? Should we be prepared for high data transfer costs across AWS Regions? How often do we need to perform manual database backups?
 
-All of these decisions have a profound impact on your AWS pricing for RDS. The following guide describes how to isolate each main RDS cost category using the [Cost and Usage Report (CUR)](https://getstrake.com/blog/cost-and-usage-report-setup) and what these different cost categories mean. If there are any questions about this guide, please let us know in your [GitHub discussions](https://github.com/getstrake/developer-cost-guide/discussions/3).
+All of these decisions have a profound impact on your AWS pricing for RDS. The following guide describes how to isolate each main RDS cost category using the [Cost and Usage Report (CUR)](https://eightlake.com/cost-and-usage-report-setup) and what these different cost categories mean. If there are any questions about this guide, please let us know in your [GitHub discussions](https://github.com/getstrake/developer-cost-guide/discussions/3).
 
 ## **RDS Instance Costs**
 
@@ -31,7 +31,7 @@ In this guide, I am grouping AWS RDS charges from the cost and usage report into
 
 ## **RDS Existence Costs**
 
-RDS Existence Cost categories combine instance running costs (similar to [EC2 existence cost](https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs)) with the provisioned services and capacity required to run your RDS instance. Variables like Database engine, region, and deployment type will impact your existence costs. Existence cost analysis will walk through how to analyze RDS costs in five categories: Instance usage, provisioned I/O, provisioned Storage, Performance Insights, and Database Proxy costs. If you’re looking for RDS pricing you can check out the [Amazon RDS Pricing Page](https://aws.amazon.com/rds/pricing/).
+RDS Existence Cost categories combine instance running costs (similar to [EC2 existence cost](https://eightlake.com/aws-ec2-cost-analysis)) with the provisioned services and capacity required to run your RDS instance. Variables like Database engine, region, and deployment type will impact your existence costs. Existence cost analysis will walk through how to analyze RDS costs in five categories: Instance usage, provisioned I/O, provisioned Storage, Performance Insights, and Database Proxy costs. If you’re looking for RDS pricing you can check out the [Amazon RDS Pricing Page](https://aws.amazon.com/rds/pricing/).
 
 ### **RDS Instance Usage**
 

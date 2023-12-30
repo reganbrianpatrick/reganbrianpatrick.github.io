@@ -94,5 +94,5 @@ Hopefully, if you analyzed your AWS environment correctly, you won't owe AWS a m
 
 If your team is in the process of negotiating an EDP agreement and you'd like some support, here are a few resources to help you get started:
 
-1. [Developer's Guide to AWS Costs](https://getstrake.com/community/developers-guide-to-aws-costs): This guide explains the cost structures of AWS services using the [AWS Cost and Usage Report (CUR)](https://getstrake.com/blog/cost-and-usage-report-setup). The first guide explains how to create and analyze the Cost and Usage Report using SQL.
-2. If your team is struggling to get an alignment or analyze your usage, please [contact our team](mailto:developer-relations@getstrake.com) for a free consultation
+1. [Developer's Guide to AWS Costs](https://eightlake.com/developer-guide-to-aws-costs): This guide explains the cost structures of AWS services using the [AWS Cost and Usage Report (CUR)](https://eightlake.com/cost-and-usage-report-setup). The first guide explains how to create and analyze the Cost and Usage Report using SQL.
+2. If your team is struggling to get an alignment or analyze your usage, please [contact our team](mailto:brian@eightlake.com) for a free consultation

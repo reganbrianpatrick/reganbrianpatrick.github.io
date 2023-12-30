@@ -11,8 +11,7 @@ featured: false
 ---
 This Cost and Usage Report overview will go through the required IAM permissions for billing analysis, how to create a cost and usage report (CUR), and how to set up a local analysis environment using SQLite3.
 
-If you have questions, feedback, or other AWS Billing problems you’d like to discuss, you can [contact our team](mailto:brian@eightlake.com). Check out [Strake](https://getstrake.com/) to see the product we’re building to solve the ‘cloud cost’ problem.
-
+If you have questions, feedback, or other AWS Billing problems you’d like to discuss, you can [contact our team](mailto:brian@eightlake.com). 
 ## **IAM Permissions**
 
 Identity and Access Management (IAM) permissions get complicated very quickly. The advantage of using Sqlite3 and doing local analysis is minimizing permissions and access needed in your AWS Account. The best way to track access to billing is to create an IAM role for engineers with access to billing information. The IAM permissions below practice the ‘least privilege principle’ for anyone in your engineering team that needs to perform billing analysis.
@@ -68,7 +67,7 @@ Second, these are the permissions to list S3 buckets and download CUR files for 
 
 ## **Cost and Usage Report Documentation**
 
-As part of the Developer’s Guide to AWS Costs, we have added a [Cost and Usage Report Documentation](https://getstrake.com/blog/aws-cost-and-usage-report-documentation) blog post to our website. For the over 200 fields in the Cost and Usage Report, this document will describe the field and provide sample values to help developers analyze their specific use cases.
+As part of the Developer’s Guide to AWS Costs, we have added a [Cost and Usage Report Documentation](https://eightlake.com/aws-cost-and-usage-report-documentation) blog post to our website. For the over 200 fields in the Cost and Usage Report, this document will describe the field and provide sample values to help developers analyze their specific use cases.
 
 This document is always a work in progress. If there are questions or comments on the information in the documentation, please let us know in our [GitHub Discussions](https://github.com/getstrake/developer-cost-guide/discussions)!
 

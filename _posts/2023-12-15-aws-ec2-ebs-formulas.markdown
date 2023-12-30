@@ -29,7 +29,7 @@ Before we go into too much detail, here is a 3-minute video on how to get starte
 
 ## **AWS EC2 Pricing**
 
-In previous posts on Strake’s blog, including the [Developer’s Guide to AWS Costs: EC2](https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs) and [What is EC2-Other?](https://getstrake.com/blog/what-is-ec2-other), I’ve broken down the different types of charges that come through your AWS bill under the ‘EC2’ service. Today, we will focus on understanding pricing for the hourly running cost of EC2 Instances.
+In previous posts on Strake’s blog, including the [Developer’s Guide to AWS Costs: EC2](https://eightlake.com/aws-ec2-cost-analysis) and [What is EC2-Other?](https://eightlake.com/what-is-ec2-other), I’ve broken down the different types of charges that come through your AWS bill under the ‘EC2’ service. Today, we will focus on understanding pricing for the hourly running cost of EC2 Instances.
 
 ### **Amazon EC2 Instance Types**
 
@@ -47,7 +47,7 @@ EC2 instance types combine an EC2 instance family and the EC2 instance size. For
 
 With the AWS Pricing by Strake project, our team has also shared several templates to help users calculate their infrastructure costs. The first template, “AWS Pricing by Strake - EC2 Pricing and Reserved Instances”, makes it simple for any user to calculate the On Demand and Reserved Instance costs for their EC2 instances.
 
-AWS Pricing: EC2 Template
+[AWS Pricing: EC2 Template](https://docs.google.com/spreadsheets/d/1_kGiAaWzShNfDuMRF9icCzQotIkaTOu5hex9v7YNL_0/edit?usp=sharing)
 
 **First**, If you have not already, you can download [AWS Pricing by Strake](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903) from the Google Workspace Marketplace. Downloading this add-on takes less than 15 seconds!
 
@@ -69,7 +69,7 @@ Now that we understand how the template works, we can use this template to answe
 
 **How do the prices for the new c6i instances compare to the c5a instances?** The price is often lower when AWS releases new instance families compared to the current generation. Engineers must understand the cost and operational benefits of moving to a new instance family before starting the migration.
 
-**Should we make convertible or reserved instance reservations?** How do the discount rates compare for different payment options and commitment terms? I discussed this in another blog post, [A Complete Guide to AWS Reservations](https://strake.webflow.io/blog/a-complete-guide-to-aws-reservations). Three key variables determine how large a discount will be: length of commitment, specificity of the commitment, and the amount of money paid upfront. This EC2 template will let your business understand the different discount rates to weigh cost benefits and operational complexity.
+**Should we make convertible or reserved instance reservations?** How do the discount rates compare for different payment options and commitment terms? I discussed this in another blog post, [A Complete Guide to AWS Reservations](https://eightlake.com/complete-guide-to-aws-reservations). Three key variables determine how large a discount will be: length of commitment, specificity of the commitment, and the amount of money paid upfront. This EC2 template will let your business understand the different discount rates to weigh cost benefits and operational complexity.
 
 **We're starting a new development project. What instance types should we use?** How does pricing compare across EC2 instance types? When your engineering team starts a new project, it is crucial to estimate your costs from the beginning. Maybe $0.01 per hour doesn't seem like a big difference, but when you're running thousands of instances in production, that can be a meaningful cost.
 
@@ -77,7 +77,7 @@ Now that we understand how the template works, we can use this template to answe
 
 The second template we have created and shared with the AWS Community, “AWS Pricing by Strake - EC2 & EBS Calculator”, combines the hourly EC2 instance cost with any attached EBS volume cost. These two costs combined give users a much better understanding of what their development project will cost.
 
-AWS Pricing: EC2 and EBS Template
+[AWS Pricing: EC2 and EBS Template](https://docs.google.com/spreadsheets/d/1iXmGH55LBAbAy1m-EA_HZyPvMr54EoIfhcOVOIlVrr0/edit?usp=sharing)
 
 To use this template, **First**, select the details for the EC2 instances. We discussed calculating the cost for different EC2 Instance Types with the “EC2 Pricing and Reserved Instance Template”. The only difference with this template is that the user must also select the payment type and any related selections. For example, if you choose the “Purchase Type” as Reserved, you will be prompted to fill out the Offering Class, Term, and Payment Option.
 
@@ -103,10 +103,3 @@ With the template filled out, the calculations will show Hourly, Daily, and Mont
 
 **Calculating the total cost impact of changing infrastructure from On Demand to Reserved Instance pricing.** Total cost reduction from reservations is an important metric to track so the business understands what percentage cost reduction Reservations can actually provide. Unfortunately, Reserved Instances don't apply to EBS Volumes. This template will allow your team to combine EC2 Reserved Instances and your existing EBS volumes to calculate the total cost reduction to your infrastructure.
 
-## **Learn More**
-
-If you're interested in learning more about AWS Pricing by Strake, here are some additional resources:
-
-- 🖥️ [Visit our website](https://getstrake.com/) to learn about features and download AWS Pricing templates.
-- 🚀 [Create a GitHub Issue](https://github.com/getmacroscope/aws-pricing-sheets-addon/issues) for bugs or if you have ideas to improve the project.
-- 💭 [Join the Strake community](https://join.slack.com/t/strake-community/shared_invite/zt-1nisfazzn-uO5O_I28Z7N6sZ6iM2H1xA) if you have questions or want to stay updated with Strake.
