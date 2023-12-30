@@ -1,51 +1,51 @@
 [
   
     {
-      "title"    : "AWS Update 1.1",
+      "title"    : "What is EC2-Other?",
       "category" : "",
-      "tags"     : "travel and hobby",
-      "url"      : "/test-is-not-a-test",
-      "image"    : "/images/20.jpg"
+      "tags"     : "Cloud",
+      "url"      : "/what-is-ec2-other",
+      "image"    : "/images/ec2-other.jpg"
     } ,
   
     {
-      "title"    : "The longer I live, the more beautiful life becomes",
+      "title"    : "What is AWS CloudTrail?",
       "category" : "",
-      "tags"     : "travel and hobby",
-      "url"      : "/this-is-test-4",
-      "image"    : "/images/post1.jpg"
+      "tags"     : "Cloud",
+      "url"      : "/what-is-cloudtrail",
+      "image"    : "/images/cloudtrail.jpg"
     } ,
   
     {
-      "title"    : "The longer I live, the more beautiful life becomes",
+      "title"    : "What Are AWS EC2 Spot Instances?",
       "category" : "",
-      "tags"     : "travel and hobby",
-      "url"      : "/this-is-test-3",
-      "image"    : "/images/post2.jpg"
+      "tags"     : "Cloud",
+      "url"      : "/what-are-aws-spot-instances",
+      "image"    : "/images/spot-instances.jpg"
     } ,
   
     {
-      "title"    : "The longer I live, the more beautiful life becomes",
+      "title"    : "Formula Building and Compare Functionality for AWS Pricing",
       "category" : "",
-      "tags"     : "travel and hobby",
-      "url"      : "/this-is-test-2",
-      "image"    : "/images/post3.jpg"
+      "tags"     : "Open Source and Cloud",
+      "url"      : "/aws-pricing-formula-builder",
+      "image"    : "/images/formula-builder.jpg"
     } ,
   
     {
-      "title"    : "The longer I live, the more beautiful life becomes",
+      "title"    : "Cost Allocation Tagging",
       "category" : "",
-      "tags"     : "travel and hobby",
-      "url"      : "/this-is-test-1",
-      "image"    : "/images/post4.jpg"
+      "tags"     : "Cloud",
+      "url"      : "/cost-allocation-tagging",
+      "image"    : "/images/cost-allocation-tagging.jpg"
     } ,
   
     {
-      "title"    : "Life is what happens when you’re busy making other plans",
+      "title"    : "Reserved Instances or Savings Plans",
       "category" : "",
-      "tags"     : "stydy and notes",
-      "url"      : "/this-is-test-5",
-      "image"    : "/images/20.jpg"
+      "tags"     : "Cloud",
+      "url"      : "/reserved-instances-or-savings-plans",
+      "image"    : "/images/ri-sp.jpg"
     } 
   
 ]

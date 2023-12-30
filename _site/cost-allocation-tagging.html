@@ -6,22 +6,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>AWS Update 1.1</title>
-  <meta name='description' content='Major updates from AWS'>
+  <title>Cost Allocation Tagging</title>
+  <meta name='description' content='An idea we’ve pushed forward pretty consistently is that cost management in the cloud is a complex endeavor, and actions must be taken if you want to avoid s...'>
 
-  <link rel="canonical" href="http://localhost:4000/templates/aws-template">
+  <link rel="canonical" href="http://localhost:4000/cost-allocation-tagging">
   <link rel="alternate" type="application/rss+xml" title="EightLake" href="/feed.xml">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AWS Update 1.1 – EightLake">
-  <meta name="twitter:description" content="Major updates from AWS">
-  <meta name="twitter:image:src" content="http://localhost:4000/images/20.jpg">
+  <meta name="twitter:title" content="Cost Allocation Tagging – EightLake">
+  <meta name="twitter:description" content="An idea we’ve pushed forward pretty consistently is that cost management in the cloud is a complex endeavor, and actions must be taken if you want to avoid surprises by the time you receive your monthly bill.">
+  <meta name="twitter:image:src" content="http://localhost:4000/images/cost-allocation-tagging.jpg">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:title" content="AWS Update 1.1 – EightLake">
-  <meta property="og:description" content="Major updates from AWS">
-  <meta property="og:image" content="http://localhost:4000/images/20.jpg">
+  <meta property="og:title" content="Cost Allocation Tagging – EightLake">
+  <meta property="og:description" content="An idea we’ve pushed forward pretty consistently is that cost management in the cloud is a complex endeavor, and actions must be taken if you want to avoid surprises by the time you receive your monthly bill.">
+  <meta property="og:image" content="http://localhost:4000/images/cost-allocation-tagging.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -218,15 +218,15 @@
           
           <div class="post__tags">
             
-            <a href="/tags/?tag=aws" class="post__tag">AWS</a>
+            <a href="/tags/?tag=cloud" class="post__tag">Cloud</a>
             
           </div>
           
 
-          <h1 class="post__title">AWS Update 1.1</h1>
+          <h1 class="post__title">Cost Allocation Tagging</h1>
 
           
-          <p class="post__description">Major updates from AWS</p>
+          <p class="post__description">An idea we’ve pushed forward pretty consistently is that cost management in the cloud is a complex endeavor, and actions must be taken if you want to avoid surprises by the time you receive your monthly bill.</p>
           
 
           <div class="post__meta">
@@ -242,7 +242,7 @@
               
                 <a class="post__author__name" href="/admin">Brian Regan</a>
               
-              <time class="post__date" datetime="2022-12-31T20:00:00-07:00">31 December 2022</time>
+              <time class="post__date" datetime="2023-12-01T05:00:00-07:00">01 December 2023</time>
             </div>
           </div>
 
@@ -254,10 +254,10 @@
       
       <div class="col col-5 push-1 col-d-12 push-d-0">
         <div class="post-image">
-          <img class="lazy" data-src="/images/20.jpg" alt="AWS Update 1.1">
+          <img class="lazy" data-src="/images/cost-allocation-tagging.jpg" alt="Cost Allocation Tagging">
         </div>
         
-          <div class="post-image-caption">If the AWS logo was a member of the Followship of the Ring.
+          <div class="post-image-caption">Cost Allocation Tagging in AWS
 </div>
         
       </div>
@@ -275,11 +275,191 @@
   <article class="post">
 
     <div class="post__content">
-      <h2 id="what-is-new-with-aws">What is new with AWS?</h2>
+      <h1 id="an-idea-weve-pushed-forward-pretty-consistently-is-that-cost-management-in-the-cloud-is-a-complex-endeavor-and-actions-must-be-taken-if-you-want-to-avoid-surprises-by-the-time-you-receive-your-monthly-bill">An idea we’ve pushed forward pretty consistently is that cost management in the cloud is a complex endeavor, and actions must be taken if you want to avoid surprises by the time you receive your monthly bill.</h1>
 
-<h3 id="why-do-we-care">Why do we care?</h3>
-<p>I don’t know why we care, but we have to!</p>
+<p>And yes, for most people, the bill’s section in the AWS Console dashboard is the go-to resource for understanding their cloud expenses. But there is a lot more to it! And hopefully, you will considerably optimize your cost management processes after reading this article. In particular, we will explain a cost optimization method called <strong>Cost Allocation</strong> and present ways to implement it using <strong>Cost Allocation Tagging</strong>.</p>
 
+<h2 id="the-importance-of-cost-measurement-and-accountability"><strong>The importance of cost measurement and accountability</strong></h2>
+
+<p>To align your cloud usage and billing with your business objectives, you should start by gaining <strong>visibility over your expenses</strong>. But a birds-eye view of your costs might not be enough to make informed financial decisions since it’s easy to get lost in such a wide variety of services, different charge types, tiered offerings, and discounts.</p>
+
+<p>This is especially important if you support multiple clients and projects inside your AWS consolidated billing. There are various options here, and no solution fits all. You might already have several accounts mapping to individual clients, projects, environments, and use cases.  It’s pretty much up to your business needs and structure.</p>
+
+<p>These scenarios can get complicated. And it’s good to know that AWS already provides real-time tools for cost monitoring and insights, such as Cost Explorer or the Cost and Usage Report. But you might need more detailed reports and custom-built categories for your analysis. This is where solutions like <strong>Cost Allocation Tagging</strong> and <strong>AWS Cost Categories</strong> come into play.</p>
+
+<h2 id="what-is-cost-allocation"><strong>What is cost allocation?</strong></h2>
+
+<p>Cost Allocation is all about establishing the relationship between costs from AWS spend, how those were incurred, and who or what incurred those costs. This is how you gain the granularity you need when reviewing your costs.</p>
+
+<p>It allows you to look at specific items within your bills and get immediate answers to questions like:</p>
+
+<ul>
+  <li><strong>Who is the owner</strong> and has the responsibility to optimize it?</li>
+  <li><strong>What workload, application, product, or environment</strong> is causing the expenses?</li>
+  <li>What are the spending areas experiencing the <strong>highest growth rate</strong>?</li>
+  <li>What <strong>budget optimizations</strong> can we apply based on past trends?</li>
+  <li>What was the <strong>real impact of our cost optimization efforts</strong>?</li>
+</ul>
+
+<p>But to properly reap its benefits, you must first design a proper cost allocation strategy, which consists of a few steps:</p>
+
+<ol>
+  <li>Define your cost allocation boundaries.</li>
+  <li>Bring in your stakeholders!</li>
+  <li>Establish cost assignment procedures (showback/chargeback).</li>
+  <li>Measure with unit metrics as KPIs.</li>
+  <li>Handle unallocatable expenses.</li>
+</ol>
+
+<p>Let’s take a deeper look at how you can design your strategy.</p>
+
+<h2 id="best-practices-for-your-cost-allocation-strategy"><strong>Best Practices for Your Cost Allocation Strategy</strong></h2>
+
+<h3 id="1-define-your-cost-allocation-boundaries"><strong>1. Define your cost allocation boundaries</strong></h3>
+
+<p>Your cost allocation models can take different forms depending on how you organize your projects across your AWS accounts. They vary in ease of implementation and desired accuracy.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Model</th>
+      <th>Details</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Account Based</td>
+      <td>Straightforward and least effort-intensive. This is ideal for organizations with a well-established account structure, where each account can be treated as its cost category.</td>
+    </tr>
+    <tr>
+      <td>Business Unit or Team Based</td>
+      <td>Slightly higher level of effort in return for improved cost visibility across teams and applications. This is useful when each unit in your organization has multiple accounts for their different use cases or environments.</td>
+    </tr>
+    <tr>
+      <td>Tag Based</td>
+      <td>Provides detailed cost tracking using Cost Allocation Tags. However, it is crucial to strike the right balance between granularity and specificity according to your needs.</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Based on the level of maturity of your cost management practices, you could start by allocating costs based on your account structure, which defines a natural boundary between spend groups. Very straightforward. As your cost management requirements increase, you will see value in integrating tags and cost categories into your model, as it grants you a more accurate and business-driven abstraction on top of your regular bills.</p>
+
+<h3 id="2-align-reporting-and-monitoring-with-your-stakeholders-needs"><strong>2. Align reporting and monitoring with your stakeholder’s needs</strong></h3>
+
+<p>Discover the cost insights your report users need and translate them into useful reports and real-time monitoring dashboards. Requirements change depending on the requesting team (technical, accounting, compliance, or finance). You will need to use different presentations and data manipulation techniques for each.</p>
+
+<p>Again, AWS provides real-time reporting tools and integrations to like Cost Explorer, Cost and Usage Reports, and AWS Organizations, among others. But you can also feed your cost data to custom-built dashboards and reports.</p>
+
+<h3 id="3-establish-a-cost-assignment-procedure"><strong>3. Establish a cost assignment procedure</strong></h3>
+
+<p>Attribute your costs to your business units, teams, clients, or organizations so you raise awareness of the cost contribution of each of them. This will also allow you to identify potential targets for cost optimizations. Two concepts are relevant to this:</p>
+
+<p><strong>Showback</strong>: calculate and present specific charges incurred by each relevant entity within the company. That is, answer the question: “How much did the X team spend last period?”</p>
+
+<p><strong>Chargeback</strong>: put your organization’s accounting processes to work and proceed with the actual charging of those attributed expenses to the relevant areas.</p>
+
+<h3 id="4-measure-using-unit-metrics-as-kpis"><strong>4. Measure using unit metrics as KPIs</strong></h3>
+
+<p>Say you have your AWS costs assigned to your business units or projects, and you spotted a cost increase in one. Is that a good or a bad sign? Well, that will depend on the efficiency of the business value generated by that spend. This is the goal of using <strong>unit metrics</strong>. They are ways to normalize your cost information and attach business relevance to it, enabling you to measure progress toward real business goals. For example, a <em>cost-per-ride</em> metric is a good starting point for a ridesharing service. If your product is a marketplace, you can use a <em>cost-per-purchase</em> metric.</p>
+
+<p>Continuously decreasing unit metric values are a good thing: this implies your cost efficiency is increasing. On the other hand, an increase in your unit metrics means you are paying more per business event. Therefore your efficiency is going down: you should dig into it.</p>
+
+<h3 id="5-allocate-unallocatable-spend"><strong>5. Allocate unallocatable spend</strong></h3>
+
+<p>Finally, you will inevitably find cost groups that can’t be tagged or assigned to a specific business category. These include <a href="https://getstrake.com/blog/a-complete-guide-to-aws-reservations">volume discounts due to AWS Reservations</a> like Reserved Instances or Savings Plans. You can use amortized costs in AWS cost reports to help you allocate these rogue items. But you might find other scenarios too. Therefore, it is relevant to define how you will manage them upfront, so you can deal with them appropriately when they present themselves.</p>
+
+<h2 id="implementing-cost-allocation-tagging"><strong>Implementing Cost Allocation Tagging</strong></h2>
+
+<p>Say you have defined your cost allocation strategy to leverage <strong>Cost Allocation Tags</strong>. Now comes the time to put it in place. But how do you achieve this?</p>
+
+<h3 id="what-are-tags"><strong>What are tags?</strong></h3>
+
+<p>First of all, let’s review what a tag is. <strong>Tags are key-value pairs</strong> that can be assigned to AWS resources and provide metadata about them. Most AWS resources support tags, like RDS instances, EC2 instances, VPCs, and security groups, to name a few. However, some can’t be tagged, so remember to define ways to manage those unallocatable cost items.</p>
+
+<p>There are <strong>AWS generated tags</strong>, prefixed as aws: or with a service name. But you can also assign custom tags, called <strong>user-defined tags</strong>. You have relative freedom when you create and assign tags to your resources (although some <a href="https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html#tag-conventions">naming restrictions apply</a>). But to implement a proper cost allocation tagging model, there have to exist some ground rules regarding how team members start tagging resources. This is called a <strong>Tagging Strategy</strong>.</p>
+
+<h3 id="build-your-tagging-strategy"><strong>Build your Tagging Strategy</strong></h3>
+
+<p><img src="/images/tagging-1.jpg" alt="Tagging 1" /></p>
+
+<p>To ensure you are tagging resources the right way, for a successful Cost Allocation Tagging implementation, AWS recommends following an iterative model, starting small with your highest priority, and then incrementally improving your strategy by following these steps:</p>
+
+<ul>
+  <li><strong>Identify the need and use cases</strong> within your organization. As explained before, you should always consider the level of granularity each stakeholder needs. You must cross IT boundaries for this step and integrate team members from finance, governance, or compliance.</li>
+  <li><strong>Define and publish a tagging schema,</strong> including mandatory tag keys, acceptable values, and naming conventions to ensure consistency across your AWS accounts.</li>
+  <li><strong>Implement and enforce tagging practices</strong>. You can achieve this through infrastructure as code (IaC) by standardizing tagging in your CI/CD pipelines. Additionally, you can create enforcement policies using AWS Organizations Tag Policies to define valid tag values, enforce capitalization, or report non-compliant resources. Service Control Policies, also from AWS Organizations, are another method for tag usage enforcement.</li>
+  <li><strong>Measure and improve</strong> the effectiveness of your tagging strategy using cost resource reporting tools like AWS Cost Explorer.</li>
+</ul>
+
+<h3 id="enable-tags-for-cost-allocation-tagging"><strong>Enable tags for Cost Allocation Tagging.</strong></h3>
+
+<p>That’s right. The tags you create are not automatically used in your billing tools! This is why you must activate them to be used in cost allocation. Let’s see how this is done.</p>
+
+<p>First, go to the AWS Billing Dashboard and look for the Cost allocation tags section. You can search for Billing or Cost allocation tags in the search bar.</p>
+
+<p><img src="/images/tagging-2.jpg" alt="Tagging 2" /></p>
+
+<p>Search for Billing or Cost Allocation tags.</p>
+
+<p>Once inside the Cost allocation tags section, you will see a list of User-defined and AWS generated tags. These are marked as Active or Inactive depending on whether they have been enabled as cost allocation tags.</p>
+
+<p><img src="/images/tagging-3.jpg" alt="Tagging 3" /></p>
+
+<p>Cost allocation status for user-defined and AWS generated tags.</p>
+
+<p>If you want to enable specific tags to be used in cost reports, select the desired tags, and mark the <strong>Activate</strong> option in the top right. You will get a confirmation popup. Confirm your action.</p>
+
+<p><img src="/images/tagging-4.jpg" alt="Tagging 4" /></p>
+
+<p>Confirmation for enabling a tag as a cost allocation tag.</p>
+
+<p>And that’s it! You have now created new cost allocation tags. Be aware that once you’ve activated a cost allocation tag, it might take a day or two before it becomes available in your cost reports.</p>
+
+<h2 id="using-your-cost-allocation-tags-in-reports"><strong>Using your Cost Allocation Tags in reports</strong></h2>
+
+<p>Cost allocation tags will appear in your standard AWS cost reporting tools: Cost Explorer, AWS Budgets, and AWS Cost and Usage Reports. You can also integrate them with custom reports using Amazon Quicksight.</p>
+
+<p>In <strong>AWS Cost Explorer,</strong> for example, you can group or filter your expenses using the cost allocation tags you have previously enabled. It’s that simple!</p>
+
+<p><img src="/images/tagging-5.jpg" alt="Tagging 5" /></p>
+
+<p>Grouping costs using cost allocation tags.</p>
+
+<p>Notice the “No tag key” value in the graph. This is a great way to detect costs incurred by untagged resources. Some might not support tags, which means they fit in the <em>unallocatable costs</em> group. As mentioned before, it is relevant to watch out for those expenses and decide how to apply the proper showback and chargeback procedures.</p>
+
+<p>With <strong>AWS Budgets</strong>, it is just as easy. You can create a new custom cost budget from the Budgets dashboard and scope your budget based on cost allocation tag filters, similar to the AWS Cost Explorer example.</p>
+
+<p>![Tagging 6]</p>
+
+<p>AWS Budget example filtering by cost allocation tags</p>
+
+<p>We’ve previously explained how to get the most from <a href="https://getstrake.com/blog/aws-cost-and-usage-report-documentation">AWS Cost and Usage Report</a>. Cost allocation tags will also be available for said reports and are another way to handle the detailed cost information presented there.</p>
+
+<p>Finally, there is another convenient feature called <strong>AWS Cost Categories.</strong> This service allows you to group your spending into meaningful cost categories based on multiple criteria. One of the grouping dimensions you can use is cost allocation tags, but you can also group by account, region, and service, among others.</p>
+
+<p><img src="/images/tagging-6.jpg" alt="Tagging 7" /></p>
+
+<p>Grouping by cost allocation tags in AWS Cost Categories</p>
+
+<p>AWS Cost Categories allow you to create another abstraction layer on top of your cost analysis. These cost categories will also appear in AWS Cost Explorer, AWS Budgets, and AWS Cost and Usage Reports.</p>
+
+<h2 id="key-takeaways"><strong>Key Takeaways</strong></h2>
+
+<p>Measuring and monitoring your AWS costs is one of the pillars of Cloud Financial Management. Within this context, <strong>Cost Allocation</strong> is a practice that helps optimize cost management in the cloud by establishing the relationship between costs, how they were incurred, and who incurred them. It can answer questions about ownership, cost drivers, growth areas, budget optimization, and the impact of your cost optimization efforts.</p>
+
+<p>Some recommended practices to help you implement a proper cost allocation strategy are:</p>
+
+<ol>
+  <li>Define your cost allocation model.</li>
+  <li>Consider your stakeholder’s needs.</li>
+  <li>Establish showback and chargeback procedures.</li>
+  <li>Measure using unit metrics.</li>
+  <li>Handle unallocatable expenses.</li>
+</ol>
+
+<p>One of the models for cost allocation is <strong>Cost Allocation Tagging</strong>, which uses standard AWS tags to classify your cloud expenses. You first define a tagging strategy using an iterative approach, after which <strong>you must opt-in the tags you desire to use as Cost Allocation Tags.</strong></p>
+
+<p>After that, you can start using AWS cost reporting offerings like AWS Cost Explorer or AWS Cost Categories, which will now support tags for grouping and managing your organization’s expenses.</p>
 
     </div>
 
@@ -287,17 +467,17 @@
       <ul class="share__list list-reset">
         <li class="share__item">
           <a class="share__link share__twitter"
-            href="https://twitter.com/intent/tweet?text=AWS%20Update%201.1&url=http://localhost:4000/templates/aws-template"
+            href="https://twitter.com/intent/tweet?text=Cost%20Allocation%20Tagging&url=http://localhost:4000/cost-allocation-tagging"
             onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
             title="Share on Twitter" rel="nofollow"><i class="ion ion-logo-twitter"></i></a>
         </li>
         <li class="share__item">
-          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/templates/aws-template"
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/cost-allocation-tagging"
             onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
             title="Share on Facebook" rel="nofollow"><i class="ion ion-logo-facebook"></i></a>
         </li>
         <li class="share__item">
-          <a class="share__link share__pinterest" href="http://pinterest.com/pin/create/button/?url=http://localhost:4000/templates/aws-template&amp;media=http://localhost:4000/images/20.jpg&amp;description=AWS%20Update%201.1"
+          <a class="share__link share__pinterest" href="http://pinterest.com/pin/create/button/?url=http://localhost:4000/cost-allocation-tagging&amp;media=http://localhost:4000/images/cost-allocation-tagging.jpg&amp;description=Cost%20Allocation%20Tagging"
           onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Pinterest"
           rel="nofollow"><i class="ion ion-logo-pinterest"></i></a>
         </li>
@@ -312,7 +492,33 @@
 <div class="container">
   <div class="post__navigation animate">
     
+    <div class="post__prev">
+      <a href="/reserved-instances-or-savings-plans" class="prev__image">
+        <img class="lazy" data-src="/images/ri-sp.jpg" alt="Cost Allocation Tagging">
+      </a>
+      <div class="prev__box">
+        <span class="post__nav post__nav__prev">Older post</span>
+        <h2 class="post__nav__title"><a href="/reserved-instances-or-savings-plans">Reserved Instances or Savings Plans</a></h2>
+        <p class="post__nav__excerpt">
+          Cost optimization is one of the pillars for the efficient usage of AWS. However, inspecting and understanding AWS billing reports can be a challenging task. This is true whether your company embraced the cloud from the start or if you just began migrating your projects.
+        </p>
+      </div>
+    </div>
+    
 
+    
+    <div class="post__next">
+      <div class="next__box">
+        <span class="post__nav post__nav__next">Newer post</span>
+        <h2 class="post__nav__title"><a href="/aws-pricing-formula-builder">Formula Building and Compare Functionality for AWS Pricing</a></h2>
+        <p class="post__nav__excerpt">
+          The AWS Pricing add-on for Google Sheets is a phenomenal tool for efficiently analyzing, forecasting, and optimizing your AWS costs. Its intuitive interface seamlessly integrates current AWS pricing information into your spreadsheets, allowing you to stay up-to-date with the latest cloud cost values, and simplifying cost management for multiple members of your organization.
+        </p>
+      </div>
+      <a href="/aws-pricing-formula-builder" class="next__image">
+        <img class="lazy" data-src="/images/formula-builder.jpg" alt="Cost Allocation Tagging">
+      </a>
+    </div>
     
   </div>
 </div>
@@ -326,7 +532,7 @@
 
 <!-- begin related posts -->
 <div class="container">
-  <section class="related-posts  animate">
+  <section class="related-posts is-related animate">
     <div class="row">
       <div class="col col-12">
         <div class="container__inner">
@@ -336,7 +542,7 @@
                 
                 
                   
-                    <a href="/tags/?tag=aws" class="section__link related-tag"><div>See all <span>AWS</span></div> <i class="ion ion-ios-arrow-round-forward"></i></a>
+                    <a href="/tags/?tag=cloud" class="section__link related-tag"><div>See all <span>Cloud</span></div> <i class="ion ion-ios-arrow-round-forward"></i></a>
                   
                 
               
@@ -352,6 +558,41 @@
             
 
             
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/what-is-ec2-other">
+                    <img class="lazy" data-src="/images/ec2-other.jpg" alt="What is EC2-Other?">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/about/" class="article__author__image" title="EightLake">
+                      <img class="lazy" data-src="/images/lake.jpg" alt="EightLake">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/what-is-ec2-other">What is EC2-Other?</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
             
             
             
@@ -359,6 +600,41 @@
             
 
             
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/what-is-cloudtrail">
+                    <img class="lazy" data-src="/images/cloudtrail.jpg" alt="What is AWS CloudTrail?">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/what-is-cloudtrail">What is AWS CloudTrail?</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
             
             
             
@@ -366,6 +642,41 @@
             
 
             
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/what-are-aws-spot-instances">
+                    <img class="lazy" data-src="/images/spot-instances.jpg" alt="What Are AWS EC2 Spot Instances?">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/what-are-aws-spot-instances">What Are AWS EC2 Spot Instances?</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
             
             
             
@@ -373,21 +684,41 @@
             
 
             
-            
-            
-            
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/aws-pricing-formula-builder">
+                    <img class="lazy" data-src="/images/formula-builder.jpg" alt="Formula Building and Compare Functionality for AWS Pricing">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/aws-pricing-formula-builder">Formula Building and Compare Functionality for AWS Pricing</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
 
             
-
-            
-            
-            
-            
-
-            
-
-            
-            
+                
+                  
           </div>
         </div>
       </div>
