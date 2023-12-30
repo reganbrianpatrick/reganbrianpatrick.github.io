@@ -13,4 +13,5 @@ featured: false
 ## What is new with AWS?
 
 ### Why do we care?
+I don't know why we care, but we have to!
 
