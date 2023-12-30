@@ -7,7 +7,7 @@ author: admin
 image: '/images/ri-sp.jpg'
 image_caption: 'Photo for the blog post'
 tags: [Cloud]
-featured: true
+featured: false
 ---
 Traditional IT tools for cost analysis need to be revised for the consumption-based models that govern the cloud. You are also faced with an overwhelming landscape of different service pricing models, constantly changing and adapting to new offerings and technologies.
 
