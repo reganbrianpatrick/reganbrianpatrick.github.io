@@ -6,24 +6,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Our Authors</title>
-  <meta name='description' content='EightLake'>
+  <title>Reserved Instances or Savings Plans</title>
+  <meta name='description' content='Cost optimization is one of the pillars for the efficient usage of AWS. However, inspecting and understanding AWS billing reports can be a challenging task. ...'>
 
-  <link rel="canonical" href="http://localhost:4000/authors/">
+  <link rel="canonical" href="http://localhost:4000/reserved-instances-or-savings-plans">
   <link rel="alternate" type="application/rss+xml" title="EightLake" href="/feed.xml">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Our Authors – EightLake">
-  <meta name="twitter:description" content="
-">
-  <meta name="twitter:image:src" content="">
+  <meta name="twitter:title" content="Reserved Instances or Savings Plans – EightLake">
+  <meta name="twitter:description" content="Cost optimization is one of the pillars for the efficient usage of AWS. However, inspecting and understanding AWS billing reports can be a challenging task. This is true whether your company embraced the cloud from the start or if you just began migrating your projects.">
+  <meta name="twitter:image:src" content="http://localhost:4000/images/ri-sp.jpg">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:title" content="Our Authors – EightLake">
-  <meta property="og:description" content="
-">
-  <meta property="og:image" content="">
+  <meta property="og:title" content="Reserved Instances or Savings Plans – EightLake">
+  <meta property="og:description" content="Cost optimization is one of the pillars for the efficient usage of AWS. However, inspecting and understanding AWS billing reports can be a challenging task. This is true whether your company embraced the cloud from the start or if you just began migrating your projects.">
+  <meta property="og:image" content="http://localhost:4000/images/ri-sp.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -225,35 +223,549 @@
   
     <!-- begin content -->
     <main class="content" aria-label="Content">
-      <!-- begin authors -->
-<section class="authors">
+      
+<div class="post-head">
+  <div class="container">
+    <div class="row">
 
-  <div class="authors__head">
-    <h1 class="authors__title">Our Authors</h1>
-  </div>
+      <div class="col col-6 col-d-12">
+        <div class="post__info">
 
-  <div class="authors__inner animate">
-    <div class="container">
-      <div class="row">
-        
-        
-        <div class="col col-4 col-d-6 col-t-12">
-          <div class="authors__info">
-            <a class="authors__image" href="/admin"><img class="lazy" data-src="/favicon.ico" alt="Brian Regan"></a>
-            <h2 class="authors__name"><a class="authors__link" href="/admin">Brian Regan</a></h2>
+          
+          <div class="post__tags">
             
-              <div class="authors__posts__count">5 Posts</div>
+            <a href="/tags/?tag=cloud" class="post__tag">Cloud</a>
             
-            <p class="authors__description">Expert in public cloud finance, SaaS operations, and startup finance.</p>
           </div>
+          
+
+          <h1 class="post__title">Reserved Instances or Savings Plans</h1>
+
+          
+          <p class="post__description">Cost optimization is one of the pillars for the efficient usage of AWS. However, inspecting and understanding AWS billing reports can be a challenging task. This is true whether your company embraced the cloud from the start or if you just began migrating your projects.</p>
+          
+
+          <div class="post__meta">
+            
+
+            
+            <a href="/admin" class="post__author__image">
+              <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+            </a>
+            
+
+            <div class="post__meta-bottom">
+              
+                <a class="post__author__name" href="/admin">Brian Regan</a>
+              
+              <time class="post__date" datetime="2023-12-01T02:00:00-07:00">01 December 2023</time>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      
+
+      
+      <div class="col col-5 push-1 col-d-12 push-d-0">
+        <div class="post-image">
+          <img class="lazy" data-src="/images/ri-sp.jpg" alt="Reserved Instances or Savings Plans">
         </div>
         
+          <div class="post-image-caption">Photo for the blog post
+</div>
+        
       </div>
+      
+
+      
+
     </div>
   </div>
+</div>
 
-</section>
-<!-- end authors -->
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      <p>Traditional IT tools for cost analysis need to be revised for the consumption-based models that govern the cloud. You are also faced with an overwhelming landscape of different service pricing models, constantly changing and adapting to new offerings and technologies.</p>
+
+<p>Fortunately, AWS provides several tools and pricing models to simplify cost management and help you save money. It is essential to understand how these operate to avoid unpleasant surprises with your bill at the end of the month.</p>
+
+<p>This article will compare two similar offerings: <strong>Reserved Instances</strong> and <strong>Savings Plans</strong>. Both are volume discount opportunities, but the mechanics of how a reservation is made and how those reservations impact your environment vary. Therefore, it’s crucial to acknowledge how these differences affect your budget and forecast operations before committing. By the end of this article, you will be able to understand them clearly and make the right decision for your business and technical needs.</p>
+
+<p>In a previous blog post, <a href="https://getstrake.com/blog/a-complete-guide-to-aws-reservations">A Complete Guide to AWS Reservations</a>, we discussed both options at a high level. Feel free to visit that guide and review the details of each. This time, we will review the history of both alternatives, as this will help us understand some of their differences and recommended use cases.</p>
+
+<h2 id="resource-based-commitment-with-ec2-reserved-instances"><strong>Resource-based commitment with EC2 Reserved Instances</strong></h2>
+
+<p>Launched in 2009, <strong>EC2</strong> <strong>Reserved Instances (RI)</strong> was the first reservation tool from AWS. Here are the details for this offering:</p>
+
+<ul>
+  <li>You can make a one or three-year commitment.</li>
+  <li><strong>Commitments are resource-based</strong>, meaning the billing discount is applied to your On-Demand instances, given they match specific characteristics defined at purchase time: EC2 instance type, platform, tenancy, and scope (regional or zonal).</li>
+  <li>Reserved Instances discount applies to On-Demand instances only.</li>
+  <li>For zonal commitments, AWS grants you a <strong>capacity reservation</strong>. This means it will keep the capacity you need available for that zone, minimizing the risk of <em>InsufficientInstanceCapacity</em> errors.</li>
+  <li><strong>Standard RIs</strong> can be sold to other AWS customers in the Reserved Instance Marketplace. AWS charges a service fee of 12% of the total upfront price of each instance you sell. You can modify your commitment’s availability zone and scope (regional/zonal). You can also leverage <strong>Instance Size Flexibility</strong> for Linux instances, transforming instance sizes within the same family and generation.</li>
+  <li>You can also purchase <strong>Convertible RIs</strong>, which can be exchanged with another convertible RI with different attributes (including instance family, type, platform, scope, or tenancy). There are specific rules for exchanging convertible RIs. In essence, you can only convert your reserved instances if the new instance’s attributes are of the same or higher cost. These can not be sold in the Reserved Instance Marketplace.</li>
+  <li>You have three payment options: <strong>all upfront</strong>, <strong>partial upfront</strong>, and <strong>no upfront</strong>. The higher the upfront payment, the greater the discount.</li>
+  <li>You can gain <strong>discounts of up to 72%</strong> depending on the payment conditions.</li>
+</ul>
+
+<p>This offering became a great way to reduce costs for predictable steady-cost usage of EC2 instances. The idea was quite successful, so it didn’t stop there.</p>
+
+<h2 id="other-reserved-instance-offerings"><strong>Other Reserved Instance offerings</strong></h2>
+
+<p>A year later, in 2010, the <strong>RDS Reserved DB Instances</strong> model was launched. Applied to RDS instance costs only, not storage or I/O. They offer size flexibility for MySQL, MariaDB, PostgreSQL, Amazon Aurora, and BYOL Oracle instances. RDS Reserved Instances can not be transferred, sold, or canceled.</p>
+
+<p>Soon other services came up with their Reserved Instance solutions:</p>
+
+<ul>
+  <li>Amazon ElastiCache reserved nodes</li>
+  <li>Amazon OpenSearch Service Reserved Instances</li>
+  <li>Amazon Redshift reserved nodes</li>
+  <li>Amazon DynamoDB reservations</li>
+</ul>
+
+<p>These all share the same core features of EC2 Reserved Instances.</p>
+
+<h2 id="pros-and-cons-of-reserved-instances"><strong>Pros and Cons of Reserved Instances</strong></h2>
+
+<p>The Reserved Instances model is ideal for optimizing the cost of steady-state workloads as long as you can predict and stick to specific instance types for your projects. There are a few downsides, though.</p>
+
+<p>These models tie your hands in terms of flexibility, which makes them a no-go for more dynamic business requirements. Also, forecasting usage to the level of detail to include instance types can be complicated. For example, say you commit to a specific EC2 Instance type for three years, only to discover several months later that your compute needs have drastically changed.</p>
+
+<p>There is some flexibility with Instance Size Flexibility, but that is still somewhat restrictive. You can also use Convertible Reserved Instances or the Reserved Instance Marketplace, but these have associated costs, either in the form of reduced discounts or operational overhead.</p>
+
+<h2 id="spend-based-commitment-with-savings-plans"><strong>Spend-based commitment with Savings Plans</strong></h2>
+
+<p>In 2019, AWS introduced Savings Plans. This model no longer forces you to predict the usage of specific resource types. Instead, you make an <strong>hourly spending commitment</strong>, independent of the resources you use, which provides more flexibility and simplicity.</p>
+
+<p>Savings Plans discounts apply to On Demand instances only; there’s no coverage for Spot usage or Reserved Instances.</p>
+
+<p>There are currently three Savings Plans options, each supporting one or three-year term commitments.</p>
+
+<h3 id="compute-savings-plans"><strong>Compute Savings Plans</strong></h3>
+
+<p>Discounts apply to Amazon EC2 costs, independent of instance type, size, tenancy, location, or operating system. Additionally, it includes AWS Fargate and AWS Lambda for container-based and serverless workloads, respectively. You can save up to 66% compared to On-Demand pricing. Savings are applied across all regions.</p>
+
+<h3 id="ec2-instance-savings-plans"><strong>EC2 Instance Savings Plans</strong></h3>
+
+<p>Discounts apply to a specific instance family and region for up to 72% savings compared to On-Demand pricing. As you might have noticed, this makes it equivalent to the EC2 Reserved Instances solution, and the achievable discounts are almost identical. However, the operational overhead of the Savings Plans model is considerably lower.</p>
+
+<h3 id="amazon-sagemaker-savings-plans"><strong>Amazon SageMaker Savings Plans</strong></h3>
+
+<p>Discounts apply to any ML instance type, size, and region. You can save up to 64% compared to On-Demand pricing.</p>
+
+<h2 id="pros-and-cons-of-savings-plans"><strong>Pros and Cons of Savings Plans</strong></h2>
+
+<p>As with Reserved Instances, Savings Plans models are a practical cost optimization solution for the predictable usage of cloud resources. Furthermore, their simplicity dramatically improves <strong>operational efficiency</strong>, as you no longer need to make specific predictions about your infrastructure, and your discounts are automatically applied to all covered services.</p>
+
+<p>Being so flexible as well, they simplify the <strong>modernization of your infrastructure.</strong> Since you are no longer committing to specific resource types, you can easily migrate to new AWS instance offerings in the future, even to container or serverless-based workloads in AWS Fargate or AWS Lambda.</p>
+
+<p>Unlike Reserved Instances, Savings Plans do not cover AWS services for database implementations, such as ElastiCache, RDS, OpenSearch, Redshift, or DynamoDB.</p>
+
+<p>Another interesting consideration is that Savings Plans can not be canceled once purchased unless you create a support ticket. And even then, you are not guaranteed to get a refund. On the other hand, Standard Reserved Instances can at least be sold in the Reserved Instance Marketplace if you no longer need them, although you will most likely have to sell them at a lower price than at the time of purchase.</p>
+
+<h2 id="which-one-is-right-for-you"><strong>Which one is right for you?</strong></h2>
+
+<p>Let’s summarize the differences between these two products in the following table:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>Criteria</th>
+      <th>Savings Plans</th>
+      <th>Reserved Instances</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Commitment type</td>
+      <td>Hourly spend based</td>
+      <td>Resource-based</td>
+    </tr>
+    <tr>
+      <td>Level of Discount</td>
+      <td>Up to 72%</td>
+      <td>Up to 72%</td>
+    </tr>
+    <tr>
+      <td>Payment options</td>
+      <td>One- or three-year commitments: Full, Partial to No Upfront payment</td>
+      <td>One- or three-year commitments: Full, Partial to No Upfront payment</td>
+    </tr>
+    <tr>
+      <td>Location coverage</td>
+      <td>Applies to all regions</td>
+      <td>Regional/zonal</td>
+    </tr>
+    <tr>
+      <td>Operational efficiency</td>
+      <td>Built-in simplicity</td>
+      <td>Operational overhead of selecting and converting specific instance types</td>
+    </tr>
+    <tr>
+      <td>Flexibility</td>
+      <td>Since it’s based on spending instead of resource types, supports resource modernization by default.</td>
+      <td>Flexible through Convertible RIs, at the expense of discount percentage.</td>
+    </tr>
+    <tr>
+      <td>Service Coverage</td>
+      <td>Amazon EC2, AWS Lambda, AWS Fargate, Amazon SageMaker</td>
+      <td>Amazon EC2, Amazon RDS, Amazon ElastiCache, Amazon OpenSearch, Amazon Redshift, and Amazon DynamoDB</td>
+    </tr>
+    <tr>
+      <td>Opt-out</td>
+      <td>Cannot be canceled</td>
+      <td>EC2 Standard RIs can be sold in the marketplace, by paying a 12% fee</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>Considering this information, you can better evaluate your cost optimization options.</p>
+
+<h3 id="first-steps"><strong>First steps</strong></h3>
+
+<p>First and foremost, consider your technological and business needs. You will probably consume different AWS services, so it’s good to evaluate your compute and non-compute resources separately.</p>
+
+<p>Also, make sure to have right-sized your instances and auto-scaling groups. If you compare your current expenses as they are, you might be reserving more capacity than you need.</p>
+
+<h3 id="savings-plans-use-cases"><strong>Savings Plans Use Cases</strong></h3>
+
+<p>For steady-state computing workloads, it’s better to go with Savings Plans. You can benefit from similar discounts, plus the simplicity and flexibility this product provides. This can be true for:</p>
+
+<ul>
+  <li>Amazon EC2-based deployments</li>
+  <li>Serverless solutions using AWS Lambda</li>
+  <li>Containerized solutions using AWS Fargate</li>
+  <li>Machine learning solutions using Amazon SageMaker</li>
+</ul>
+
+<p>In particular, we can compare discount percentages for computing solutions. In the following table, we take a us-east-1 c5.xlarge Linux instance as an example. We make the following assumptions:</p>
+
+<ul>
+  <li>A fixed on-demand hourly rate of USD$0.17 over the three years.</li>
+  <li>All Upfront payments for the reservation scenarios.</li>
+  <li>100% utilization for the On Demand instance over the three years.</li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th> </th>
+      <th>1-year cost $USD</th>
+      <th>1-year savings %</th>
+      <th>3-year cost $USD</th>
+      <th>3-year savings %</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>On Demand</td>
+      <td>$1,489.20</td>
+      <td>–</td>
+      <td>$4,467.60</td>
+      <td>–</td>
+    </tr>
+    <tr>
+      <td>Standard Reserved Instance</td>
+      <td>$876.00</td>
+      <td>41%</td>
+      <td>$1,629.00</td>
+      <td>64%</td>
+    </tr>
+    <tr>
+      <td>EC2 Instance Savings Plans</td>
+      <td>$876.00</td>
+      <td>41%</td>
+      <td>$1,629.36</td>
+      <td>64%</td>
+    </tr>
+    <tr>
+      <td>Convertible Reserved Instance</td>
+      <td>$1,007.00</td>
+      <td>32%</td>
+      <td>$1,957.00</td>
+      <td>56%</td>
+    </tr>
+    <tr>
+      <td>Compute Savings Plans</td>
+      <td>$1,007.40</td>
+      <td>32%</td>
+      <td>$1,944.72</td>
+      <td>56%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>As you can see, both Standard Reserved Instances and EC2 Instance Savings Plans provide nearly the same discount percentage. Similarly, the more flexible options like Convertible Reserved Instances and Compute Savings Plans offer fewer savings, being almost identical as well.</p>
+
+<h3 id="reserved-instances-use-cases"><strong>Reserved Instances Use Cases</strong></h3>
+
+<p>If you are consuming database services in AWS, then the Reserved Instances model will be your only available option. And that’s still the way to go for increased savings. This can be true for any solution built with RDS, ElastiCache, OpenSearch, Redshift, or DynamoDB.</p>
+
+<p>Another use case for Reserved Instances is the capacity reservation feature. As discussed before, AWS attempts to guarantee the availability of your resources whenever you purchase Zonal Reserved Instances. This is useful when you need a fleet of high-end instances or if your EC2 Instances are hosted in availability zones with exhausted capacity. However, Savings Plans can also be combined with another AWS offering: the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html">EC2 On-Demand Capacity Reservation</a> feature. This can help you achieve the same benefits for no additional cost.</p>
+
+<h3 id="the-case-for-on-demand"><strong>The Case for On Demand</strong></h3>
+
+<p>What if you don’t plan on using your EC2 instances all the time over the commitment period? Let’s revisit our us-east-1 c5.xlarge Linux instance example. Imagine this time that you predict the instance to be used only during working hours, so your usage percentage is now close to 25%. This means that your three years On Demand cost would be:</p>
+
+<p><code class="language-plaintext highlighter-rouge">3-year On Demand cost = 
+Full 3-year usage cost × 0.25
+= USD$4,467.60 × 0.25
+= USD$1,116.90</code></p>
+
+<p>Similarly, your 1-year usage cost would be:</p>
+
+<p><code class="language-plaintext highlighter-rouge">1-year On Demand cost =
+Full 1-year usage cost × 0.25
+= USD$1,489.20 × 0.25
+= USD$372.30</code></p>
+
+<p>By comparing with the previous table, On Demand is the most cost effective solution for both of these terms.</p>
+
+<h3 id="breakeven-point-for-reservations"><strong>Breakeven Point for Reservations</strong></h3>
+
+<p>Furthermore, there is a breakeven expected hourly usage after which you can safely purchase a reservation commitment. A simple way to calculate this for All upfront payments is to divide the upfront payment by the on demand hourly cost. Let’s take the 3-year Compute Savings Plan from the previous example:</p>
+
+<p><code class="language-plaintext highlighter-rouge">Usage hours to breakeven = 
+Upfront payment / On Demand Hourly cost
+= USD$1,944.72 / USD$0.17[hour]
+= 11,440 hours</code></p>
+
+<p>This means that after 11,440 hours over the three years, your on demand costs will increase over the upfront payment. Therefore, you will incur extra expenses.</p>
+
+<p>Hopefully, these scenarios help you understand how to exploit these two offerings to maximize cost reductions. You can also check comparative calculations between them in <a href="https://getstrake.com/blog/a-complete-guide-to-aws-reservations">A Complete Guide to AWS Reservations</a>.</p>
+
+<h2 id="understanding-reserved-instances-with-the-aws-pricing-plugin"><strong>Understanding Reserved Instances with the AWS Pricing Plugin</strong></h2>
+
+<p>You can make these or even more complex calculations using the <a href="https://getstrake.com/blog/aws-pricing-add-on-for-google-sheets">AWS Pricing Plugin for Google Sheets</a>, a project managed by Strake and available for free from the <a href="https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903">Google Workspace Marketplace</a>.</p>
+
+<p>You can build your own spreadsheets and get real-time AWS pricing data to compare the different reservation models. In particular, feel free to use our <a href="https://docs.google.com/spreadsheets/d/1GdoZ-jNQZ0IFhQPu1RMLG0eC8cS_Q4i-3aiQdrNNBNA/edit#gid=0">EC2 Pricing &amp; Reservations</a> template as a starting point in your analysis.</p>
+
+<h2 id="key-takeaways"><strong>Key Takeaways</strong></h2>
+
+<p>It is a complex task to manage costs in the cloud. But AWS offers reservation models such as Reserved Instances or Savings Plans to help you optimize your spending for steady-state workloads. Think of Reserved Instances to get discounts for predictable usage of AWS database services. Savings Plans will be a better choice for computing services due to their flexibility and simplicity. You can always use both offerings together to maximize your cost reductions.</p>
+
+<p>If you don’t plan on using your EC2 instances all the time, you can calculate a breakeven point to determine whether On Demand is the best option.</p>
+
+<p>The <a href="https://getstrake.com/community/aws-pricing">AWS Pricing Plugin</a> provided by Strake is a great tool to help you forecast and understand your cloud costs to make the best solution for your use case.</p>
+
+<p>‍</p>
+
+    </div>
+
+    <div class="post__share">
+      <ul class="share__list list-reset">
+        <li class="share__item">
+          <a class="share__link share__twitter"
+            href="https://twitter.com/intent/tweet?text=Reserved%20Instances%20or%20Savings%20Plans&url=http://localhost:4000/reserved-instances-or-savings-plans"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Twitter" rel="nofollow"><i class="ion ion-logo-twitter"></i></a>
+        </li>
+        <li class="share__item">
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/reserved-instances-or-savings-plans"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Facebook" rel="nofollow"><i class="ion ion-logo-facebook"></i></a>
+        </li>
+        <li class="share__item">
+          <a class="share__link share__pinterest" href="http://pinterest.com/pin/create/button/?url=http://localhost:4000/reserved-instances-or-savings-plans&amp;media=http://localhost:4000/images/ri-sp.jpg&amp;description=Reserved%20Instances%20or%20Savings%20Plans"
+          onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Pinterest"
+          rel="nofollow"><i class="ion ion-logo-pinterest"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    
+  </article>
+</div>
+<!-- end post -->
+
+<div class="container">
+  <div class="post__navigation animate">
+    
+    <div class="post__prev">
+      <a href="/test-is-not-a-test" class="prev__image">
+        <img class="lazy" data-src="/images/20.jpg" alt="Reserved Instances or Savings Plans">
+      </a>
+      <div class="prev__box">
+        <span class="post__nav post__nav__prev">Older post</span>
+        <h2 class="post__nav__title"><a href="/test-is-not-a-test">AWS Update 1.1</a></h2>
+        <p class="post__nav__excerpt">
+          Major updates from AWS
+        </p>
+      </div>
+    </div>
+    
+
+    
+    <div class="post__next">
+      <div class="next__box">
+        <span class="post__nav post__nav__next">Newer post</span>
+        <h2 class="post__nav__title"><a href="/aws-pricing-formula-builder">Formula Building and Compare Functionality for AWS Pricing</a></h2>
+        <p class="post__nav__excerpt">
+          The AWS Pricing add-on for Google Sheets is a phenomenal tool for efficiently analyzing, forecasting, and optimizing your AWS costs. Its intuitive interface seamlessly integrates current AWS pricing information into your spreadsheets, allowing you to stay up-to-date with the latest cloud cost values, and simplifying cost management for multiple members of your organization.
+        </p>
+      </div>
+      <a href="/aws-pricing-formula-builder" class="next__image">
+        <img class="lazy" data-src="/images/formula-builder.jpg" alt="Reserved Instances or Savings Plans">
+      </a>
+    </div>
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- begin related posts -->
+<div class="container">
+  <section class="related-posts is-related animate">
+    <div class="row">
+      <div class="col col-12">
+        <div class="container__inner">
+          <div class="section__info">
+            <div class="section__head__small">
+              <h2 class="section__title">You may also like</h2>
+                
+                
+                  
+                    <a href="/tags/?tag=cloud" class="section__link related-tag"><div>See all <span>Cloud</span></div> <i class="ion ion-ios-arrow-round-forward"></i></a>
+                  
+                
+              
+              </a>
+            </div>
+          </div>
+          <div class="row">
+
+          
+            
+            
+
+            
+
+            
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/what-are-aws-spot-instances">
+                    <img class="lazy" data-src="/images/spot-instances.jpg" alt="What Are AWS EC2 Spot Instances?">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/what-are-aws-spot-instances">What Are AWS EC2 Spot Instances?</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
+            
+            
+            
+
+            
+
+            
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/aws-pricing-formula-builder">
+                    <img class="lazy" data-src="/images/formula-builder.jpg" alt="Formula Building and Compare Functionality for AWS Pricing">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/aws-pricing-formula-builder">Formula Building and Compare Functionality for AWS Pricing</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
+            
+            
+            
+
+            
+
+            
+            
+            
+            
+
+            
+
+            
+            
+            
+            
+
+            
+
+            
+            
+            
+            
+
+            
+
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- end related posts -->
     </main>
     <!-- end content -->
   

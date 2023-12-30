@@ -6,24 +6,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>Our Authors</title>
-  <meta name='description' content='EightLake'>
+  <title>What Are AWS EC2 Spot Instances?</title>
+  <meta name='description' content='Spot instances are a purchasing model for EC2 compute instances that use spare EC2 capacity for a fraction of the On Demand price. This can bring you fantast...'>
 
-  <link rel="canonical" href="http://localhost:4000/authors/">
+  <link rel="canonical" href="http://localhost:4000/what-are-aws-spot-instances">
   <link rel="alternate" type="application/rss+xml" title="EightLake" href="/feed.xml">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="Our Authors – EightLake">
-  <meta name="twitter:description" content="
-">
-  <meta name="twitter:image:src" content="">
+  <meta name="twitter:title" content="What Are AWS EC2 Spot Instances? – EightLake">
+  <meta name="twitter:description" content="Spot instances are a purchasing model for EC2 compute instances that use spare EC2 capacity for a fraction of the On Demand price. This can bring you fantastic billing discounts, as you can save up to 90% compared to the On Demand model, depending on the conditions of your spot purchase.">
+  <meta name="twitter:image:src" content="http://localhost:4000/images/spot-instances.jpg">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:title" content="Our Authors – EightLake">
-  <meta property="og:description" content="
-">
-  <meta property="og:image" content="">
+  <meta property="og:title" content="What Are AWS EC2 Spot Instances? – EightLake">
+  <meta property="og:description" content="Spot instances are a purchasing model for EC2 compute instances that use spare EC2 capacity for a fraction of the On Demand price. This can bring you fantastic billing discounts, as you can save up to 90% compared to the On Demand model, depending on the conditions of your spot purchase.">
+  <meta property="og:image" content="http://localhost:4000/images/spot-instances.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -225,35 +223,565 @@
   
     <!-- begin content -->
     <main class="content" aria-label="Content">
-      <!-- begin authors -->
-<section class="authors">
+      
+<div class="post-head">
+  <div class="container">
+    <div class="row">
 
-  <div class="authors__head">
-    <h1 class="authors__title">Our Authors</h1>
-  </div>
+      <div class="col col-6 col-d-12">
+        <div class="post__info">
 
-  <div class="authors__inner animate">
-    <div class="container">
-      <div class="row">
-        
-        
-        <div class="col col-4 col-d-6 col-t-12">
-          <div class="authors__info">
-            <a class="authors__image" href="/admin"><img class="lazy" data-src="/favicon.ico" alt="Brian Regan"></a>
-            <h2 class="authors__name"><a class="authors__link" href="/admin">Brian Regan</a></h2>
+          
+          <div class="post__tags">
             
-              <div class="authors__posts__count">5 Posts</div>
+            <a href="/tags/?tag=cloud" class="post__tag">Cloud</a>
             
-            <p class="authors__description">Expert in public cloud finance, SaaS operations, and startup finance.</p>
           </div>
+          
+
+          <h1 class="post__title">What Are AWS EC2 Spot Instances?</h1>
+
+          
+          <p class="post__description">Spot instances are a purchasing model for EC2 compute instances that use spare EC2 capacity for a fraction of the On Demand price. This can bring you fantastic billing discounts, as you can save up to 90% compared to the On Demand model, depending on the conditions of your spot purchase.</p>
+          
+
+          <div class="post__meta">
+            
+
+            
+            <a href="/admin" class="post__author__image">
+              <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+            </a>
+            
+
+            <div class="post__meta-bottom">
+              
+                <a class="post__author__name" href="/admin">Brian Regan</a>
+              
+              <time class="post__date" datetime="2023-12-03T02:00:00-07:00">03 December 2023</time>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      
+
+      
+      <div class="col col-5 push-1 col-d-12 push-d-0">
+        <div class="post-image">
+          <img class="lazy" data-src="/images/spot-instances.jpg" alt="What Are AWS EC2 Spot Instances?">
         </div>
         
+          <div class="post-image-caption">Photo for AWS Spot instances on AWS
+</div>
+        
       </div>
+      
+
+      
+
     </div>
   </div>
+</div>
 
-</section>
-<!-- end authors -->
+<!-- begin post -->
+<div class="container animate">
+
+  <article class="post">
+
+    <div class="post__content">
+      <p>Sounds great, right? So why don’t we use Spot all the time? Because, of course, there is a downside: spot instances run on <strong>unused EC2 compute capacity</strong>, and since cloud usage constantly fluctuates over time, AWS does not guarantee enough room to keep your spot workloads running. That is, your instances could get reclaimed unilaterally by AWS at any time.</p>
+
+<p>In this article, we will explore the attributes of this model, including relevant definitions, suggested use cases, a comparison with other AWS pricing models, and, finally, how to measure its benefits.</p>
+
+<h2 id="how-do-spot-instances-work"><strong>How do Spot Instances work?</strong></h2>
+
+<p>Unlike On-Demand instances, Spot instances must be allocated by generating a <strong>Spot Instance Request.</strong> There are a few recommended ways to create such a request:</p>
+
+<ul>
+  <li><strong>By creating an Auto Scaling Group</strong> with a mixed configuration of On Demand and Spot instances using the <a href="https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CreateAutoScalingGroup.html">EC2 CreateAutoScalingGroup API</a>.</li>
+  <li><strong>By creating an EC2 Fleet</strong> consisting of On-Demand and Spot Instances using the <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet.html">EC2 CreateFleet API</a>.</li>
+</ul>
+
+<p>Keep in mind that there are also other alternatives, but they are no longer supported or recommended by AWS. These are the <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html">EC2 RunInstances API</a>, the <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html">EC2 RequestSpotInstances API</a>, and the <a href="https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html">EC2 RequestSpotFleet API</a>. The first two API calls are no longer being maintained, and AWS does not recommend Spot Fleets, as you are not allowed to mix instance types in a single request. Also, notice that Spot Fleets are currently presented as a legacy option in the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet.html">AWS documentation</a>.</p>
+
+<p>Each <strong>Spot Instance Request</strong> consists of the following:</p>
+
+<ul>
+  <li>The launch specification, including the desired EC2 instance type and Availability Zone, among other instance details.</li>
+  <li>The desired number of instances.</li>
+  <li>Your request price (either the spot price or the maximum you define).</li>
+  <li>The request type (either one-time or persistent).</li>
+  <li>A time range during which the request will be valid (for persistent requests).</li>
+</ul>
+
+<p>Whenever a request is created, Amazon EC2 looks for available spare capacity. If such exists, it launches your instance, fulfilling your request. If not, it will wait until it can be fulfilled or until you cancel the request.</p>
+
+<p>The launched spot instances will run until:</p>
+
+<ul>
+  <li>You stop or terminate them yourself.</li>
+  <li>Demand for spot instances increases, and your price no longer matches the spot price.</li>
+  <li>AWS needs the capacity back (supply decrease)</li>
+</ul>
+
+<p>If AWS needs to reclaim the instance, a <strong>Spot Instance Interruption</strong> event occurs. This happens two minutes before the actual deallocation, allowing you to react and manage the impending instance loss. Be careful, though, as AWS claims this is based on a best-effort basis, meaning that interruptions might happen before the actual notice is made available.</p>
+
+<p>Interruption notices can be detected either as Amazon Eventbridge events or by querying an instance metadata endpoint. The Eventbridge event name is <strong>EC2 Spot Instance Interruption Warning</strong> and the source is <strong>aws.ec2</strong>. The instance metadata endpoint you must query is called <strong>instance-action</strong> and gives you the approximate time in which your instance will be terminated, stopped, or hibernated. If no notice exists yet, you will get an HTTP 404 error. You can find more details about these options in the <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-instance-termination-notices.html">AWS documentation</a>.</p>
+
+<p>You can also use CloudTrail to find instance interruption events. They appear in the Event History with the name <strong>BidEvictedEvent</strong>.</p>
+
+<p>!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c814e9afc299cac81fdf8d_event-history.png</p>
+
+<p>CloudTrail Event history listing interruption events</p>
+
+<p>If you created a <strong>persistent request,</strong> Amazon EC2 could automatically resubmit a new spot instance request. If this was a <strong>one-time</strong> <strong>request</strong>, the instance is taken down after two minutes, and AWS takes no further action.</p>
+
+<p>Another helpful tool to proactively react to instance interruption is the <strong>EC2 instance rebalance recommendation</strong>. This event occurs whenever one of your Spot Instances is at risk of getting interrupted, so you can take preventive measures before the regular two minutes warning. By leveraging the <a href="https://aws.amazon.com/eventbridge/">Amazon Eventbridge</a> notification mentioned before, you can trigger automatic actions based on real-time notifications and handle the situation according to your needs. On the other hand, service Integrations like AWS Auto Scaling or EC2 fleets allow for automatic capacity rebalancing.</p>
+
+<p>Spot instances are also <strong>integrated with other AWS services</strong>, such as Amazon EMR (Elastic Map Reduce), Amazon ECS (Elastic Container Service), or Amazon SageMaker. We will review some example use cases below.</p>
+
+<h2 id="spot-instance-market"><strong>Spot Instance Market</strong></h2>
+
+<p>AWS spare capacity is grouped in various <strong>Spot Capacity Pools</strong>, each representing unused capacity for a unique EC2 Instance Type and Availability Zone tuple. Each pool has its <strong>spot price</strong>, i.e., the hourly price set by AWS and periodically adjusted based on the spot instance’s supply and demand.</p>
+
+<p>The following table lists some example spot prices for a specific capacity pool: the C5 instance type in the us-east-1 availability zone.</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>C5 (Linux)</th>
+      <th>On-Demand Price</th>
+      <th>Spot Price (us-east-1a)</th>
+      <th>Spot Price (us-east-1b)</th>
+      <th>Spot Price (us-east-1c)</th>
+      <th>Spot Price (us-east-1d)</th>
+      <th>Spot Price (us-east-1f)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>large</td>
+      <td>$0.085</td>
+      <td>$0.063</td>
+      <td>$0.057</td>
+      <td>$0.054</td>
+      <td>$0.058</td>
+      <td>$0.071</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>—</td>
+      <td>25.65%</td>
+      <td>33.06%</td>
+      <td>36.35%</td>
+      <td>31.76%</td>
+      <td>16.71%</td>
+    </tr>
+    <tr>
+      <td>xlarge</td>
+      <td>$0.170</td>
+      <td>$0.135</td>
+      <td>$0.134</td>
+      <td>$0.098</td>
+      <td>$0.132</td>
+      <td>$0.127</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>—</td>
+      <td>20.76%</td>
+      <td>20.94%</td>
+      <td>42.29%</td>
+      <td>22.35%</td>
+      <td>25.47%</td>
+    </tr>
+    <tr>
+      <td>2xlarge</td>
+      <td>$0.340</td>
+      <td>$0.218</td>
+      <td>$0.233</td>
+      <td>$0.205</td>
+      <td>$0.230</td>
+      <td>$0.244</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>—</td>
+      <td>35.76%</td>
+      <td>31.41%</td>
+      <td>39.82%</td>
+      <td>32.50%</td>
+      <td>28.38%</td>
+    </tr>
+    <tr>
+      <td>4xlarge</td>
+      <td>$0.680</td>
+      <td>$0.417</td>
+      <td>$0.259</td>
+      <td>$0.259</td>
+      <td>$0.259</td>
+      <td>$0.271</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>—</td>
+      <td>38.71%</td>
+      <td>61.90%</td>
+      <td>61.90%</td>
+      <td>61.90%</td>
+      <td>60.15%</td>
+    </tr>
+    <tr>
+      <td>24xlarge</td>
+      <td>$4.080</td>
+      <td>$2.478</td>
+      <td>$2.902</td>
+      <td>$1.555</td>
+      <td>$1.555</td>
+      <td>$1.555</td>
+    </tr>
+    <tr>
+      <td> </td>
+      <td>—</td>
+      <td>39.27%</td>
+      <td>28.88%</td>
+      <td>61.90%</td>
+      <td>61.90%</td>
+      <td>61.90%</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>These prices were taken from the Spot Instance pricing history section in the AWS Console, specifically the EC2 Dashboard. You can also generate comparison graphs and filter using your desired criteria.</p>
+
+<p>!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c81570e568d4e7f6b5ca2b_spot-instance-pricing-history.png</p>
+
+<p>Comparison graph generated for the C3 family in the Spot Instance pricing history section</p>
+
+<p>Notice that choosing different Availability Zones can heavily impact the discount you get using spot instances. Also, consider that these prices are referential, as they constantly change.</p>
+
+<p>For a list of up-to-date spot capacity pool prices, you can check the Amazon EC2 Spot Instances Pricing page, which updates every five minutes. You can use the <a href="https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/describe-spot-price-history.html">AWS EC2 CLI</a> or the Spot Requests/Pricing History section in the Amazon EC2 Console for a historical price list.</p>
+
+<h2 id="what-about-otherpurchasing-options"><strong>What about other purchasing options?</strong></h2>
+
+<p>Besides On-Demand and Spot Instances, other EC2 purchasing options also offer great discounts: Reserved Instances and Savings Plans. We’ve discussed both models in a previous blog post: <a href="https://getstrake.com/blog/a-complete-guide-to-aws-reservations">A Complete Guide to AWS Reservations</a>.</p>
+
+<p>They are volume discount options, where you commit to pay for a certain amount of compute instances/dollars for one to three years. It is important to note that both Reserved Instances and Savings Plans only apply to On-Demand usage, not Spot Instances.</p>
+
+<p>Although they don’t apply to Spot Instances, they work together well, allowing considerable savings in your computing totals. Say, for example, that you keep an EC2 fleet of 180 EC2 instances simultaneously running per month. Across these instances, only 25% can be hosted in Spot Instances due to their flexibility and capacity to afford interruptions. You can maximize your savings by purchasing a Savings Plan or Reserved Instances to cover the remaining 75% of your EC2 usage.</p>
+
+<p>Some valuable integrations between Spot Instances and Amazon EC2 Auto Scaling or EC2 Fleet make combining these different purchasing models easy.</p>
+
+<p>If mixing them makes it difficult to analyze and manage your costs, you can head to our <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#spot">Developer’s Guide to AWS Costs for EC2</a>, an invaluable resource to learn the difference between each model by analyzing your spending and selecting discounts individually.</p>
+
+<h2 id="are-my-workloads-appropriate-for-spot"><strong>Are my workloads appropriate for Spot?</strong></h2>
+
+<p>Now that you understand the inner workings of Spot Instances, a key question arises: how do I know if my use case is good enough for spot instances? As with most things in this field of work, it depends! However, we can mention two workload attributes that make for good spot Instances candidates: <strong>fault tolerance and flexibility</strong>.</p>
+
+<h3 id="fault-tolerance"><strong>Fault tolerance</strong></h3>
+
+<p>Your spot instance instances can get interrupted. There’s no way around it. Even though AWS reports the average interruption frequency to be less than 5%, this depends on the instance type you choose. You can visit the <a href="https://aws.amazon.com/ec2/spot/instance-advisor/">Spot Instance Advisor</a> to get specific frequencies.</p>
+
+<p>!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c8159eda8462ac1fd7ada4_spot-instance-advisor.png</p>
+
+<p>Example view from the Spot Instance advisor</p>
+
+<p>This means that your spot workloads <strong>must be able to support interruptions</strong>. For example, keeping your entire production workload in spot instances is probably not the best idea. An unexpected interruption could take down essential parts of your capacity and affect your customers.</p>
+
+<p>However, there is room for spot purchases in your production workloads if you use them to complement a steady On-Demand or reserved capacity. We will review this scenario shortly.</p>
+
+<h3 id="flexibility"><strong>Flexibility</strong></h3>
+
+<p>The more Spot Capacity Pools your requests cover, the more your chances of fulfilling it. That is, flexible workloads regarding acceptable EC2 Instance Types and Availability Zones will get better results using the spot model. Suppose your use case prevents you from using a variety of EC2 instances. In that case, your requests will cover fewer spot capacity pools, which means fewer discount opportunities and recovery alternatives, should Amazon EC2 decide to claim your instances.</p>
+
+<p>In this respect, AWS recommends selecting <strong>no less than 10 EC2 Instance types</strong> for increased coverage. Also, make sure to cover all Availability Zones inside your region.</p>
+
+<h2 id="recommended-spot-instance-use-cases"><strong>Recommended Spot Instance Use Cases</strong></h2>
+
+<p>Based on these attributes, here are some excellent use cases for spot instances leveraging several AWS service integrations:</p>
+
+<h3 id="web-applications-amazon-ec2-auto-scaling-group"><strong>Web Applications (Amazon EC2 Auto Scaling Group)</strong></h3>
+
+<p>You can configure an Amazon EC2 Auto Scaling Group with a mixed instances group policy. You would use On-Demand instances to support your baseline production traffic and a combination of additional On-Demand and Spot Instances to scale out and cover unexpected usage peaks for a fraction of the cost. Under such a scenario, an interruption would only impact your additional instances, allowing you to avoid disrupting your service while gaining the discounts the spot market provides.</p>
+
+<p>This scenario can be enabled during the creation of the Auto Scaling Group. In step 2: Choose instance launch options. You can configure the following:</p>
+
+<h3 id="network-settings"><strong>Network settings</strong></h3>
+
+<p><strong>‍</strong>In this case, follow the flexibility recommended practice and choose as many availability zones as you deem appropriate.</p>
+
+<p>!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c858a84d77e154670dcb1e_network-settings.png</p>
+
+<p>Diversify Availability Zones for your Auto Scaling Group</p>
+
+<h3 id="instance-type-requirements"><strong>Instance type requirements</strong></h3>
+
+<p><strong>‍</strong>Here it’s also recommended to be flexible and choose different EC2 Instance types based on your needs.</p>
+
+<p>!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c858d21cf9e6192ed2232c_instance-type-requirements.png</p>
+
+<p>Leverage instance type flexibility for your Auto Scaling Group</p>
+
+<h3 id="instance-purchase-options"><strong>Instance purchase options</strong></h3>
+
+<p><strong>‍</strong>This is where you set the On Demand and Spot instances distribution for your Auto Scaling Group. You can also define a minimum number of On-Demand instances as base capacity.</p>
+
+<p>!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c858f6d30337f00ca476b4_instance-purchase-options.png</p>
+
+<p>Select the best On-Demand/Spot ratio for your use case</p>
+
+<h3 id="allocation-strategies"><strong>Allocation strategies</strong></h3>
+
+<p><strong>‍</strong>When selecting spot instances in your mix, you can choose different approaches to determine where they will land. The recommended method is Price capacity optimized, considering both price and availability within your instance pools. You can also choose to utilize a capacity or a price oriented strategy. You can also enable Capacity Rebalance to take proactive actions before AWS claims back your instances.</p>
+
+<p>!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c85917215cec261972c98c_allocation-strategies.png</p>
+
+<p>Price capacity optimized is the recommended strategy for placing your spot instances</p>
+
+<p>This same pattern can be applied to your Continuous Integration/Continuous Deployment solutions and lower environments, such as testing or development, where an interruption’s impact is more easily tolerated.</p>
+
+<h3 id="big-data-and-analytics-amazon-emr"><strong>Big Data and Analytics (Amazon EMR)</strong></h3>
+
+<p>Cost can quickly get out of hand when dealing with Big Data solutions. However, this kind of workload, implying hyper-scale parallel execution of data analysis, usually supports interruptions and restarts. This is why Spot Instances integration with services like Amazon Elastic Map Reduce can give you steep savings.</p>
+
+<p>You can select Spot purchases for core and task instance fleets during cluster creation. Similarly to the Auto Scaling Group integration, you can choose ratios between On-Demand and Spot, allocation strategies, and even specific behaviors whenever no spot instances are available.</p>
+
+<p>!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c815f626bb53b2ce35462b_cluster-scaling-and-provisioning.png</p>
+
+<p>The same recommendations for flexibility apply to this use case: choose as many Availability Zones and instance types as possible.</p>
+
+<h3 id="containerized-workloads-amazon-ecseks"><strong>Containerized workloads (Amazon ECS/EKS)</strong></h3>
+
+<p>Container workloads are almost always stateless and fault tolerant, a perfect match for Spot Instance purchase. You can use them across all container solutions in AWS, be it Amazon ECS or Kubernetes in EKS.</p>
+
+<p>In your Kubernetes cluster, for example, you can create specific node groups using managed spot instances to host less critical applications, CI/CD workers, or other support components of your architecture.</p>
+
+<h3 id="machine-learning-workloads-amazon-sagemaker"><strong>Machine Learning workloads (Amazon SageMaker)</strong></h3>
+
+<p>You can also leverage the vast savings that Spot Instances provides thanks to its integration with Amazon SageMaker. Thus, you can train machine learning models using considerable computing power while paying less than the On-Demand alternative. This service’s <strong>Managed Spot Training</strong> feature allows you to allocate specific training jobs in spot capacity pools, also defining a stopping condition, should no available instances exist.</p>
+
+<h2 id="accounting-for-spot-savings"><strong>Accounting for Spot savings</strong></h2>
+
+<p>The AWS Cost and Usage Report is an excellent way to review your Spot Instance costs and savings. Feel free to look at our <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#spot">Developer’s Guide to AWS Costs for EC2</a> for a comprehensive example of how to query this resource for a good understanding of your spot usage costs.</p>
+
+<p>You can also access a <strong>Savings Summary</strong> by visiting the AWS EC2 Console inside the Spot Requests section of the dashboard. In there, you will find helpful details such as:</p>
+
+<ul>
+  <li>Total number of spot instances</li>
+  <li>Aggregated CPU/Memory hours and average costs</li>
+  <li>Aggregated spot costs, including savings compared to on-demand</li>
+  <li>A detailed list with this specific information for each spot instance</li>
+</ul>
+
+<p>Understanding how these charges and discounts operate is essential to help you apply successful cost management strategies while integrating On-Demand, Spot, Reserved Instances, and Savings Plans.</p>
+
+<h2 id="key-takeaways"><strong>Key Takeaways</strong></h2>
+
+<p>Spot Instances are a purchasing model for Amazon EC2 compute instances that offer considerable cost savings compared to On-Demand instances. However, there is a trade-off: since Spot Instances run on unused EC2 capacity, AWS does not guarantee the availability of this capacity at all times. Therefore, your spot instances can be reclaimed by AWS if there is a higher demand.</p>
+
+<p>Although these interruptions don’t happen frequently, and AWS provides several options to handle them proactively, fault tolerance is essential for any Spot Instances candidate. It is also a best practice to keep your choices flexible regarding EC2 Instance types and Availability Zones to minimize the probability of interruptions.</p>
+
+<p>Once you decide to make a Spot purchase, several AWS service integrations will simplify your management. From this point on, it’s essential to monitor the fluctuation of Spot prices, leverage other purchasing options, and analyze the costs and savings you get. This will help you implement efficient strategies for optimal cost management.</p>
+
+    </div>
+
+    <div class="post__share">
+      <ul class="share__list list-reset">
+        <li class="share__item">
+          <a class="share__link share__twitter"
+            href="https://twitter.com/intent/tweet?text=What%20Are%20AWS%20EC2%20Spot%20Instances?&url=http://localhost:4000/what-are-aws-spot-instances"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Twitter" rel="nofollow"><i class="ion ion-logo-twitter"></i></a>
+        </li>
+        <li class="share__item">
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/what-are-aws-spot-instances"
+            onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
+            title="Share on Facebook" rel="nofollow"><i class="ion ion-logo-facebook"></i></a>
+        </li>
+        <li class="share__item">
+          <a class="share__link share__pinterest" href="http://pinterest.com/pin/create/button/?url=http://localhost:4000/what-are-aws-spot-instances&amp;media=http://localhost:4000/images/spot-instances.jpg&amp;description=What%20Are%20AWS%20EC2%20Spot%20Instances?"
+          onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Pinterest"
+          rel="nofollow"><i class="ion ion-logo-pinterest"></i></a>
+        </li>
+      </ul>
+    </div>
+
+    
+  </article>
+</div>
+<!-- end post -->
+
+<div class="container">
+  <div class="post__navigation animate">
+    
+    <div class="post__prev">
+      <a href="/aws-pricing-formula-builder" class="prev__image">
+        <img class="lazy" data-src="/images/formula-builder.jpg" alt="What Are AWS EC2 Spot Instances?">
+      </a>
+      <div class="prev__box">
+        <span class="post__nav post__nav__prev">Older post</span>
+        <h2 class="post__nav__title"><a href="/aws-pricing-formula-builder">Formula Building and Compare Functionality for AWS Pricing</a></h2>
+        <p class="post__nav__excerpt">
+          The AWS Pricing add-on for Google Sheets is a phenomenal tool for efficiently analyzing, forecasting, and optimizing your AWS costs. Its intuitive interface seamlessly integrates current AWS pricing information into your spreadsheets, allowing you to stay up-to-date with the latest cloud cost values, and simplifying cost management for multiple members of your organization.
+        </p>
+      </div>
+    </div>
+    
+
+    
+  </div>
+</div>
+
+
+
+
+
+
+
+
+<!-- begin related posts -->
+<div class="container">
+  <section class="related-posts is-related animate">
+    <div class="row">
+      <div class="col col-12">
+        <div class="container__inner">
+          <div class="section__info">
+            <div class="section__head__small">
+              <h2 class="section__title">You may also like</h2>
+                
+                
+                  
+                    <a href="/tags/?tag=cloud" class="section__link related-tag"><div>See all <span>Cloud</span></div> <i class="ion ion-ios-arrow-round-forward"></i></a>
+                  
+                
+              
+              </a>
+            </div>
+          </div>
+          <div class="row">
+
+          
+            
+            
+
+            
+
+            
+            
+            
+            
+
+            
+
+            
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/aws-pricing-formula-builder">
+                    <img class="lazy" data-src="/images/formula-builder.jpg" alt="Formula Building and Compare Functionality for AWS Pricing">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/aws-pricing-formula-builder">Formula Building and Compare Functionality for AWS Pricing</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
+            
+            
+            
+
+            
+
+            
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/reserved-instances-or-savings-plans">
+                    <img class="lazy" data-src="/images/ri-sp.jpg" alt="Reserved Instances or Savings Plans">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/reserved-instances-or-savings-plans">Reserved Instances or Savings Plans</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
+            
+            
+            
+
+            
+
+            
+            
+            
+            
+
+            
+
+            
+            
+            
+            
+
+            
+
+            
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<!-- end related posts -->
     </main>
     <!-- end content -->
   

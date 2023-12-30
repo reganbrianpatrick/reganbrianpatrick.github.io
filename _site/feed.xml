@@ -5,9 +5,662 @@
         <description>EightLake</description>
         <link>http://localhost:4000/</link>
         <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Thu, 28 Dec 2023 20:58:17 -0700</pubDate>
-        <lastBuildDate>Thu, 28 Dec 2023 20:58:17 -0700</lastBuildDate>
+        <pubDate>Fri, 29 Dec 2023 20:30:53 -0700</pubDate>
+        <lastBuildDate>Fri, 29 Dec 2023 20:30:53 -0700</lastBuildDate>
         <generator>Jekyll v4.3.2</generator>
+        
+            <item>
+                <title></title>
+                <description>&lt;p&gt;Sounds great, right? So why don’t we use Spot all the time? Because, of course, there is a downside: spot instances run on &lt;strong&gt;unused EC2 compute capacity&lt;/strong&gt;, and since cloud usage constantly fluctuates over time, AWS does not guarantee enough room to keep your spot workloads running. That is, your instances could get reclaimed unilaterally by AWS at any time.&lt;/p&gt;
+
+&lt;p&gt;In this article, we will explore the attributes of this model, including relevant definitions, suggested use cases, a comparison with other AWS pricing models, and, finally, how to measure its benefits.&lt;/p&gt;
+
+&lt;h2 id=&quot;how-do-spot-instances-work&quot;&gt;&lt;strong&gt;How do Spot Instances work?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Unlike On-Demand instances, Spot instances must be allocated by generating a &lt;strong&gt;Spot Instance Request.&lt;/strong&gt; There are a few recommended ways to create such a request:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;By creating an Auto Scaling Group&lt;/strong&gt; with a mixed configuration of On Demand and Spot instances using the &lt;a href=&quot;https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CreateAutoScalingGroup.html&quot;&gt;EC2 CreateAutoScalingGroup API&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;By creating an EC2 Fleet&lt;/strong&gt; consisting of On-Demand and Spot Instances using the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet.html&quot;&gt;EC2 CreateFleet API&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Keep in mind that there are also other alternatives, but they are no longer supported or recommended by AWS. These are the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html&quot;&gt;EC2 RunInstances API&lt;/a&gt;, the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html&quot;&gt;EC2 RequestSpotInstances API&lt;/a&gt;, and the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html&quot;&gt;EC2 RequestSpotFleet API&lt;/a&gt;. The first two API calls are no longer being maintained, and AWS does not recommend Spot Fleets, as you are not allowed to mix instance types in a single request. Also, notice that Spot Fleets are currently presented as a legacy option in the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet.html&quot;&gt;AWS documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;Each &lt;strong&gt;Spot Instance Request&lt;/strong&gt; consists of the following:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;The launch specification, including the desired EC2 instance type and Availability Zone, among other instance details.&lt;/li&gt;
+  &lt;li&gt;The desired number of instances.&lt;/li&gt;
+  &lt;li&gt;Your request price (either the spot price or the maximum you define).&lt;/li&gt;
+  &lt;li&gt;The request type (either one-time or persistent).&lt;/li&gt;
+  &lt;li&gt;A time range during which the request will be valid (for persistent requests).&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Whenever a request is created, Amazon EC2 looks for available spare capacity. If such exists, it launches your instance, fulfilling your request. If not, it will wait until it can be fulfilled or until you cancel the request.&lt;/p&gt;
+
+&lt;p&gt;The launched spot instances will run until:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You stop or terminate them yourself.&lt;/li&gt;
+  &lt;li&gt;Demand for spot instances increases, and your price no longer matches the spot price.&lt;/li&gt;
+  &lt;li&gt;AWS needs the capacity back (supply decrease)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If AWS needs to reclaim the instance, a &lt;strong&gt;Spot Instance Interruption&lt;/strong&gt; event occurs. This happens two minutes before the actual deallocation, allowing you to react and manage the impending instance loss. Be careful, though, as AWS claims this is based on a best-effort basis, meaning that interruptions might happen before the actual notice is made available.&lt;/p&gt;
+
+&lt;p&gt;Interruption notices can be detected either as Amazon Eventbridge events or by querying an instance metadata endpoint. The Eventbridge event name is &lt;strong&gt;EC2 Spot Instance Interruption Warning&lt;/strong&gt; and the source is &lt;strong&gt;aws.ec2&lt;/strong&gt;. The instance metadata endpoint you must query is called &lt;strong&gt;instance-action&lt;/strong&gt; and gives you the approximate time in which your instance will be terminated, stopped, or hibernated. If no notice exists yet, you will get an HTTP 404 error. You can find more details about these options in the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-instance-termination-notices.html&quot;&gt;AWS documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can also use CloudTrail to find instance interruption events. They appear in the Event History with the name &lt;strong&gt;BidEvictedEvent&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c814e9afc299cac81fdf8d_event-history.png&lt;/p&gt;
+
+&lt;p&gt;CloudTrail Event history listing interruption events&lt;/p&gt;
+
+&lt;p&gt;If you created a &lt;strong&gt;persistent request,&lt;/strong&gt; Amazon EC2 could automatically resubmit a new spot instance request. If this was a &lt;strong&gt;one-time&lt;/strong&gt; &lt;strong&gt;request&lt;/strong&gt;, the instance is taken down after two minutes, and AWS takes no further action.&lt;/p&gt;
+
+&lt;p&gt;Another helpful tool to proactively react to instance interruption is the &lt;strong&gt;EC2 instance rebalance recommendation&lt;/strong&gt;. This event occurs whenever one of your Spot Instances is at risk of getting interrupted, so you can take preventive measures before the regular two minutes warning. By leveraging the &lt;a href=&quot;https://aws.amazon.com/eventbridge/&quot;&gt;Amazon Eventbridge&lt;/a&gt; notification mentioned before, you can trigger automatic actions based on real-time notifications and handle the situation according to your needs. On the other hand, service Integrations like AWS Auto Scaling or EC2 fleets allow for automatic capacity rebalancing.&lt;/p&gt;
+
+&lt;p&gt;Spot instances are also &lt;strong&gt;integrated with other AWS services&lt;/strong&gt;, such as Amazon EMR (Elastic Map Reduce), Amazon ECS (Elastic Container Service), or Amazon SageMaker. We will review some example use cases below.&lt;/p&gt;
+
+&lt;h2 id=&quot;spot-instance-market&quot;&gt;&lt;strong&gt;Spot Instance Market&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;AWS spare capacity is grouped in various &lt;strong&gt;Spot Capacity Pools&lt;/strong&gt;, each representing unused capacity for a unique EC2 Instance Type and Availability Zone tuple. Each pool has its &lt;strong&gt;spot price&lt;/strong&gt;, i.e., the hourly price set by AWS and periodically adjusted based on the spot instance’s supply and demand.&lt;/p&gt;
+
+&lt;p&gt;The following table lists some example spot prices for a specific capacity pool: the C5 instance type in the us-east-1 availability zone.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;C5 (Linux)&lt;/th&gt;
+      &lt;th&gt;On-Demand Price&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1a)&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1b)&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1c)&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1d)&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1f)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;large&lt;/td&gt;
+      &lt;td&gt;$0.085&lt;/td&gt;
+      &lt;td&gt;$0.063&lt;/td&gt;
+      &lt;td&gt;$0.057&lt;/td&gt;
+      &lt;td&gt;$0.054&lt;/td&gt;
+      &lt;td&gt;$0.058&lt;/td&gt;
+      &lt;td&gt;$0.071&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;25.65%&lt;/td&gt;
+      &lt;td&gt;33.06%&lt;/td&gt;
+      &lt;td&gt;36.35%&lt;/td&gt;
+      &lt;td&gt;31.76%&lt;/td&gt;
+      &lt;td&gt;16.71%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;xlarge&lt;/td&gt;
+      &lt;td&gt;$0.170&lt;/td&gt;
+      &lt;td&gt;$0.135&lt;/td&gt;
+      &lt;td&gt;$0.134&lt;/td&gt;
+      &lt;td&gt;$0.098&lt;/td&gt;
+      &lt;td&gt;$0.132&lt;/td&gt;
+      &lt;td&gt;$0.127&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;20.76%&lt;/td&gt;
+      &lt;td&gt;20.94%&lt;/td&gt;
+      &lt;td&gt;42.29%&lt;/td&gt;
+      &lt;td&gt;22.35%&lt;/td&gt;
+      &lt;td&gt;25.47%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2xlarge&lt;/td&gt;
+      &lt;td&gt;$0.340&lt;/td&gt;
+      &lt;td&gt;$0.218&lt;/td&gt;
+      &lt;td&gt;$0.233&lt;/td&gt;
+      &lt;td&gt;$0.205&lt;/td&gt;
+      &lt;td&gt;$0.230&lt;/td&gt;
+      &lt;td&gt;$0.244&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;35.76%&lt;/td&gt;
+      &lt;td&gt;31.41%&lt;/td&gt;
+      &lt;td&gt;39.82%&lt;/td&gt;
+      &lt;td&gt;32.50%&lt;/td&gt;
+      &lt;td&gt;28.38%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4xlarge&lt;/td&gt;
+      &lt;td&gt;$0.680&lt;/td&gt;
+      &lt;td&gt;$0.417&lt;/td&gt;
+      &lt;td&gt;$0.259&lt;/td&gt;
+      &lt;td&gt;$0.259&lt;/td&gt;
+      &lt;td&gt;$0.259&lt;/td&gt;
+      &lt;td&gt;$0.271&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;38.71%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;60.15%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;24xlarge&lt;/td&gt;
+      &lt;td&gt;$4.080&lt;/td&gt;
+      &lt;td&gt;$2.478&lt;/td&gt;
+      &lt;td&gt;$2.902&lt;/td&gt;
+      &lt;td&gt;$1.555&lt;/td&gt;
+      &lt;td&gt;$1.555&lt;/td&gt;
+      &lt;td&gt;$1.555&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;39.27%&lt;/td&gt;
+      &lt;td&gt;28.88%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;These prices were taken from the Spot Instance pricing history section in the AWS Console, specifically the EC2 Dashboard. You can also generate comparison graphs and filter using your desired criteria.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c81570e568d4e7f6b5ca2b_spot-instance-pricing-history.png&lt;/p&gt;
+
+&lt;p&gt;Comparison graph generated for the C3 family in the Spot Instance pricing history section&lt;/p&gt;
+
+&lt;p&gt;Notice that choosing different Availability Zones can heavily impact the discount you get using spot instances. Also, consider that these prices are referential, as they constantly change.&lt;/p&gt;
+
+&lt;p&gt;For a list of up-to-date spot capacity pool prices, you can check the Amazon EC2 Spot Instances Pricing page, which updates every five minutes. You can use the &lt;a href=&quot;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/describe-spot-price-history.html&quot;&gt;AWS EC2 CLI&lt;/a&gt; or the Spot Requests/Pricing History section in the Amazon EC2 Console for a historical price list.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-about-otherpurchasing-options&quot;&gt;&lt;strong&gt;What about other purchasing options?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Besides On-Demand and Spot Instances, other EC2 purchasing options also offer great discounts: Reserved Instances and Savings Plans. We’ve discussed both models in a previous blog post: &lt;a href=&quot;https://getstrake.com/blog/a-complete-guide-to-aws-reservations&quot;&gt;A Complete Guide to AWS Reservations&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;They are volume discount options, where you commit to pay for a certain amount of compute instances/dollars for one to three years. It is important to note that both Reserved Instances and Savings Plans only apply to On-Demand usage, not Spot Instances.&lt;/p&gt;
+
+&lt;p&gt;Although they don’t apply to Spot Instances, they work together well, allowing considerable savings in your computing totals. Say, for example, that you keep an EC2 fleet of 180 EC2 instances simultaneously running per month. Across these instances, only 25% can be hosted in Spot Instances due to their flexibility and capacity to afford interruptions. You can maximize your savings by purchasing a Savings Plan or Reserved Instances to cover the remaining 75% of your EC2 usage.&lt;/p&gt;
+
+&lt;p&gt;Some valuable integrations between Spot Instances and Amazon EC2 Auto Scaling or EC2 Fleet make combining these different purchasing models easy.&lt;/p&gt;
+
+&lt;p&gt;If mixing them makes it difficult to analyze and manage your costs, you can head to our &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#spot&quot;&gt;Developer’s Guide to AWS Costs for EC2&lt;/a&gt;, an invaluable resource to learn the difference between each model by analyzing your spending and selecting discounts individually.&lt;/p&gt;
+
+&lt;h2 id=&quot;are-my-workloads-appropriate-for-spot&quot;&gt;&lt;strong&gt;Are my workloads appropriate for Spot?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Now that you understand the inner workings of Spot Instances, a key question arises: how do I know if my use case is good enough for spot instances? As with most things in this field of work, it depends! However, we can mention two workload attributes that make for good spot Instances candidates: &lt;strong&gt;fault tolerance and flexibility&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;fault-tolerance&quot;&gt;&lt;strong&gt;Fault tolerance&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Your spot instance instances can get interrupted. There’s no way around it. Even though AWS reports the average interruption frequency to be less than 5%, this depends on the instance type you choose. You can visit the &lt;a href=&quot;https://aws.amazon.com/ec2/spot/instance-advisor/&quot;&gt;Spot Instance Advisor&lt;/a&gt; to get specific frequencies.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c8159eda8462ac1fd7ada4_spot-instance-advisor.png&lt;/p&gt;
+
+&lt;p&gt;Example view from the Spot Instance advisor&lt;/p&gt;
+
+&lt;p&gt;This means that your spot workloads &lt;strong&gt;must be able to support interruptions&lt;/strong&gt;. For example, keeping your entire production workload in spot instances is probably not the best idea. An unexpected interruption could take down essential parts of your capacity and affect your customers.&lt;/p&gt;
+
+&lt;p&gt;However, there is room for spot purchases in your production workloads if you use them to complement a steady On-Demand or reserved capacity. We will review this scenario shortly.&lt;/p&gt;
+
+&lt;h3 id=&quot;flexibility&quot;&gt;&lt;strong&gt;Flexibility&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;The more Spot Capacity Pools your requests cover, the more your chances of fulfilling it. That is, flexible workloads regarding acceptable EC2 Instance Types and Availability Zones will get better results using the spot model. Suppose your use case prevents you from using a variety of EC2 instances. In that case, your requests will cover fewer spot capacity pools, which means fewer discount opportunities and recovery alternatives, should Amazon EC2 decide to claim your instances.&lt;/p&gt;
+
+&lt;p&gt;In this respect, AWS recommends selecting &lt;strong&gt;no less than 10 EC2 Instance types&lt;/strong&gt; for increased coverage. Also, make sure to cover all Availability Zones inside your region.&lt;/p&gt;
+
+&lt;h2 id=&quot;recommended-spot-instance-use-cases&quot;&gt;&lt;strong&gt;Recommended Spot Instance Use Cases&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Based on these attributes, here are some excellent use cases for spot instances leveraging several AWS service integrations:&lt;/p&gt;
+
+&lt;h3 id=&quot;web-applications-amazon-ec2-auto-scaling-group&quot;&gt;&lt;strong&gt;Web Applications (Amazon EC2 Auto Scaling Group)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;You can configure an Amazon EC2 Auto Scaling Group with a mixed instances group policy. You would use On-Demand instances to support your baseline production traffic and a combination of additional On-Demand and Spot Instances to scale out and cover unexpected usage peaks for a fraction of the cost. Under such a scenario, an interruption would only impact your additional instances, allowing you to avoid disrupting your service while gaining the discounts the spot market provides.&lt;/p&gt;
+
+&lt;p&gt;This scenario can be enabled during the creation of the Auto Scaling Group. In step 2: Choose instance launch options. You can configure the following:&lt;/p&gt;
+
+&lt;h3 id=&quot;network-settings&quot;&gt;&lt;strong&gt;Network settings&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‍&lt;/strong&gt;In this case, follow the flexibility recommended practice and choose as many availability zones as you deem appropriate.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c858a84d77e154670dcb1e_network-settings.png&lt;/p&gt;
+
+&lt;p&gt;Diversify Availability Zones for your Auto Scaling Group&lt;/p&gt;
+
+&lt;h3 id=&quot;instance-type-requirements&quot;&gt;&lt;strong&gt;Instance type requirements&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‍&lt;/strong&gt;Here it’s also recommended to be flexible and choose different EC2 Instance types based on your needs.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c858d21cf9e6192ed2232c_instance-type-requirements.png&lt;/p&gt;
+
+&lt;p&gt;Leverage instance type flexibility for your Auto Scaling Group&lt;/p&gt;
+
+&lt;h3 id=&quot;instance-purchase-options&quot;&gt;&lt;strong&gt;Instance purchase options&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‍&lt;/strong&gt;This is where you set the On Demand and Spot instances distribution for your Auto Scaling Group. You can also define a minimum number of On-Demand instances as base capacity.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c858f6d30337f00ca476b4_instance-purchase-options.png&lt;/p&gt;
+
+&lt;p&gt;Select the best On-Demand/Spot ratio for your use case&lt;/p&gt;
+
+&lt;h3 id=&quot;allocation-strategies&quot;&gt;&lt;strong&gt;Allocation strategies&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‍&lt;/strong&gt;When selecting spot instances in your mix, you can choose different approaches to determine where they will land. The recommended method is Price capacity optimized, considering both price and availability within your instance pools. You can also choose to utilize a capacity or a price oriented strategy. You can also enable Capacity Rebalance to take proactive actions before AWS claims back your instances.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c85917215cec261972c98c_allocation-strategies.png&lt;/p&gt;
+
+&lt;p&gt;Price capacity optimized is the recommended strategy for placing your spot instances&lt;/p&gt;
+
+&lt;p&gt;This same pattern can be applied to your Continuous Integration/Continuous Deployment solutions and lower environments, such as testing or development, where an interruption’s impact is more easily tolerated.&lt;/p&gt;
+
+&lt;h3 id=&quot;big-data-and-analytics-amazon-emr&quot;&gt;&lt;strong&gt;Big Data and Analytics (Amazon EMR)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Cost can quickly get out of hand when dealing with Big Data solutions. However, this kind of workload, implying hyper-scale parallel execution of data analysis, usually supports interruptions and restarts. This is why Spot Instances integration with services like Amazon Elastic Map Reduce can give you steep savings.&lt;/p&gt;
+
+&lt;p&gt;You can select Spot purchases for core and task instance fleets during cluster creation. Similarly to the Auto Scaling Group integration, you can choose ratios between On-Demand and Spot, allocation strategies, and even specific behaviors whenever no spot instances are available.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c815f626bb53b2ce35462b_cluster-scaling-and-provisioning.png&lt;/p&gt;
+
+&lt;p&gt;The same recommendations for flexibility apply to this use case: choose as many Availability Zones and instance types as possible.&lt;/p&gt;
+
+&lt;h3 id=&quot;containerized-workloads-amazon-ecseks&quot;&gt;&lt;strong&gt;Containerized workloads (Amazon ECS/EKS)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Container workloads are almost always stateless and fault tolerant, a perfect match for Spot Instance purchase. You can use them across all container solutions in AWS, be it Amazon ECS or Kubernetes in EKS.&lt;/p&gt;
+
+&lt;p&gt;In your Kubernetes cluster, for example, you can create specific node groups using managed spot instances to host less critical applications, CI/CD workers, or other support components of your architecture.&lt;/p&gt;
+
+&lt;h3 id=&quot;machine-learning-workloads-amazon-sagemaker&quot;&gt;&lt;strong&gt;Machine Learning workloads (Amazon SageMaker)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;You can also leverage the vast savings that Spot Instances provides thanks to its integration with Amazon SageMaker. Thus, you can train machine learning models using considerable computing power while paying less than the On-Demand alternative. This service’s &lt;strong&gt;Managed Spot Training&lt;/strong&gt; feature allows you to allocate specific training jobs in spot capacity pools, also defining a stopping condition, should no available instances exist.&lt;/p&gt;
+
+&lt;h2 id=&quot;accounting-for-spot-savings&quot;&gt;&lt;strong&gt;Accounting for Spot savings&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;The AWS Cost and Usage Report is an excellent way to review your Spot Instance costs and savings. Feel free to look at our &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#spot&quot;&gt;Developer’s Guide to AWS Costs for EC2&lt;/a&gt; for a comprehensive example of how to query this resource for a good understanding of your spot usage costs.&lt;/p&gt;
+
+&lt;p&gt;You can also access a &lt;strong&gt;Savings Summary&lt;/strong&gt; by visiting the AWS EC2 Console inside the Spot Requests section of the dashboard. In there, you will find helpful details such as:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Total number of spot instances&lt;/li&gt;
+  &lt;li&gt;Aggregated CPU/Memory hours and average costs&lt;/li&gt;
+  &lt;li&gt;Aggregated spot costs, including savings compared to on-demand&lt;/li&gt;
+  &lt;li&gt;A detailed list with this specific information for each spot instance&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Understanding how these charges and discounts operate is essential to help you apply successful cost management strategies while integrating On-Demand, Spot, Reserved Instances, and Savings Plans.&lt;/p&gt;
+
+&lt;h2 id=&quot;key-takeaways&quot;&gt;&lt;strong&gt;Key Takeaways&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Spot Instances are a purchasing model for Amazon EC2 compute instances that offer considerable cost savings compared to On-Demand instances. However, there is a trade-off: since Spot Instances run on unused EC2 capacity, AWS does not guarantee the availability of this capacity at all times. Therefore, your spot instances can be reclaimed by AWS if there is a higher demand.&lt;/p&gt;
+
+&lt;p&gt;Although these interruptions don’t happen frequently, and AWS provides several options to handle them proactively, fault tolerance is essential for any Spot Instances candidate. It is also a best practice to keep your choices flexible regarding EC2 Instance types and Availability Zones to minimize the probability of interruptions.&lt;/p&gt;
+
+&lt;p&gt;Once you decide to make a Spot purchase, several AWS service integrations will simplify your management. From this point on, it’s essential to monitor the fluctuation of Spot prices, leverage other purchasing options, and analyze the costs and savings you get. This will help you implement efficient strategies for optimal cost management.&lt;/p&gt;
+</description>
+                <pubDate>Sun, 03 Dec 2023 02:00:00 -0700</pubDate>
+                <link>http://localhost:4000/what-are-aws-spot-instances</link>
+                <guid isPermaLink="true">http://localhost:4000/what-are-aws-spot-instances</guid>
+                
+                <category>Cloud</category>
+                
+                
+            </item>
+        
+            <item>
+                <title></title>
+                <description>&lt;p&gt;You can use this information to compare alternative pricing models, regions, and volume reservation opportunities, including Reserved Instances in its many flavors. Best of all, since it uses standard Google Spreadsheets, collaboration between teams comes right out of the box!&lt;/p&gt;
+
+&lt;p&gt;If you’d like to get more information about this tool, visit our &lt;a href=&quot;https://getstrake.com/community/aws-pricing&quot;&gt;AWS Pricing plugin&lt;/a&gt; site.&lt;/p&gt;
+
+&lt;h2 id=&quot;the-aws-pricing-formula-builder&quot;&gt;&lt;strong&gt;The AWS Pricing Formula Builder&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;One of the most helpful features of the AWS Pricing Add-On is the AWS Pricing Formula Builder. This is a sidebar you can enable within the context of your Google spreadsheet. It allows you to parameterize the AWS pricing values you want for specific cells, automatically generating the formula you require and placing it in place.&lt;/p&gt;
+
+&lt;p&gt;Let’s illustrate this with a simple example. Imagine you want to quickly compare the hourly cost for three types of RDS instances using reserved instances. This would be a regular part of the planning process for optimizing your workloads. You would normally start with something like this:&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/6543d740422f300857b4f639_formula-building-screen-1.png&lt;/p&gt;
+
+&lt;p&gt;Usually, it would require you to go to the AWS pricing page for RDS or use the AWS Pricing calculator to fill those question mark cells. However, with the Pricing Formula builder, it’s as easy as selecting the appropriate parameters from the sidebar and inserting the automatically generated formula in your active cell.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/6543d758ca8bd25a67e719d3_formula-building-screen-2.png&lt;/p&gt;
+
+&lt;p&gt;You can also check the formula to be added in the sidebar as you play around with database engines, instance types, regions, and purchase types.  You can now complete your analysis within a few seconds.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/6543d7769d31c23b34b786fd_formula-building-screen-3.png&lt;/p&gt;
+
+&lt;h2 id=&quot;new-compare-functionality&quot;&gt;&lt;strong&gt;NEW: Compare functionality&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;We added a useful new tool to the Formula Builder: the Compare option. It allows you to compare multiple resource dimensions at once by generating a table in a new sheet.&lt;/p&gt;
+
+&lt;p&gt;We will now paint a more complex scenario. You want to compare the benefits of on-demand and reservation instances for a new RDS Aurora workload, considering the possibility of multiple regions and instance types. You would traditionally collect those individual values from the Aurora pricing page or the Pricing Calculator. Although the information is available there, it could take a while to filter and find the specifics you need.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/6543d7923a280b98e278543d_formula-building-screen-4.png&lt;/p&gt;
+
+&lt;p&gt;List of costs from the RDS Pricing page&lt;/p&gt;
+
+&lt;p&gt;And, let’s face it: most of the time you will end up playing around with values in a spreadsheet anyways. Check out how easy it is to generate a comparison table with this new plugin feature. First, go to the Compare tab in the AWS Pricing Formula Builder:&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/6543d7b4f46e00883b74d5c1_formula-building-screen-5.png&lt;/p&gt;
+
+&lt;p&gt;Once you select the service (in this case, RDS), you will be presented with the same filters as before: engines, instance types, region, purchase type, and reservation options. This time, however, you can select multiple values for each dimension:&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/6543d7cca8b262ba67a54b3f_formula-building-screen-6.png&lt;/p&gt;
+
+&lt;p&gt;In our example, we will compare Aurora MySQL from three instance types in four us-regions and consider 1- and 3-year reservations with All Upfront payments. This is what our sidebar looks like:&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/6543d7e225f7df224ddfada5_formula-building-screen-7.png&lt;/p&gt;
+
+&lt;p&gt;You are now ready to generate the comparison table with the &lt;em&gt;Insert formulas in new sheet&lt;/em&gt; button. In a matter of seconds, you get a new sheet with a complete comparison table you can modify to your heart’s content!&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/6543d805891b7218c5b3e482_formula-building-screen-8.png&lt;/p&gt;
+
+&lt;p&gt;This was just one example. You can also implement comparative cost analysis for EC2, EBS, and RDS storage.&lt;/p&gt;
+
+&lt;p&gt;!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/6543d822ee364f01aae3df80_formula-building-screen-9.png&lt;/p&gt;
+
+&lt;h2 id=&quot;learn-more&quot;&gt;&lt;strong&gt;Learn More&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Strake is committed to maintaining the AWS Pricing add-on as an open-source project and expanding it with feedback from the open-source community. Here are some ways to stay up to date and get in touch with our team:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If you want to learn more about the AWS Pricing project, you can get it free from the &lt;a href=&quot;https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903&quot;&gt;Google Workspace Marketplace.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Join the &lt;a href=&quot;https://join.slack.com/t/strake-community/shared_invite/zt-1nisfazzn-uO5O_I28Z7N6sZ6iM2H1xA&quot;&gt;Strake Community&lt;/a&gt; on Slack to get in touch with our team.&lt;/li&gt;
+&lt;/ul&gt;
+</description>
+                <pubDate>Sat, 02 Dec 2023 02:00:00 -0700</pubDate>
+                <link>http://localhost:4000/aws-pricing-formula-builder</link>
+                <guid isPermaLink="true">http://localhost:4000/aws-pricing-formula-builder</guid>
+                
+                <category>Open Source</category>
+                
+                <category>Cloud</category>
+                
+                
+            </item>
+        
+            <item>
+                <title></title>
+                <description>&lt;p&gt;Traditional IT tools for cost analysis need to be revised for the consumption-based models that govern the cloud. You are also faced with an overwhelming landscape of different service pricing models, constantly changing and adapting to new offerings and technologies.&lt;/p&gt;
+
+&lt;p&gt;Fortunately, AWS provides several tools and pricing models to simplify cost management and help you save money. It is essential to understand how these operate to avoid unpleasant surprises with your bill at the end of the month.&lt;/p&gt;
+
+&lt;p&gt;This article will compare two similar offerings: &lt;strong&gt;Reserved Instances&lt;/strong&gt; and &lt;strong&gt;Savings Plans&lt;/strong&gt;. Both are volume discount opportunities, but the mechanics of how a reservation is made and how those reservations impact your environment vary. Therefore, it’s crucial to acknowledge how these differences affect your budget and forecast operations before committing. By the end of this article, you will be able to understand them clearly and make the right decision for your business and technical needs.&lt;/p&gt;
+
+&lt;p&gt;In a previous blog post, &lt;a href=&quot;https://getstrake.com/blog/a-complete-guide-to-aws-reservations&quot;&gt;A Complete Guide to AWS Reservations&lt;/a&gt;, we discussed both options at a high level. Feel free to visit that guide and review the details of each. This time, we will review the history of both alternatives, as this will help us understand some of their differences and recommended use cases.&lt;/p&gt;
+
+&lt;h2 id=&quot;resource-based-commitment-with-ec2-reserved-instances&quot;&gt;&lt;strong&gt;Resource-based commitment with EC2 Reserved Instances&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Launched in 2009, &lt;strong&gt;EC2&lt;/strong&gt; &lt;strong&gt;Reserved Instances (RI)&lt;/strong&gt; was the first reservation tool from AWS. Here are the details for this offering:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You can make a one or three-year commitment.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Commitments are resource-based&lt;/strong&gt;, meaning the billing discount is applied to your On-Demand instances, given they match specific characteristics defined at purchase time: EC2 instance type, platform, tenancy, and scope (regional or zonal).&lt;/li&gt;
+  &lt;li&gt;Reserved Instances discount applies to On-Demand instances only.&lt;/li&gt;
+  &lt;li&gt;For zonal commitments, AWS grants you a &lt;strong&gt;capacity reservation&lt;/strong&gt;. This means it will keep the capacity you need available for that zone, minimizing the risk of &lt;em&gt;InsufficientInstanceCapacity&lt;/em&gt; errors.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Standard RIs&lt;/strong&gt; can be sold to other AWS customers in the Reserved Instance Marketplace. AWS charges a service fee of 12% of the total upfront price of each instance you sell. You can modify your commitment’s availability zone and scope (regional/zonal). You can also leverage &lt;strong&gt;Instance Size Flexibility&lt;/strong&gt; for Linux instances, transforming instance sizes within the same family and generation.&lt;/li&gt;
+  &lt;li&gt;You can also purchase &lt;strong&gt;Convertible RIs&lt;/strong&gt;, which can be exchanged with another convertible RI with different attributes (including instance family, type, platform, scope, or tenancy). There are specific rules for exchanging convertible RIs. In essence, you can only convert your reserved instances if the new instance’s attributes are of the same or higher cost. These can not be sold in the Reserved Instance Marketplace.&lt;/li&gt;
+  &lt;li&gt;You have three payment options: &lt;strong&gt;all upfront&lt;/strong&gt;, &lt;strong&gt;partial upfront&lt;/strong&gt;, and &lt;strong&gt;no upfront&lt;/strong&gt;. The higher the upfront payment, the greater the discount.&lt;/li&gt;
+  &lt;li&gt;You can gain &lt;strong&gt;discounts of up to 72%&lt;/strong&gt; depending on the payment conditions.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;This offering became a great way to reduce costs for predictable steady-cost usage of EC2 instances. The idea was quite successful, so it didn’t stop there.&lt;/p&gt;
+
+&lt;h2 id=&quot;other-reserved-instance-offerings&quot;&gt;&lt;strong&gt;Other Reserved Instance offerings&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;A year later, in 2010, the &lt;strong&gt;RDS Reserved DB Instances&lt;/strong&gt; model was launched. Applied to RDS instance costs only, not storage or I/O. They offer size flexibility for MySQL, MariaDB, PostgreSQL, Amazon Aurora, and BYOL Oracle instances. RDS Reserved Instances can not be transferred, sold, or canceled.&lt;/p&gt;
+
+&lt;p&gt;Soon other services came up with their Reserved Instance solutions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Amazon ElastiCache reserved nodes&lt;/li&gt;
+  &lt;li&gt;Amazon OpenSearch Service Reserved Instances&lt;/li&gt;
+  &lt;li&gt;Amazon Redshift reserved nodes&lt;/li&gt;
+  &lt;li&gt;Amazon DynamoDB reservations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These all share the same core features of EC2 Reserved Instances.&lt;/p&gt;
+
+&lt;h2 id=&quot;pros-and-cons-of-reserved-instances&quot;&gt;&lt;strong&gt;Pros and Cons of Reserved Instances&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;The Reserved Instances model is ideal for optimizing the cost of steady-state workloads as long as you can predict and stick to specific instance types for your projects. There are a few downsides, though.&lt;/p&gt;
+
+&lt;p&gt;These models tie your hands in terms of flexibility, which makes them a no-go for more dynamic business requirements. Also, forecasting usage to the level of detail to include instance types can be complicated. For example, say you commit to a specific EC2 Instance type for three years, only to discover several months later that your compute needs have drastically changed.&lt;/p&gt;
+
+&lt;p&gt;There is some flexibility with Instance Size Flexibility, but that is still somewhat restrictive. You can also use Convertible Reserved Instances or the Reserved Instance Marketplace, but these have associated costs, either in the form of reduced discounts or operational overhead.&lt;/p&gt;
+
+&lt;h2 id=&quot;spend-based-commitment-with-savings-plans&quot;&gt;&lt;strong&gt;Spend-based commitment with Savings Plans&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;In 2019, AWS introduced Savings Plans. This model no longer forces you to predict the usage of specific resource types. Instead, you make an &lt;strong&gt;hourly spending commitment&lt;/strong&gt;, independent of the resources you use, which provides more flexibility and simplicity.&lt;/p&gt;
+
+&lt;p&gt;Savings Plans discounts apply to On Demand instances only; there’s no coverage for Spot usage or Reserved Instances.&lt;/p&gt;
+
+&lt;p&gt;There are currently three Savings Plans options, each supporting one or three-year term commitments.&lt;/p&gt;
+
+&lt;h3 id=&quot;compute-savings-plans&quot;&gt;&lt;strong&gt;Compute Savings Plans&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Discounts apply to Amazon EC2 costs, independent of instance type, size, tenancy, location, or operating system. Additionally, it includes AWS Fargate and AWS Lambda for container-based and serverless workloads, respectively. You can save up to 66% compared to On-Demand pricing. Savings are applied across all regions.&lt;/p&gt;
+
+&lt;h3 id=&quot;ec2-instance-savings-plans&quot;&gt;&lt;strong&gt;EC2 Instance Savings Plans&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Discounts apply to a specific instance family and region for up to 72% savings compared to On-Demand pricing. As you might have noticed, this makes it equivalent to the EC2 Reserved Instances solution, and the achievable discounts are almost identical. However, the operational overhead of the Savings Plans model is considerably lower.&lt;/p&gt;
+
+&lt;h3 id=&quot;amazon-sagemaker-savings-plans&quot;&gt;&lt;strong&gt;Amazon SageMaker Savings Plans&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Discounts apply to any ML instance type, size, and region. You can save up to 64% compared to On-Demand pricing.&lt;/p&gt;
+
+&lt;h2 id=&quot;pros-and-cons-of-savings-plans&quot;&gt;&lt;strong&gt;Pros and Cons of Savings Plans&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;As with Reserved Instances, Savings Plans models are a practical cost optimization solution for the predictable usage of cloud resources. Furthermore, their simplicity dramatically improves &lt;strong&gt;operational efficiency&lt;/strong&gt;, as you no longer need to make specific predictions about your infrastructure, and your discounts are automatically applied to all covered services.&lt;/p&gt;
+
+&lt;p&gt;Being so flexible as well, they simplify the &lt;strong&gt;modernization of your infrastructure.&lt;/strong&gt; Since you are no longer committing to specific resource types, you can easily migrate to new AWS instance offerings in the future, even to container or serverless-based workloads in AWS Fargate or AWS Lambda.&lt;/p&gt;
+
+&lt;p&gt;Unlike Reserved Instances, Savings Plans do not cover AWS services for database implementations, such as ElastiCache, RDS, OpenSearch, Redshift, or DynamoDB.&lt;/p&gt;
+
+&lt;p&gt;Another interesting consideration is that Savings Plans can not be canceled once purchased unless you create a support ticket. And even then, you are not guaranteed to get a refund. On the other hand, Standard Reserved Instances can at least be sold in the Reserved Instance Marketplace if you no longer need them, although you will most likely have to sell them at a lower price than at the time of purchase.&lt;/p&gt;
+
+&lt;h2 id=&quot;which-one-is-right-for-you&quot;&gt;&lt;strong&gt;Which one is right for you?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Let’s summarize the differences between these two products in the following table:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Criteria&lt;/th&gt;
+      &lt;th&gt;Savings Plans&lt;/th&gt;
+      &lt;th&gt;Reserved Instances&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Commitment type&lt;/td&gt;
+      &lt;td&gt;Hourly spend based&lt;/td&gt;
+      &lt;td&gt;Resource-based&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Level of Discount&lt;/td&gt;
+      &lt;td&gt;Up to 72%&lt;/td&gt;
+      &lt;td&gt;Up to 72%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Payment options&lt;/td&gt;
+      &lt;td&gt;One- or three-year commitments: Full, Partial to No Upfront payment&lt;/td&gt;
+      &lt;td&gt;One- or three-year commitments: Full, Partial to No Upfront payment&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Location coverage&lt;/td&gt;
+      &lt;td&gt;Applies to all regions&lt;/td&gt;
+      &lt;td&gt;Regional/zonal&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Operational efficiency&lt;/td&gt;
+      &lt;td&gt;Built-in simplicity&lt;/td&gt;
+      &lt;td&gt;Operational overhead of selecting and converting specific instance types&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Flexibility&lt;/td&gt;
+      &lt;td&gt;Since it’s based on spending instead of resource types, supports resource modernization by default.&lt;/td&gt;
+      &lt;td&gt;Flexible through Convertible RIs, at the expense of discount percentage.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Service Coverage&lt;/td&gt;
+      &lt;td&gt;Amazon EC2, AWS Lambda, AWS Fargate, Amazon SageMaker&lt;/td&gt;
+      &lt;td&gt;Amazon EC2, Amazon RDS, Amazon ElastiCache, Amazon OpenSearch, Amazon Redshift, and Amazon DynamoDB&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Opt-out&lt;/td&gt;
+      &lt;td&gt;Cannot be canceled&lt;/td&gt;
+      &lt;td&gt;EC2 Standard RIs can be sold in the marketplace, by paying a 12% fee&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Considering this information, you can better evaluate your cost optimization options.&lt;/p&gt;
+
+&lt;h3 id=&quot;first-steps&quot;&gt;&lt;strong&gt;First steps&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;First and foremost, consider your technological and business needs. You will probably consume different AWS services, so it’s good to evaluate your compute and non-compute resources separately.&lt;/p&gt;
+
+&lt;p&gt;Also, make sure to have right-sized your instances and auto-scaling groups. If you compare your current expenses as they are, you might be reserving more capacity than you need.&lt;/p&gt;
+
+&lt;h3 id=&quot;savings-plans-use-cases&quot;&gt;&lt;strong&gt;Savings Plans Use Cases&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;For steady-state computing workloads, it’s better to go with Savings Plans. You can benefit from similar discounts, plus the simplicity and flexibility this product provides. This can be true for:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Amazon EC2-based deployments&lt;/li&gt;
+  &lt;li&gt;Serverless solutions using AWS Lambda&lt;/li&gt;
+  &lt;li&gt;Containerized solutions using AWS Fargate&lt;/li&gt;
+  &lt;li&gt;Machine learning solutions using Amazon SageMaker&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In particular, we can compare discount percentages for computing solutions. In the following table, we take a us-east-1 c5.xlarge Linux instance as an example. We make the following assumptions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A fixed on-demand hourly rate of USD$0.17 over the three years.&lt;/li&gt;
+  &lt;li&gt;All Upfront payments for the reservation scenarios.&lt;/li&gt;
+  &lt;li&gt;100% utilization for the On Demand instance over the three years.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;1-year cost $USD&lt;/th&gt;
+      &lt;th&gt;1-year savings %&lt;/th&gt;
+      &lt;th&gt;3-year cost $USD&lt;/th&gt;
+      &lt;th&gt;3-year savings %&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;On Demand&lt;/td&gt;
+      &lt;td&gt;$1,489.20&lt;/td&gt;
+      &lt;td&gt;–&lt;/td&gt;
+      &lt;td&gt;$4,467.60&lt;/td&gt;
+      &lt;td&gt;–&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Standard Reserved Instance&lt;/td&gt;
+      &lt;td&gt;$876.00&lt;/td&gt;
+      &lt;td&gt;41%&lt;/td&gt;
+      &lt;td&gt;$1,629.00&lt;/td&gt;
+      &lt;td&gt;64%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;EC2 Instance Savings Plans&lt;/td&gt;
+      &lt;td&gt;$876.00&lt;/td&gt;
+      &lt;td&gt;41%&lt;/td&gt;
+      &lt;td&gt;$1,629.36&lt;/td&gt;
+      &lt;td&gt;64%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Convertible Reserved Instance&lt;/td&gt;
+      &lt;td&gt;$1,007.00&lt;/td&gt;
+      &lt;td&gt;32%&lt;/td&gt;
+      &lt;td&gt;$1,957.00&lt;/td&gt;
+      &lt;td&gt;56%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Compute Savings Plans&lt;/td&gt;
+      &lt;td&gt;$1,007.40&lt;/td&gt;
+      &lt;td&gt;32%&lt;/td&gt;
+      &lt;td&gt;$1,944.72&lt;/td&gt;
+      &lt;td&gt;56%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;As you can see, both Standard Reserved Instances and EC2 Instance Savings Plans provide nearly the same discount percentage. Similarly, the more flexible options like Convertible Reserved Instances and Compute Savings Plans offer fewer savings, being almost identical as well.&lt;/p&gt;
+
+&lt;h3 id=&quot;reserved-instances-use-cases&quot;&gt;&lt;strong&gt;Reserved Instances Use Cases&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;If you are consuming database services in AWS, then the Reserved Instances model will be your only available option. And that’s still the way to go for increased savings. This can be true for any solution built with RDS, ElastiCache, OpenSearch, Redshift, or DynamoDB.&lt;/p&gt;
+
+&lt;p&gt;Another use case for Reserved Instances is the capacity reservation feature. As discussed before, AWS attempts to guarantee the availability of your resources whenever you purchase Zonal Reserved Instances. This is useful when you need a fleet of high-end instances or if your EC2 Instances are hosted in availability zones with exhausted capacity. However, Savings Plans can also be combined with another AWS offering: the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html&quot;&gt;EC2 On-Demand Capacity Reservation&lt;/a&gt; feature. This can help you achieve the same benefits for no additional cost.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-case-for-on-demand&quot;&gt;&lt;strong&gt;The Case for On Demand&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;What if you don’t plan on using your EC2 instances all the time over the commitment period? Let’s revisit our us-east-1 c5.xlarge Linux instance example. Imagine this time that you predict the instance to be used only during working hours, so your usage percentage is now close to 25%. This means that your three years On Demand cost would be:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3-year On Demand cost = 
+Full 3-year usage cost × 0.25
+= USD$4,467.60 × 0.25
+= USD$1,116.90&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Similarly, your 1-year usage cost would be:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1-year On Demand cost =
+Full 1-year usage cost × 0.25
+= USD$1,489.20 × 0.25
+= USD$372.30&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;By comparing with the previous table, On Demand is the most cost effective solution for both of these terms.&lt;/p&gt;
+
+&lt;h3 id=&quot;breakeven-point-for-reservations&quot;&gt;&lt;strong&gt;Breakeven Point for Reservations&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Furthermore, there is a breakeven expected hourly usage after which you can safely purchase a reservation commitment. A simple way to calculate this for All upfront payments is to divide the upfront payment by the on demand hourly cost. Let’s take the 3-year Compute Savings Plan from the previous example:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Usage hours to breakeven = 
+Upfront payment / On Demand Hourly cost
+= USD$1,944.72 / USD$0.17[hour]
+= 11,440 hours&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This means that after 11,440 hours over the three years, your on demand costs will increase over the upfront payment. Therefore, you will incur extra expenses.&lt;/p&gt;
+
+&lt;p&gt;Hopefully, these scenarios help you understand how to exploit these two offerings to maximize cost reductions. You can also check comparative calculations between them in &lt;a href=&quot;https://getstrake.com/blog/a-complete-guide-to-aws-reservations&quot;&gt;A Complete Guide to AWS Reservations&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;understanding-reserved-instances-with-the-aws-pricing-plugin&quot;&gt;&lt;strong&gt;Understanding Reserved Instances with the AWS Pricing Plugin&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;You can make these or even more complex calculations using the &lt;a href=&quot;https://getstrake.com/blog/aws-pricing-add-on-for-google-sheets&quot;&gt;AWS Pricing Plugin for Google Sheets&lt;/a&gt;, a project managed by Strake and available for free from the &lt;a href=&quot;https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903&quot;&gt;Google Workspace Marketplace&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can build your own spreadsheets and get real-time AWS pricing data to compare the different reservation models. In particular, feel free to use our &lt;a href=&quot;https://docs.google.com/spreadsheets/d/1GdoZ-jNQZ0IFhQPu1RMLG0eC8cS_Q4i-3aiQdrNNBNA/edit#gid=0&quot;&gt;EC2 Pricing &amp;amp; Reservations&lt;/a&gt; template as a starting point in your analysis.&lt;/p&gt;
+
+&lt;h2 id=&quot;key-takeaways&quot;&gt;&lt;strong&gt;Key Takeaways&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;It is a complex task to manage costs in the cloud. But AWS offers reservation models such as Reserved Instances or Savings Plans to help you optimize your spending for steady-state workloads. Think of Reserved Instances to get discounts for predictable usage of AWS database services. Savings Plans will be a better choice for computing services due to their flexibility and simplicity. You can always use both offerings together to maximize your cost reductions.&lt;/p&gt;
+
+&lt;p&gt;If you don’t plan on using your EC2 instances all the time, you can calculate a breakeven point to determine whether On Demand is the best option.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://getstrake.com/community/aws-pricing&quot;&gt;AWS Pricing Plugin&lt;/a&gt; provided by Strake is a great tool to help you forecast and understand your cloud costs to make the best solution for your use case.&lt;/p&gt;
+
+&lt;p&gt;‍&lt;/p&gt;
+</description>
+                <pubDate>Fri, 01 Dec 2023 02:00:00 -0700</pubDate>
+                <link>http://localhost:4000/reserved-instances-or-savings-plans</link>
+                <guid isPermaLink="true">http://localhost:4000/reserved-instances-or-savings-plans</guid>
+                
+                <category>Cloud</category>
+                
+                
+            </item>
         
             <item>
                 <title></title>
@@ -57,114 +710,6 @@
                 <pubDate>Mon, 19 Apr 2021 06:01:35 -0600</pubDate>
                 <link>http://localhost:4000/this-is-test-4</link>
                 <guid isPermaLink="true">http://localhost:4000/this-is-test-4</guid>
-                
-                <category>travel</category>
-                
-                <category>hobby</category>
-                
-                
-            </item>
-        
-            <item>
-                <title></title>
-                <description>&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The longer I live, the more I realize that I am never wrong about anything, and that all the pains I have so humbly taken to verify my notions have only wasted my time!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
-
-&lt;p&gt;Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/19-1.jpg&quot; alt=&quot;Bikes&quot; loading=&quot;lazy&quot; /&gt;
-&lt;em&gt;Photo by &lt;a href=&quot;https://unsplash.com/photos/VhcxuEGNXo4&quot;&gt;Harley Davidson&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/&quot;&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
-
-&lt;p&gt;Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.&lt;/p&gt;
-
-&lt;p&gt;Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric “outside the box” thinking. Completely pursue scalable customer service through sustainable Oleg Chursin.&lt;/p&gt;
-</description>
-                <pubDate>Mon, 19 Apr 2021 06:01:35 -0600</pubDate>
-                <link>http://localhost:4000/this-is-test-3</link>
-                <guid isPermaLink="true">http://localhost:4000/this-is-test-3</guid>
-                
-                <category>travel</category>
-                
-                <category>hobby</category>
-                
-                
-            </item>
-        
-            <item>
-                <title></title>
-                <description>&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The longer I live, the more I realize that I am never wrong about anything, and that all the pains I have so humbly taken to verify my notions have only wasted my time!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
-
-&lt;p&gt;Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/19-1.jpg&quot; alt=&quot;Bikes&quot; loading=&quot;lazy&quot; /&gt;
-&lt;em&gt;Photo by &lt;a href=&quot;https://unsplash.com/photos/VhcxuEGNXo4&quot;&gt;Harley Davidson&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/&quot;&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
-
-&lt;p&gt;Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.&lt;/p&gt;
-
-&lt;p&gt;Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric “outside the box” thinking. Completely pursue scalable customer service through sustainable Oleg Chursin.&lt;/p&gt;
-</description>
-                <pubDate>Mon, 19 Apr 2021 06:01:35 -0600</pubDate>
-                <link>http://localhost:4000/this-is-test-2</link>
-                <guid isPermaLink="true">http://localhost:4000/this-is-test-2</guid>
-                
-                <category>travel</category>
-                
-                <category>hobby</category>
-                
-                
-            </item>
-        
-            <item>
-                <title></title>
-                <description>&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
-
-&lt;blockquote&gt;
-  &lt;p&gt;The longer I live, the more I realize that I am never wrong about anything, and that all the pains I have so humbly taken to verify my notions have only wasted my time!&lt;/p&gt;
-&lt;/blockquote&gt;
-
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
-
-&lt;p&gt;Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.&lt;/p&gt;
-
-&lt;p&gt;&lt;img src=&quot;/images/19-1.jpg&quot; alt=&quot;Bikes&quot; loading=&quot;lazy&quot; /&gt;
-&lt;em&gt;Photo by &lt;a href=&quot;https://unsplash.com/photos/VhcxuEGNXo4&quot;&gt;Harley Davidson&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/&quot;&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-
-&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
-
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
-
-&lt;p&gt;Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.&lt;/p&gt;
-
-&lt;p&gt;Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric “outside the box” thinking. Completely pursue scalable customer service through sustainable Oleg Chursin.&lt;/p&gt;
-</description>
-                <pubDate>Mon, 19 Apr 2021 06:01:35 -0600</pubDate>
-                <link>http://localhost:4000/this-is-test-1</link>
-                <guid isPermaLink="true">http://localhost:4000/this-is-test-1</guid>
                 
                 <category>travel</category>
                 
