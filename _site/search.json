@@ -1,6 +1,22 @@
 [
   
     {
+      "title"    : "What is EC2-Other?",
+      "category" : "",
+      "tags"     : "Cloud",
+      "url"      : "/what-is-ec2-other",
+      "image"    : "/images/ec2-other.jpg"
+    } ,
+  
+    {
+      "title"    : "What is AWS CloudTrail?",
+      "category" : "",
+      "tags"     : "Cloud",
+      "url"      : "/what-is-cloudtrail",
+      "image"    : "/images/cloudtrail.jpg"
+    } ,
+  
+    {
       "title"    : "What Are AWS EC2 Spot Instances?",
       "category" : "",
       "tags"     : "Cloud",
@@ -17,35 +33,19 @@
     } ,
   
     {
+      "title"    : "Cost Allocation Tagging",
+      "category" : "",
+      "tags"     : "Cloud",
+      "url"      : "/cost-allocation-tagging",
+      "image"    : "/images/cost-allocation-tagging.jpg"
+    } ,
+  
+    {
       "title"    : "Reserved Instances or Savings Plans",
       "category" : "",
       "tags"     : "Cloud",
       "url"      : "/reserved-instances-or-savings-plans",
       "image"    : "/images/ri-sp.jpg"
-    } ,
-  
-    {
-      "title"    : "AWS Update 1.1",
-      "category" : "",
-      "tags"     : "travel and hobby",
-      "url"      : "/test-is-not-a-test",
-      "image"    : "/images/20.jpg"
-    } ,
-  
-    {
-      "title"    : "The longer I live, the more beautiful life becomes",
-      "category" : "",
-      "tags"     : "travel and hobby",
-      "url"      : "/this-is-test-4",
-      "image"    : "/images/post1.jpg"
-    } ,
-  
-    {
-      "title"    : "Life is what happens when you’re busy making other plans",
-      "category" : "",
-      "tags"     : "stydy and notes",
-      "url"      : "/this-is-test-5",
-      "image"    : "/images/20.jpg"
     } 
   
 ]

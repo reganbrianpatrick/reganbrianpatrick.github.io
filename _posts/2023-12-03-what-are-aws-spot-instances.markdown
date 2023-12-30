@@ -7,7 +7,7 @@ author: admin
 image: '/images/spot-instances.jpg'
 image_caption: 'Photo for AWS Spot instances on AWS'
 tags: [Cloud]
-featured: true
+featured: false
 ---
 Sounds great, right? So why don’t we use Spot all the time? Because, of course, there is a downside: spot instances run on **unused EC2 compute capacity**, and since cloud usage constantly fluctuates over time, AWS does not guarantee enough room to keep your spot workloads running. That is, your instances could get reclaimed unilaterally by AWS at any time.
 
@@ -44,7 +44,7 @@ Interruption notices can be detected either as Amazon Eventbridge events or by q
 
 You can also use CloudTrail to find instance interruption events. They appear in the Event History with the name **BidEvictedEvent**.
 
-!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c814e9afc299cac81fdf8d_event-history.png
+![bigevicted](/images/bid-evicted.jpg)
 
 CloudTrail Event history listing interruption events
 
@@ -75,7 +75,7 @@ The following table lists some example spot prices for a specific capacity pool:
 
 These prices were taken from the Spot Instance pricing history section in the AWS Console, specifically the EC2 Dashboard. You can also generate comparison graphs and filter using your desired criteria.
 
-!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c81570e568d4e7f6b5ca2b_spot-instance-pricing-history.png
+![Spot Pricing History](/images/spot-pricing-history.jpg)
 
 Comparison graph generated for the C3 family in the Spot Instance pricing history section
 
@@ -103,7 +103,7 @@ Now that you understand the inner workings of Spot Instances, a key question ari
 
 Your spot instance instances can get interrupted. There’s no way around it. Even though AWS reports the average interruption frequency to be less than 5%, this depends on the instance type you choose. You can visit the [Spot Instance Advisor](https://aws.amazon.com/ec2/spot/instance-advisor/) to get specific frequencies.
 
-!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c8159eda8462ac1fd7ada4_spot-instance-advisor.png
+![Spot Instance Advisor](/images/spot-instance-advisor.jpg)
 
 Example view from the Spot Instance advisor
 
@@ -131,7 +131,7 @@ This scenario can be enabled during the creation of the Auto Scaling Group. In s
 
 **‍**In this case, follow the flexibility recommended practice and choose as many availability zones as you deem appropriate.
 
-!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c858a84d77e154670dcb1e_network-settings.png
+![Spot Network](/images/spot-network.jpg)
 
 Diversify Availability Zones for your Auto Scaling Group
 
@@ -139,7 +139,7 @@ Diversify Availability Zones for your Auto Scaling Group
 
 **‍**Here it’s also recommended to be flexible and choose different EC2 Instance types based on your needs.
 
-!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c858d21cf9e6192ed2232c_instance-type-requirements.png
+![Instance Type Requirements](/images/instance-type-requirements.jpg)
 
 Leverage instance type flexibility for your Auto Scaling Group
 
@@ -147,7 +147,7 @@ Leverage instance type flexibility for your Auto Scaling Group
 
 **‍**This is where you set the On Demand and Spot instances distribution for your Auto Scaling Group. You can also define a minimum number of On-Demand instances as base capacity.
 
-!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c858f6d30337f00ca476b4_instance-purchase-options.png
+![Instance Purchase Options](/images/instance-purchase-options.jpg)
 
 Select the best On-Demand/Spot ratio for your use case
 
@@ -155,7 +155,7 @@ Select the best On-Demand/Spot ratio for your use case
 
 **‍**When selecting spot instances in your mix, you can choose different approaches to determine where they will land. The recommended method is Price capacity optimized, considering both price and availability within your instance pools. You can also choose to utilize a capacity or a price oriented strategy. You can also enable Capacity Rebalance to take proactive actions before AWS claims back your instances.
 
-!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c85917215cec261972c98c_allocation-strategies.png
+![Allocation Strategies](/images/allocation-strategies.jpg)
 
 Price capacity optimized is the recommended strategy for placing your spot instances
 
@@ -167,7 +167,7 @@ Cost can quickly get out of hand when dealing with Big Data solutions. However, 
 
 You can select Spot purchases for core and task instance fleets during cluster creation. Similarly to the Auto Scaling Group integration, you can choose ratios between On-Demand and Spot, allocation strategies, and even specific behaviors whenever no spot instances are available.
 
-!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/64c815f626bb53b2ce35462b_cluster-scaling-and-provisioning.png
+![Scaling and Provisioning](/images/scaling-and-provisioning.jpg)
 
 The same recommendations for flexibility apply to this use case: choose as many Availability Zones and instance types as possible.
 
