@@ -5,206 +5,1319 @@
         <description>EightLake</description>
         <link>http://localhost:4000/</link>
         <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Thu, 28 Dec 2023 20:58:17 -0700</pubDate>
-        <lastBuildDate>Thu, 28 Dec 2023 20:58:17 -0700</lastBuildDate>
+        <pubDate>Fri, 29 Dec 2023 21:20:18 -0700</pubDate>
+        <lastBuildDate>Fri, 29 Dec 2023 21:20:18 -0700</lastBuildDate>
         <generator>Jekyll v4.3.2</generator>
         
             <item>
                 <title></title>
-                <description>&lt;h1 id=&quot;what-is-new-with-aws&quot;&gt;What is new with AWS?&lt;/h1&gt;
+                <description>&lt;p&gt;EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within ‘EC2-Other’. All the code in this blog post is included in the &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs&quot;&gt;Developer’s Guide to AWS Costs guide for EC2&lt;/a&gt;.&lt;/p&gt;
 
-&lt;h2 id=&quot;there-are-new-ec2-instances&quot;&gt;There are new EC2 Instances.&lt;/h2&gt;
+&lt;h2 id=&quot;understanding-ec2-costs&quot;&gt;&lt;strong&gt;Understanding EC2 Costs&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;New EC2 instnaces are nothing new, but these ones are CRAZY!&lt;/p&gt;
+&lt;p&gt;Before we can unpack what costs live in the ‘EC2-Other’ category, you have to understand what this category means to &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs&quot;&gt;total EC2 costs&lt;/a&gt; and how EC2 costs are calculated in various AWS reporting tools.&lt;/p&gt;
 
+&lt;p&gt;After researching this problem, I put together the table below for how different AWS reporting tools display total EC2 costs. Below the table, I summarize the different reporting methodologies and how these values relate. Please note that this is only true for on-demand EC2 usage.&lt;/p&gt;
+
+&lt;h3 id=&quot;calculating-total-ec2-costs&quot;&gt;&lt;strong&gt;Calculating Total EC2 Costs&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AWS Bill&lt;/th&gt;
+      &lt;th&gt;CUR (ServiceCode)&lt;/th&gt;
+      &lt;th&gt;AWS Cost Explorer&lt;/th&gt;
+      &lt;th&gt;CUR (ProductCode)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Elastic Compute Cloud&lt;/td&gt;
+      &lt;td&gt;AmazonEC2&lt;/td&gt;
+      &lt;td&gt;EC2-Instances&lt;/td&gt;
+      &lt;td&gt;AmazonEC2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Data Transfer (partial)&lt;/td&gt;
+      &lt;td&gt;AWSDataTransfer (partial)&lt;/td&gt;
+      &lt;td&gt;EC2-Other&lt;/td&gt;
+      &lt;td&gt;AmazonEC2&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;h3 id=&quot;aws-bill&quot;&gt;&lt;strong&gt;‍AWS Bill&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;The AWS Bill category ‘Elastic Compute Cloud’ combines EC2 instance running costs, NAT Gateway, EBS, and all EC2 costs &lt;strong&gt;except data transfer&lt;/strong&gt;. A second category in the AWS Bill called ‘Data Transfer’ combines data transfer costs for many different AWS Services. Unfortunately, EC2 Data Transfer costs cannot be isolated using only your AWS Bill.&lt;/p&gt;
+
+&lt;h3 id=&quot;aws-cost-explorer&quot;&gt;&lt;strong&gt;AWS Cost Explorer&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;When you search for ‘EC2’ under ‘Service’ in Cost Explorer, there are four options that come up:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;EC2-Instances (Elastic Compute Cloud - Compute)&lt;/li&gt;
+  &lt;li&gt;EC2-Other&lt;/li&gt;
+  &lt;li&gt;EC2-ELB (Elastic Load Balancing)&lt;/li&gt;
+  &lt;li&gt;EC2 Container Registry (ECR)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;The first two combined, EC2-Instances and EC2-Other, make up your total EC2 costs (including data transfer for EC2). The second two, EC2-ELB and EC2 Container Registry, can be ignored because they are different services altogether.&lt;/p&gt;
+
+&lt;p&gt;The EC2-Instances category isolates the hourly cost of running your EC2 instances. One of the benefits of this category is that customers can quickly identify the instance costs that can be covered with reservations. EC2-Other is a calculation that combines all other costs driven by EC2 usage: EBS, NAT Gateway, EC2’s portion of Data Transfer, and others.&lt;/p&gt;
+
+&lt;p&gt;With these two categories, EC2-Instances and EC2-Other, customers can get the total cost of running their EC2 instances. However, since this cost includes EC2’s portion of data transfer costs, this will not be the same as the AWS Bill’s cost for ‘Elastic Compute Cloud’ if there is any data transfer cost.&lt;/p&gt;
+
+&lt;h3 id=&quot;aws-cost-and-usage-report-cur&quot;&gt;&lt;strong&gt;AWS Cost and Usage Report (CUR)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;The CUR is the source of truth for all AWS billing. In the Developer’s Guide to AWS, I go into much more detail about the CUR, provide a data dictionary, and share instructions for setting up the CUR in your AWS Account.&lt;/p&gt;
+
+&lt;p&gt;For this discussion about EC2-Other costs, there are two fields that matter:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;[lineItem/ProductCode] - the value ‘AmazonEC2’ captures all costs associated with running EC2 instances (including Data Transfer).&lt;/li&gt;
+  &lt;li&gt;[product/ServiceCode] - the valued ‘AmazonEC2’ will show all EC2 costs other than Data Transfer, and ‘AWSDataTransfer’ is used for data transfer costs by any AWS Service.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;h3 id=&quot;data-sources-key-takeaways&quot;&gt;&lt;strong&gt;Data Sources Key Takeaways&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;There are three key takeaways from the different AWS data sources before we dig into the cost categories that make up EC2-Other.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;First:&lt;/strong&gt; EC2-Other is a calculated metric from Cost explorer. This metric calculates the total cost of running your EC2 instances, less the fixed hourly instance running costs.&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Second:&lt;/strong&gt; If you want to dig into costs for categories on your AWS Bill, the top cost categories on the AWS Bill align to the CUR’s [product/ServiceCode] fields:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;AWS Bill Categories&lt;/th&gt;
+      &lt;th&gt;[product/ServiceCode] Values&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Elastic Compute Cloud&lt;/td&gt;
+      &lt;td&gt;AmazonEC2&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Data Transfer&lt;/td&gt;
+      &lt;td&gt;AWSDataTransfer&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;&lt;strong&gt;Third:&lt;/strong&gt; The sum of EC2-Instances and EC2-Other from cost explorer:&lt;strong&gt;‍&lt;/strong&gt;&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;IS&lt;/strong&gt; equal to [lineItem/ProductCode] is ‘AmazonEC2’&lt;strong&gt;‍&lt;/strong&gt;&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;IS NOT&lt;/strong&gt; equal to ‘Elastic Compute Cloud’ on the AWS Bill because this field does not include EC2’s portion of Data Transfer costs.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;visibility-into-ec2-other-costs&quot;&gt;&lt;strong&gt;Visibility into EC2-Other Costs&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;In the &lt;a href=&quot;https://getstrake.com/community/developers-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;, the first service I posted a guide for was EC2. In this guide, I broke EC2 costs into three logical categories:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#existence&quot;&gt;Existence Cost&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;EC2-Instances&lt;/em&gt; in cost explorer - This identifies the cost of having an EC2 instance running regardless of the resource activity. This cost is based on an hourly rate determined by your instance type, region, and whether you’re using contractual reservations or spot instances.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#utilization&quot;&gt;Utilization Cost&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;part of&lt;/em&gt; &lt;em&gt;EC2 - Other&lt;/em&gt; in cost explorer - On top of the flat rate for having an instance running, some costs come from how an EC2 instance is utilized. These costs are driven by a usage-based metric such as $ per GB-month. The most common Utilization cost for EC2 is data transfer.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#subresource&quot;&gt;Subresource Cost&lt;/a&gt;&lt;/strong&gt; - &lt;em&gt;the second part of&lt;/em&gt; &lt;em&gt;EC2 - Other&lt;/em&gt; in cost explorer - This is incurred for resources attached to or directly interacting with your EC2 instance. An easy example of EC2 is EBS Volumes used for EC2 instance storage.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;I broke down the ‘EC2-Other’ category from Cost Explorer into Utilization and Subresource costs. Utilization focuses on how your EC2 resources are used, while Subresources isolates other resources (NAT Gateways or EBS Volumes, for example) that contribute to your total EC2 cost.&lt;/p&gt;
+
+&lt;h2 id=&quot;total-ec2-other-costs&quot;&gt;&lt;strong&gt;Total EC2-Other Costs&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;utilization-costs&quot;&gt;&lt;strong&gt;Utilization Costs&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;To isolate &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#utilization&quot;&gt;Utilization Costs&lt;/a&gt; by Operation, use the query below. This query isolates your EC2 instances using the &lt;strong&gt;[lineItem/ResourceId]&lt;/strong&gt; field and filters out types &lt;strong&gt;[lineItem/UsageType]&lt;/strong&gt; and &lt;strong&gt;[lineItem/Operation]&lt;/strong&gt; fields that indicate Existence cost.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-Utilization Costs
+--Utilization costs for EC2 by line item operation
+SELECT	[lineItem/Operation],	round(sum([lineItem/UnblendedCost]), 4) as utilization_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is &apos;AmazonEC2&apos;	and [lineItem/ResourceId] LIKE &apos;i-%&apos;	and [lineItem/UsageType] NOT LIKE     &apos;%BoxUsage%&apos;	and [lineItem/Operation] NOT LIKE &apos;RunInstances%&apos;	and [lineItem/LineItemType] is &apos;Usage&apos;
+GROUP BY	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);`
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Some of the sample values from &lt;strong&gt;[lineItem/Operation]&lt;/strong&gt; that indicate Utilization costs include:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;VPCPeering-In and VPCPeering-Out - VPC Peering connections between the VPCs allow you to route traffic using private IP Addresses. All VPC Peering connections in the same AWS Region are charged at &lt;strong&gt;$0.01/GB&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;PublicIP-In and PublicIP-Out - These track the costs of transferring data ‘in’ or ‘out’ from a public or Elastic IPv4 address. This traffic is charged at &lt;strong&gt;$0.01/GB&lt;/strong&gt; in each direction.&lt;/li&gt;
+  &lt;li&gt;InterZone-In and InterZone-Out - These are the costs associated with transferring data ‘In’ or ‘Out’ of EC2. Data transfer ‘In’ from the internet is free, but there are charges for data transfer ‘out’ to either the internet or other AWS Services. If you want to see the costs from AWS that show data transfer costs from EC2 to each region or product, those are posted on the &lt;a href=&quot;https://aws.amazon.com/ec2/pricing/on-demand/&quot;&gt;EC2 pricing page&lt;/a&gt; under Data Transfer.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If you add the &lt;strong&gt;[product/ServiceCode]&lt;/strong&gt; field to the SELECT statement of this query, you will be able to see which costs are categorized as ‘AWSDataTransfer’ and which are ‘AmazonEC2’.&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;-Subresource Costs
+--Subresource costs for EBS Volumes
+SELECT DISTINCT	[lineItem/ResourceID],	[lineItem/LineItemType],	[lineItem/Operation],	round(sum([lineItem/    UnblendedCost]), 4) as subresource_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is &apos;AmazonEC2&apos;	and [lineItem/ResourceId] LIKE &apos;vol-%&apos;
+GROUP BY	[lineItem/ResourceID],	[lineitem/lineitemtype],	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);`
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;h2 id=&quot;subresource-cost&quot;&gt;&lt;strong&gt;‍Subresource Cost&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;There are three main categories of &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#subresource&quot;&gt;Subresources&lt;/a&gt; customers should have the ability to analyze in more detail:&lt;/p&gt;
+
+&lt;h3 id=&quot;ebs-volumes&quot;&gt;&lt;strong&gt;EBS Volumes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#ebs&quot;&gt;EBS volumes&lt;/a&gt; are identified by filtering the &lt;strong&gt;[lineItem/ResourceID]&lt;/strong&gt; field for items that contain &lt;em&gt;vol-%&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;There are two main types of costs for EBS Volumes that show up in the &lt;strong&gt;[lineItem/Operation]&lt;/strong&gt; field: IO Usage: read and write costs and CreateVolume: costs for creating provisioned EBS Volumes.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-Subresource Costs
+--Subresource costs for EBS Volumes
+SELECT DISTINCT	[lineItem/ResourceID],	[lineItem/LineItemType],	[lineItem/Operation],	round(sum([lineItem/UnblendedCost]), 4) as subresource_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is &apos;AmazonEC2&apos;	and [lineItem/ResourceId] LIKE &apos;vol-%&apos;
+GROUP BY	[lineItem/ResourceID],	[lineitem/lineitemtype],	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;ebs-volume-snapshots&quot;&gt;&lt;strong&gt;‍EBS Volume Snapshots&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#snapshots&quot;&gt;EBS Volume Snapshots&lt;/a&gt; are identified by filtering the &lt;strong&gt;[lineItem/ResourceID]&lt;/strong&gt; field for items that contain &lt;em&gt;%snapshot%&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;Only one main cost category for EBS Volume Snapshots shows up in the &lt;strong&gt;[lineItem/Operation]&lt;/strong&gt; field: CreateSnapshot, which captures the cost per GB for storing snapshots.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-Subresource Costs
+--Subresource costs for EBS Volume Snapshots
+SELECT DISTINCT	[lineItem/ResourceID],	[lineItem/LineItemType],	[lineItem/Operation],	round(sum([lineItem/UnblendedCost]), 4) as subresource_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is &apos;AmazonEC2&apos;	and [lineItem/ResourceId] LIKE &apos;%snapshot%&apos;
+GROUP BY	[lineItem/ResourceID],	[lineitem/lineitemtype],	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;nat-gateways&quot;&gt;&lt;strong&gt;‍NAT Gateways&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;a href=&quot;https://strake.webflow.io/blog/aws-cost-analysis-amazon-ec2-costs#nat-gateway&quot;&gt;NAT Gateways&lt;/a&gt; are identified by filtering the &lt;strong&gt;[lineItem/ResourceID]&lt;/strong&gt; field for items that contain &lt;em&gt;%natgateway%&lt;/em&gt;.&lt;/li&gt;
+  &lt;li&gt;There are many different cost categories for NAT Gateways, but they are primarily driven by data transfer or data processing fees.&lt;/li&gt;
+  &lt;li&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;-Subresource Costs
+--Subresource costs for NAT Gateways
+SELECT DISTINCT	[lineItem/ResourceID],	[lineItem/LineItemType],	[lineItem/Operation],	round(sum([lineItem/UnblendedCost]), 4) as subresource_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is &apos;AmazonEC2&apos;	and [lineItem/ResourceId] LIKE &apos;%natgateway%&apos;
+GROUP BY	[lineItem/ResourceID],	[lineitem/lineitemtype],	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);&lt;/code&gt;&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;further-reading&quot;&gt;&lt;strong&gt;Further Reading&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Thank you for reading! If you are looking for more information on EC2 Costs, you can read the full &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs&quot;&gt;EC2 Cost Guide&lt;/a&gt; on the &lt;a href=&quot;https://getstrake.com/community/developers-guide-to-aws-costs&quot;&gt;Developer’s Guide to AWS Costs&lt;/a&gt;. If your team is working to understand your AWS costs, here are some additional resources for you:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;A &lt;a href=&quot;https://getstrake.com/blog/cost-and-usage-report-setup&quot;&gt;Cost and Usage Report Setup Guide&lt;/a&gt; including IAM Permissions&lt;/li&gt;
+  &lt;li&gt;&lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-rds-costs&quot;&gt;Relational Database Service Cost Guide&lt;/a&gt; to understand your RDS costs&lt;/li&gt;
+  &lt;li&gt;To get in touch with our team with additional questions, &lt;a href=&quot;mailto:developer-relations@getstrake.com&quot;&gt;email us&lt;/a&gt; or leave us a message on our &lt;a href=&quot;https://github.com/getstrake/developer-cost-guide/discussions&quot;&gt;GitHub Discussions page&lt;/a&gt;!&lt;/li&gt;
+&lt;/ol&gt;
 </description>
-                <pubDate>Sat, 31 Dec 2022 23:00:00 -0700</pubDate>
-                <link>http://localhost:4000/test-is-not-a-test</link>
-                <guid isPermaLink="true">http://localhost:4000/test-is-not-a-test</guid>
+                <pubDate>Wed, 06 Dec 2023 02:00:00 -0700</pubDate>
+                <link>http://localhost:4000/what-is-ec2-other</link>
+                <guid isPermaLink="true">http://localhost:4000/what-is-ec2-other</guid>
                 
-                <category>travel</category>
-                
-                <category>hobby</category>
+                <category>Cloud</category>
                 
                 
             </item>
         
             <item>
                 <title></title>
-                <description>&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+                <description>&lt;p&gt;AWS CloudTrail is a crucial governance and auditing tool for any company operating in the cloud. At its core, this service records all activity in your AWS environments in the form of &lt;strong&gt;CloudTrail Events&lt;/strong&gt;, which are specific API requests that can originate from:&lt;/p&gt;
 
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Individual users, moving around the AWS Management Console and reviewing or changing things.&lt;/li&gt;
+  &lt;li&gt;Other AWS services, as varied as EC2 instance creation due to an automatic EC2 Auto Scaling event, scheduled Fargate tasks running in an ECS cluster, or a new log stream being created in CloudWatch due to a recent Lambda function execution.&lt;/li&gt;
+  &lt;li&gt;Programmatic access using CLI and SDKs from any location in the world.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;The longer I live, the more I realize that I am never wrong about anything, and that all the pains I have so humbly taken to verify my notions have only wasted my time!&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;Tracking these events has countless benefits:&lt;/p&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;Easily &lt;strong&gt;audit your account activity&lt;/strong&gt; since it provides a centralized collection of logs you can view, search, analyze, and use for incident response.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Satisfy regulatory compliance requirements&lt;/strong&gt; by allowing you to store account activity for many years.&lt;/li&gt;
+  &lt;li&gt;Optimize your &lt;strong&gt;security and access management controls&lt;/strong&gt; by applying permission restrictions based on usage evidence.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Improve your operational excellence&lt;/strong&gt; by allowing you to track account changes and their impact on your business workloads.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.&lt;/p&gt;
+&lt;p&gt;For all these reasons, it is fundamental to understand and know how to leverage this service. And that is why we will cover its main characteristics and explore some relevant use cases in this article.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/19-1.jpg&quot; alt=&quot;Bikes&quot; loading=&quot;lazy&quot; /&gt;
-&lt;em&gt;Photo by &lt;a href=&quot;https://unsplash.com/photos/VhcxuEGNXo4&quot;&gt;Harley Davidson&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/&quot;&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;h2 id=&quot;a-plethora-of-integrations&quot;&gt;&lt;strong&gt;A plethora of integrations&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+&lt;p&gt;What kind of activity does it record? That is a fair question to ask. AWS CloudTrail is capable of recording API calls to several AWS services. So many of them that it is easier to list &lt;em&gt;unsupported&lt;/em&gt; services:&lt;/p&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;AWS Import/Export.&lt;/li&gt;
+  &lt;li&gt;Amazon VPC endpoint policy-specific events.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.&lt;/p&gt;
+&lt;p&gt;This means that CloudTrail will include requests made to API endpoints from &lt;strong&gt;Amazon EC2, API Gateway, CloudWatch, S3, and Secrets Manager, among many others&lt;/strong&gt;. You can get a detailed list of all the services supported in the &lt;a href=&quot;https://docs.aws.amazon.com/awscloudtrail/latest/userguide/cloudtrail-aws-service-specific-topics.html#cloudtrail-aws-service-specific-topics-list&quot;&gt;AWS CloudTrail user guide&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric “outside the box” thinking. Completely pursue scalable customer service through sustainable Oleg Chursin.&lt;/p&gt;
+&lt;p&gt;Besides being able to log events from all those services, plenty of AWS services use CloudTrail records under the hood to provide you with several useful features. Here are some of these benefits, only to name a few:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Trigger &lt;strong&gt;Amazon EventBridge&lt;/strong&gt; events whenever specific API calls occur.&lt;/li&gt;
+  &lt;li&gt;Organize multi-account activity records using &lt;strong&gt;AWS Organizations&lt;/strong&gt;.&lt;/li&gt;
+  &lt;li&gt;Understand resource modifications by linking CloudTrail events from the &lt;strong&gt;AWS Config&lt;/strong&gt; dashboard.&lt;/li&gt;
+  &lt;li&gt;Investigate security incidents through the &lt;strong&gt;Amazon Detective&lt;/strong&gt; integration.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But how does CloudTrail work? And how can I use it for my governance and auditing purposes? We will now learn about the workflow and concepts that make up this essential tool.&lt;/p&gt;
+
+&lt;h2 id=&quot;of-events-trails-and-lakes&quot;&gt;&lt;strong&gt;Of events, trails, and lakes&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Let’s start by taking a look at the service dashboard in the AWS Console. If you go there, you will immediately encounter a list of &lt;strong&gt;events&lt;/strong&gt; already recorded by the service.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/cloudtrail-dashboard.jpg&quot; alt=&quot;CloudTrail Dashboard&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;CloudTrail dashboard in the AWS Console&lt;/p&gt;
+
+&lt;h3 id=&quot;events-types-and-anatomy&quot;&gt;&lt;strong&gt;Events: Types and Anatomy&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;We already covered the definition of an &lt;strong&gt;Event&lt;/strong&gt; as the record of a specific AWS API call received by your account, stored in JSON format. There are three types of events: management, data, and insights.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Management Events&lt;/th&gt;
+      &lt;th&gt;Data Events&lt;/th&gt;
+      &lt;th&gt;Insights Events&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;These are API calls performed on the resources in your Account. These are the ones you see by default in your CloudTrail dashboard. You will need to monitor these events if your aim is auditing specific actions executed in your account.&lt;/td&gt;
+      &lt;td&gt;These are data plane operations performed on or within AWS resources. Examples: uploads to an S3 bucket, item updates inside a DynamoDB table, and activity on Cognito Identity Pools, among many others. These are high-volume events, so recording them might increase your costs, as we will see later in this article.&lt;/td&gt;
+      &lt;td&gt;These are events generated by CloudTrail whenever unusual activity is detected in your account, like an increase in the volume of specific API calls or a sudden peak in error rates within your account’s management events. These can help you identify and respond to potential incidents that require your attention.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;For example, a &lt;strong&gt;&lt;em&gt;CreateLogStream&lt;/em&gt;&lt;/strong&gt; management event would look like this:&lt;/p&gt;
+
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    {
+      &quot;eventVersion&quot;: &quot;1.08&quot;,
+      &quot;userIdentity&quot;: {
+        &quot;type&quot;: &quot;AssumedRole&quot;,
+        &quot;principalId&quot;: &quot;somePrincipalId&quot;,
+        &quot;arn&quot;: &quot;arn:aws:sts::123456789012:assumed-role/someAssumedRole&quot;,
+        &quot;accountId&quot;: &quot;123456789012&quot;,
+        &quot;accessKeyId&quot;: &quot;someAccessKeyId&quot;,
+        &quot;sessionContext&quot;: {
+          &quot;sessionIssuer&quot;: {
+            &quot;type&quot;: &quot;Role&quot;,
+            &quot;principalId&quot;: &quot;somePrincipalId&quot;,
+            &quot;arn&quot;: &quot;arn:aws:iam::123456789012:role/someRole&quot;,
+            &quot;accountId&quot;: &quot;123456789012&quot;,
+            &quot;userName&quot;: &quot;someUserName&quot;
+          },
+          &quot;webIdFederationData&quot;: {},
+          &quot;attributes&quot;: {
+            &quot;creationDate&quot;: &quot;2023-06-28T20:35:16Z&quot;,
+            &quot;mfaAuthenticated&quot;: &quot;false&quot;
+          }
+        }
+      },
+      &quot;eventTime&quot;: &quot;2023-06-28T20:35:23Z&quot;,
+      &quot;eventSource&quot;: &quot;logs.amazonaws.com&quot;,
+      &quot;eventName&quot;: &quot;CreateLogStream&quot;,
+      &quot;awsRegion&quot;: &quot;us-east-1&quot;,
+      &quot;sourceIPAddress&quot;: &quot;34.228.254.90&quot;,
+      &quot;userAgent&quot;: &quot;awslambda-worker/1.0 rusoto/0.48.0 rust/1.69.0 linux&quot;,
+      &quot;requestParameters&quot;: {
+        &quot;logGroupName&quot;: &quot;/some/LogGroup/Name&quot;,
+        &quot;logStreamName&quot;: &quot;/some/LogStream/Name&quot;
+      },
+      &quot;responseElements&quot;: null,
+      &quot;requestID&quot;: &quot;12345678-ffff-aaaa-0000-111122223333&quot;,
+      &quot;eventID&quot;: &quot;12345678-ffff-aaaa-0000-111122223333&quot;,
+      &quot;readOnly&quot;: false,
+      &quot;eventType&quot;: &quot;AwsApiCall&quot;,
+      &quot;apiVersion&quot;: &quot;20140328&quot;,
+      &quot;managementEvent&quot;: true,
+      &quot;recipientAccountId&quot;: &quot;123456789012&quot;,
+      &quot;eventCategory&quot;: &quot;Management&quot;,
+      &quot;tlsDetails&quot;: {
+        &quot;tlsVersion&quot;: &quot;TLSv1.2&quot;,
+        &quot;cipherSuite&quot;: &quot;ECDHE-RSA-AES128-GCM-SHA256&quot;,
+        &quot;clientProvidedHostHeader&quot;: &quot;logs.us-east-1.amazonaws.com&quot;
+      }
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;Besides showing you which API call was actually executed (the &lt;strong&gt;Event Name&lt;/strong&gt;), it gives you all sorts of details regarding who &lt;strong&gt;**is executing the API call (the &lt;/strong&gt;&lt;em&gt;userIdentity&lt;/em&gt;&lt;strong&gt; field), the parameters of the call (&lt;/strong&gt;&lt;em&gt;requestParameters&lt;/em&gt;&lt;strong&gt; field), the response (&lt;/strong&gt;&lt;em&gt;responseElements&lt;/em&gt;&lt;strong&gt;, in this case empty), and many otspecific     values about the overall context and conditions of the request. Notice also tthe &lt;/strong&gt;&lt;em&gt;eventCategory&lt;/em&gt;** field     specifies the type of event.&lt;/p&gt;
+
+&lt;p&gt;Here’s another example, this time for an Insights event:&lt;/p&gt;
+&lt;div class=&quot;language-plaintext highlighter-rouge&quot;&gt;&lt;div class=&quot;highlight&quot;&gt;&lt;pre class=&quot;highlight&quot;&gt;&lt;code&gt;    {
+      &quot;version&quot;: &quot;0&quot;,
+      &quot;id&quot;: &quot;01234567-0123-0123-0123-012345678901&quot;,
+      &quot;detail-type&quot;: &quot;AWS Insight via CloudTrail&quot;,
+      &quot;source&quot;: &quot;aws.cloudtrail&quot;,
+      &quot;account&quot;: &quot;123456789012&quot;,
+      &quot;time&quot;: &quot;2019-11-15T20:16:00Z&quot;,
+      &quot;region&quot;: &quot;us-east-1&quot;,
+      &quot;resources&quot;: [],
+      &quot;detail&quot;: {
+        &quot;eventVersion&quot;: &quot;1.07&quot;,
+        &quot;eventTime&quot;: &quot;2019-11-15T20:16:00Z&quot;,
+        &quot;awsRegion&quot;: &quot;us-east-1&quot;,
+        &quot;eventID&quot;: &quot;01234567-89ab-cdef-1234-0123456789ab&quot;,
+        &quot;eventType&quot;: &quot;AwsCloudTrailInsight&quot;,
+        &quot;recipientAccountId&quot;: &quot;123456789012&quot;,
+        &quot;sharedEventID&quot;: &quot;12345678-ffff-aaaa-0000-111122223333&quot;,
+        &quot;insightDetails&quot;: {
+          &quot;state&quot;: &quot;End&quot;,
+          &quot;eventSource&quot;: &quot;logs.amazonaws.com&quot;,
+          &quot;eventName&quot;: &quot;CreateLogStream&quot;,
+          &quot;insightType&quot;: &quot;ApiCallRateInsight&quot;,
+          &quot;insightContext&quot;: {
+            &quot;statistics&quot;: {
+              &quot;baseline&quot;: {
+                &quot;average&quot;: 0
+              },
+              &quot;insight&quot;: {
+                &quot;average&quot;: 2
+              },
+              &quot;insightDuration&quot;: 1
+            }
+          }
+        },
+        &quot;eventCategory&quot;: &quot;Insight&quot;
+      }
+    }
+&lt;/code&gt;&lt;/pre&gt;&lt;/div&gt;&lt;/div&gt;
+
+&lt;p&gt;In this case, the insightDetails field contains the nature of the unusual activity (&lt;strong&gt;&lt;em&gt;insightType&lt;/em&gt;&lt;/strong&gt;, in this case ApiCallRateInsight), and the difference between the baseline and the measured value in the &lt;strong&gt;&lt;em&gt;insightContext&lt;/em&gt;&lt;/strong&gt;. Additional contextual information is also provided in other fields.&lt;/p&gt;
+
+&lt;h3 id=&quot;trails&quot;&gt;&lt;strong&gt;Trails&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;A collection of events that are captured together and delivered to a common destination (S3 bucket, CloudWatch Logs or Amazon Eventbridge) is called a &lt;strong&gt;Trail&lt;/strong&gt;. By default, AWS provides you with an initial trail storing up to 90 days of management events. And yes, the events from the Dashboard home belong to this initial trail.&lt;/p&gt;
+
+&lt;p&gt;But you can also create your own trails from the Trails section in the CloudTrail dashboard, or using the AWS CLI. Upon creation, you can specify the following trail attributes:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;S3 bucket that will hold the event files&lt;/li&gt;
+  &lt;li&gt;Optional encryption configuration using a KMS key&lt;/li&gt;
+  &lt;li&gt;Whether to enable log digest files to validate the integrity of the files&lt;/li&gt;
+  &lt;li&gt;SNS notification for every log file creation&lt;/li&gt;
+  &lt;li&gt;CloudWatch Logs integration&lt;/li&gt;
+  &lt;li&gt;Tags for the trail resource&lt;/li&gt;
+  &lt;li&gt;And most importantly, the type of events to collect in the trail.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Trails can also be multi-Regional, single-Regional or organizational. AWS recommends always using multi-Regional trails for a comprehensive audit of your account, as well as organizational trails for multi-account workloads by integrating with the AWS Organizations offering.&lt;/p&gt;
+
+&lt;h3 id=&quot;lakes&quot;&gt;&lt;strong&gt;Lakes&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Since trail events can be delivered to S3 and CloudWatch Logs, you can leverage offerings like Amazon Athena or CloudWatch Logs metric filters to inspect and inspect your account’s activity. But you can also use CloudTrail Lake, a service that allows you to aggregate CloudTrail events into event data stores, and analyze them using SQL-based queries. This keeps you from implementing external data processing pipelines, as you can now process all audit information within one service. You can even add events from sources outside AWS, like Github, Okta, Snyk, or even your own on-premises applications.&lt;/p&gt;
+
+&lt;h2 id=&quot;some-real-world-applications&quot;&gt;&lt;strong&gt;Some Real World Applications&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;monitor-console-login-activity-with-cloudwatch-alarms&quot;&gt;&lt;strong&gt;Monitor console login activity with CloudWatch Alarms&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;A classical example for CloudTrail usage is to monitor for login activity inside your AWS account. Imagine a user logs into the AWS Console. This will generate a Cloudtrail management event named &lt;strong&gt;ConsoleLogin&lt;/strong&gt;. This event will contain useful contextual information about the incident, such as the user name, user agent, IP address, and even if MFA authentication was in place for the login.&lt;/p&gt;
+
+&lt;p&gt;In order to monitor this type of activity, you can create a trail that captures management events, sends them to an S3 bucket as well as CloudWatch Logs, and use CloudWatch Logs metric filters to look for events containing the &lt;strong&gt;ConsoleLogin&lt;/strong&gt; name and create a custom metric. Using this metric, you can trigger a CloudWatch alarm with an SNS target to notify you whenever someone accesses the console.&lt;/p&gt;
+
+&lt;h3 id=&quot;monitor-suspicious-account-activity-with-amazon-eventbridge&quot;&gt;&lt;strong&gt;Monitor suspicious account activity with Amazon Eventbridge&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;You can also use Amazon Eventbridge to automate responses to specific events captured by CloudTrail. Say for example that you have created a trail recording CloudTrail Insights events, and you wish to receive a Slack message whenever unusual activity is detected.&lt;/p&gt;
+
+&lt;p&gt;All you need to do is create an Eventbridge Rule having an AWS Cloudtrail event as source, and search for AWS Insight events. This would be the rule’s event pattern:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;{
+  &quot;source&quot;: [&quot;aws.cloudtrail&quot;],
+  &quot;detail-type&quot;: [&quot;AWS Insight via CloudTrail&quot;]
+}&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Once a target action is configured and this rule is enabled, you will be able to automate your response.&lt;/p&gt;
+
+&lt;h2 id=&quot;cloudtrail-pricing&quot;&gt;&lt;strong&gt;CloudTrail Pricing&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Now you know the benefits of using AWS CloudTrail in your accounts, but how much will it cost you? Like with most AWS services, you pay only for what you use.&lt;/p&gt;
+
+&lt;p&gt;You get your automatic first trail for free, recording 90 days of management events across your account. Should you create additional trails, there might be fees per event delivered to Amazon S3. Your first copy of management events are delivered for free, additional deliveries are charged USD$2.00 per 100,000 events. In the case of data events, there’s no free tier available, and you always pay USD$0.10 per 100,000 events.&lt;/p&gt;
+
+&lt;p&gt;If you enable CloudTrail Insights, you will be charged USD$0.35 per 100,000 events analyzed.&lt;/p&gt;
+
+&lt;p&gt;Essentially, your CloudTrail costs will depend on the amount of activity your account has, and on whether you’d like to measure it or not. You could get away monitoring management activity for free, but would have to increase your payments if you desire to create additional copies of the events, or start tracking data events.&lt;/p&gt;
+
+&lt;p&gt;Finally, for CloudTrail Lake, there’s a free trial period, valid until 30 days have passed or a 5 GB limit of ingested or scanned data is reached. After that, you have ingest and storage fee tiers ranging between USD$2.5 and USD$0.5 per GB depending on the amount of TB stored, and an additional scanning fee of $0.005 per GB of data analyzed.&lt;/p&gt;
+
+&lt;p&gt;You can find the latest information regarding CloudTrail pricing, as well as some useful examples, in the &lt;a href=&quot;https://aws.amazon.com/cloudtrail/pricing/&quot;&gt;AWS CloudTrail Pricing page&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;cloudtrail-best-practices&quot;&gt;&lt;strong&gt;CloudTrail Best practices&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Here are some useful recommendations when to help you secure your CloudTrail assets.&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Deliver all CloudTrail logs to a central S3 bucket with strong access control. Ideally in another AWS account, using a restrictive S3 resource policy.&lt;/li&gt;
+  &lt;li&gt;Prevent accidental loss of CloudTrail data by enabling versioning and MFA-delete on the S3 bucket.&lt;/li&gt;
+  &lt;li&gt;Encrypt your CloudTrail files enabling SSE-KMS encryption in your bucket.&lt;/li&gt;
+  &lt;li&gt;Always enable log file validation for your files, in order to prevent tampering.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h2 id=&quot;key-takeaways&quot;&gt;&lt;strong&gt;Key Takeaways&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;AWS CloudTrail is a governance and auditing tool that records all activity in your AWS accounts, in the form of CloudTrail Events. By leveraging its integrations with AWS services like Eventbridge, CloudWatch, among many others, this service allows you to easily audit account activity, satisfy regulatory compliance requirements, automate security and access management controls, and improve your operational excellence.You can decide to record management events to keep track of your account activity as a whole, specific data events for monitoring changes to your data plane, or insights events for responding to unusual activity in your account.The costs of using this service will depend on the number of events recorded and analyzed. Finally, it is a security best practice to restrict access to your CloudTrail logs bucket, as well as protecting the availability and integrity of your event records.&lt;/p&gt;
 </description>
-                <pubDate>Mon, 19 Apr 2021 06:01:35 -0600</pubDate>
-                <link>http://localhost:4000/this-is-test-4</link>
-                <guid isPermaLink="true">http://localhost:4000/this-is-test-4</guid>
+                <pubDate>Mon, 04 Dec 2023 02:00:00 -0700</pubDate>
+                <link>http://localhost:4000/what-is-cloudtrail</link>
+                <guid isPermaLink="true">http://localhost:4000/what-is-cloudtrail</guid>
                 
-                <category>travel</category>
-                
-                <category>hobby</category>
+                <category>Cloud</category>
                 
                 
             </item>
         
             <item>
                 <title></title>
-                <description>&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+                <description>&lt;p&gt;Sounds great, right? So why don’t we use Spot all the time? Because, of course, there is a downside: spot instances run on &lt;strong&gt;unused EC2 compute capacity&lt;/strong&gt;, and since cloud usage constantly fluctuates over time, AWS does not guarantee enough room to keep your spot workloads running. That is, your instances could get reclaimed unilaterally by AWS at any time.&lt;/p&gt;
 
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
+&lt;p&gt;In this article, we will explore the attributes of this model, including relevant definitions, suggested use cases, a comparison with other AWS pricing models, and, finally, how to measure its benefits.&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;The longer I live, the more I realize that I am never wrong about anything, and that all the pains I have so humbly taken to verify my notions have only wasted my time!&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;h2 id=&quot;how-do-spot-instances-work&quot;&gt;&lt;strong&gt;How do Spot Instances work?&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;p&gt;Unlike On-Demand instances, Spot instances must be allocated by generating a &lt;strong&gt;Spot Instance Request.&lt;/strong&gt; There are a few recommended ways to create such a request:&lt;/p&gt;
 
-&lt;p&gt;Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;By creating an Auto Scaling Group&lt;/strong&gt; with a mixed configuration of On Demand and Spot instances using the &lt;a href=&quot;https://docs.aws.amazon.com/autoscaling/ec2/APIReference/API_CreateAutoScalingGroup.html&quot;&gt;EC2 CreateAutoScalingGroup API&lt;/a&gt;.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;By creating an EC2 Fleet&lt;/strong&gt; consisting of On-Demand and Spot Instances using the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_CreateFleet.html&quot;&gt;EC2 CreateFleet API&lt;/a&gt;.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/19-1.jpg&quot; alt=&quot;Bikes&quot; loading=&quot;lazy&quot; /&gt;
-&lt;em&gt;Photo by &lt;a href=&quot;https://unsplash.com/photos/VhcxuEGNXo4&quot;&gt;Harley Davidson&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/&quot;&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Keep in mind that there are also other alternatives, but they are no longer supported or recommended by AWS. These are the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RunInstances.html&quot;&gt;EC2 RunInstances API&lt;/a&gt;, the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotInstances.html&quot;&gt;EC2 RequestSpotInstances API&lt;/a&gt;, and the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/APIReference/API_RequestSpotFleet.html&quot;&gt;EC2 RequestSpotFleet API&lt;/a&gt;. The first two API calls are no longer being maintained, and AWS does not recommend Spot Fleets, as you are not allowed to mix instance types in a single request. Also, notice that Spot Fleets are currently presented as a legacy option in the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-fleet.html&quot;&gt;AWS documentation&lt;/a&gt;.&lt;/p&gt;
 
-&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+&lt;p&gt;Each &lt;strong&gt;Spot Instance Request&lt;/strong&gt; consists of the following:&lt;/p&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;The launch specification, including the desired EC2 instance type and Availability Zone, among other instance details.&lt;/li&gt;
+  &lt;li&gt;The desired number of instances.&lt;/li&gt;
+  &lt;li&gt;Your request price (either the spot price or the maximum you define).&lt;/li&gt;
+  &lt;li&gt;The request type (either one-time or persistent).&lt;/li&gt;
+  &lt;li&gt;A time range during which the request will be valid (for persistent requests).&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.&lt;/p&gt;
+&lt;p&gt;Whenever a request is created, Amazon EC2 looks for available spare capacity. If such exists, it launches your instance, fulfilling your request. If not, it will wait until it can be fulfilled or until you cancel the request.&lt;/p&gt;
 
-&lt;p&gt;Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric “outside the box” thinking. Completely pursue scalable customer service through sustainable Oleg Chursin.&lt;/p&gt;
+&lt;p&gt;The launched spot instances will run until:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;You stop or terminate them yourself.&lt;/li&gt;
+  &lt;li&gt;Demand for spot instances increases, and your price no longer matches the spot price.&lt;/li&gt;
+  &lt;li&gt;AWS needs the capacity back (supply decrease)&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;If AWS needs to reclaim the instance, a &lt;strong&gt;Spot Instance Interruption&lt;/strong&gt; event occurs. This happens two minutes before the actual deallocation, allowing you to react and manage the impending instance loss. Be careful, though, as AWS claims this is based on a best-effort basis, meaning that interruptions might happen before the actual notice is made available.&lt;/p&gt;
+
+&lt;p&gt;Interruption notices can be detected either as Amazon Eventbridge events or by querying an instance metadata endpoint. The Eventbridge event name is &lt;strong&gt;EC2 Spot Instance Interruption Warning&lt;/strong&gt; and the source is &lt;strong&gt;aws.ec2&lt;/strong&gt;. The instance metadata endpoint you must query is called &lt;strong&gt;instance-action&lt;/strong&gt; and gives you the approximate time in which your instance will be terminated, stopped, or hibernated. If no notice exists yet, you will get an HTTP 404 error. You can find more details about these options in the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/spot-instance-termination-notices.html&quot;&gt;AWS documentation&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can also use CloudTrail to find instance interruption events. They appear in the Event History with the name &lt;strong&gt;BidEvictedEvent&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/bid-evicted.jpg&quot; alt=&quot;bigevicted&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;CloudTrail Event history listing interruption events&lt;/p&gt;
+
+&lt;p&gt;If you created a &lt;strong&gt;persistent request,&lt;/strong&gt; Amazon EC2 could automatically resubmit a new spot instance request. If this was a &lt;strong&gt;one-time&lt;/strong&gt; &lt;strong&gt;request&lt;/strong&gt;, the instance is taken down after two minutes, and AWS takes no further action.&lt;/p&gt;
+
+&lt;p&gt;Another helpful tool to proactively react to instance interruption is the &lt;strong&gt;EC2 instance rebalance recommendation&lt;/strong&gt;. This event occurs whenever one of your Spot Instances is at risk of getting interrupted, so you can take preventive measures before the regular two minutes warning. By leveraging the &lt;a href=&quot;https://aws.amazon.com/eventbridge/&quot;&gt;Amazon Eventbridge&lt;/a&gt; notification mentioned before, you can trigger automatic actions based on real-time notifications and handle the situation according to your needs. On the other hand, service Integrations like AWS Auto Scaling or EC2 fleets allow for automatic capacity rebalancing.&lt;/p&gt;
+
+&lt;p&gt;Spot instances are also &lt;strong&gt;integrated with other AWS services&lt;/strong&gt;, such as Amazon EMR (Elastic Map Reduce), Amazon ECS (Elastic Container Service), or Amazon SageMaker. We will review some example use cases below.&lt;/p&gt;
+
+&lt;h2 id=&quot;spot-instance-market&quot;&gt;&lt;strong&gt;Spot Instance Market&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;AWS spare capacity is grouped in various &lt;strong&gt;Spot Capacity Pools&lt;/strong&gt;, each representing unused capacity for a unique EC2 Instance Type and Availability Zone tuple. Each pool has its &lt;strong&gt;spot price&lt;/strong&gt;, i.e., the hourly price set by AWS and periodically adjusted based on the spot instance’s supply and demand.&lt;/p&gt;
+
+&lt;p&gt;The following table lists some example spot prices for a specific capacity pool: the C5 instance type in the us-east-1 availability zone.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;C5 (Linux)&lt;/th&gt;
+      &lt;th&gt;On-Demand Price&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1a)&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1b)&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1c)&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1d)&lt;/th&gt;
+      &lt;th&gt;Spot Price (us-east-1f)&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;large&lt;/td&gt;
+      &lt;td&gt;$0.085&lt;/td&gt;
+      &lt;td&gt;$0.063&lt;/td&gt;
+      &lt;td&gt;$0.057&lt;/td&gt;
+      &lt;td&gt;$0.054&lt;/td&gt;
+      &lt;td&gt;$0.058&lt;/td&gt;
+      &lt;td&gt;$0.071&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;25.65%&lt;/td&gt;
+      &lt;td&gt;33.06%&lt;/td&gt;
+      &lt;td&gt;36.35%&lt;/td&gt;
+      &lt;td&gt;31.76%&lt;/td&gt;
+      &lt;td&gt;16.71%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;xlarge&lt;/td&gt;
+      &lt;td&gt;$0.170&lt;/td&gt;
+      &lt;td&gt;$0.135&lt;/td&gt;
+      &lt;td&gt;$0.134&lt;/td&gt;
+      &lt;td&gt;$0.098&lt;/td&gt;
+      &lt;td&gt;$0.132&lt;/td&gt;
+      &lt;td&gt;$0.127&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;20.76%&lt;/td&gt;
+      &lt;td&gt;20.94%&lt;/td&gt;
+      &lt;td&gt;42.29%&lt;/td&gt;
+      &lt;td&gt;22.35%&lt;/td&gt;
+      &lt;td&gt;25.47%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;2xlarge&lt;/td&gt;
+      &lt;td&gt;$0.340&lt;/td&gt;
+      &lt;td&gt;$0.218&lt;/td&gt;
+      &lt;td&gt;$0.233&lt;/td&gt;
+      &lt;td&gt;$0.205&lt;/td&gt;
+      &lt;td&gt;$0.230&lt;/td&gt;
+      &lt;td&gt;$0.244&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;35.76%&lt;/td&gt;
+      &lt;td&gt;31.41%&lt;/td&gt;
+      &lt;td&gt;39.82%&lt;/td&gt;
+      &lt;td&gt;32.50%&lt;/td&gt;
+      &lt;td&gt;28.38%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;4xlarge&lt;/td&gt;
+      &lt;td&gt;$0.680&lt;/td&gt;
+      &lt;td&gt;$0.417&lt;/td&gt;
+      &lt;td&gt;$0.259&lt;/td&gt;
+      &lt;td&gt;$0.259&lt;/td&gt;
+      &lt;td&gt;$0.259&lt;/td&gt;
+      &lt;td&gt;$0.271&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;38.71%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;60.15%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;24xlarge&lt;/td&gt;
+      &lt;td&gt;$4.080&lt;/td&gt;
+      &lt;td&gt;$2.478&lt;/td&gt;
+      &lt;td&gt;$2.902&lt;/td&gt;
+      &lt;td&gt;$1.555&lt;/td&gt;
+      &lt;td&gt;$1.555&lt;/td&gt;
+      &lt;td&gt;$1.555&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt; &lt;/td&gt;
+      &lt;td&gt;—&lt;/td&gt;
+      &lt;td&gt;39.27%&lt;/td&gt;
+      &lt;td&gt;28.88%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+      &lt;td&gt;61.90%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;These prices were taken from the Spot Instance pricing history section in the AWS Console, specifically the EC2 Dashboard. You can also generate comparison graphs and filter using your desired criteria.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/spot-pricing-history.jpg&quot; alt=&quot;Spot Pricing History&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Comparison graph generated for the C3 family in the Spot Instance pricing history section&lt;/p&gt;
+
+&lt;p&gt;Notice that choosing different Availability Zones can heavily impact the discount you get using spot instances. Also, consider that these prices are referential, as they constantly change.&lt;/p&gt;
+
+&lt;p&gt;For a list of up-to-date spot capacity pool prices, you can check the Amazon EC2 Spot Instances Pricing page, which updates every five minutes. You can use the &lt;a href=&quot;https://awscli.amazonaws.com/v2/documentation/api/latest/reference/ec2/describe-spot-price-history.html&quot;&gt;AWS EC2 CLI&lt;/a&gt; or the Spot Requests/Pricing History section in the Amazon EC2 Console for a historical price list.&lt;/p&gt;
+
+&lt;h2 id=&quot;what-about-otherpurchasing-options&quot;&gt;&lt;strong&gt;What about other purchasing options?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Besides On-Demand and Spot Instances, other EC2 purchasing options also offer great discounts: Reserved Instances and Savings Plans. We’ve discussed both models in a previous blog post: &lt;a href=&quot;https://getstrake.com/blog/a-complete-guide-to-aws-reservations&quot;&gt;A Complete Guide to AWS Reservations&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;They are volume discount options, where you commit to pay for a certain amount of compute instances/dollars for one to three years. It is important to note that both Reserved Instances and Savings Plans only apply to On-Demand usage, not Spot Instances.&lt;/p&gt;
+
+&lt;p&gt;Although they don’t apply to Spot Instances, they work together well, allowing considerable savings in your computing totals. Say, for example, that you keep an EC2 fleet of 180 EC2 instances simultaneously running per month. Across these instances, only 25% can be hosted in Spot Instances due to their flexibility and capacity to afford interruptions. You can maximize your savings by purchasing a Savings Plan or Reserved Instances to cover the remaining 75% of your EC2 usage.&lt;/p&gt;
+
+&lt;p&gt;Some valuable integrations between Spot Instances and Amazon EC2 Auto Scaling or EC2 Fleet make combining these different purchasing models easy.&lt;/p&gt;
+
+&lt;p&gt;If mixing them makes it difficult to analyze and manage your costs, you can head to our &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#spot&quot;&gt;Developer’s Guide to AWS Costs for EC2&lt;/a&gt;, an invaluable resource to learn the difference between each model by analyzing your spending and selecting discounts individually.&lt;/p&gt;
+
+&lt;h2 id=&quot;are-my-workloads-appropriate-for-spot&quot;&gt;&lt;strong&gt;Are my workloads appropriate for Spot?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Now that you understand the inner workings of Spot Instances, a key question arises: how do I know if my use case is good enough for spot instances? As with most things in this field of work, it depends! However, we can mention two workload attributes that make for good spot Instances candidates: &lt;strong&gt;fault tolerance and flexibility&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;fault-tolerance&quot;&gt;&lt;strong&gt;Fault tolerance&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Your spot instance instances can get interrupted. There’s no way around it. Even though AWS reports the average interruption frequency to be less than 5%, this depends on the instance type you choose. You can visit the &lt;a href=&quot;https://aws.amazon.com/ec2/spot/instance-advisor/&quot;&gt;Spot Instance Advisor&lt;/a&gt; to get specific frequencies.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/spot-instance-advisor.jpg&quot; alt=&quot;Spot Instance Advisor&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Example view from the Spot Instance advisor&lt;/p&gt;
+
+&lt;p&gt;This means that your spot workloads &lt;strong&gt;must be able to support interruptions&lt;/strong&gt;. For example, keeping your entire production workload in spot instances is probably not the best idea. An unexpected interruption could take down essential parts of your capacity and affect your customers.&lt;/p&gt;
+
+&lt;p&gt;However, there is room for spot purchases in your production workloads if you use them to complement a steady On-Demand or reserved capacity. We will review this scenario shortly.&lt;/p&gt;
+
+&lt;h3 id=&quot;flexibility&quot;&gt;&lt;strong&gt;Flexibility&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;The more Spot Capacity Pools your requests cover, the more your chances of fulfilling it. That is, flexible workloads regarding acceptable EC2 Instance Types and Availability Zones will get better results using the spot model. Suppose your use case prevents you from using a variety of EC2 instances. In that case, your requests will cover fewer spot capacity pools, which means fewer discount opportunities and recovery alternatives, should Amazon EC2 decide to claim your instances.&lt;/p&gt;
+
+&lt;p&gt;In this respect, AWS recommends selecting &lt;strong&gt;no less than 10 EC2 Instance types&lt;/strong&gt; for increased coverage. Also, make sure to cover all Availability Zones inside your region.&lt;/p&gt;
+
+&lt;h2 id=&quot;recommended-spot-instance-use-cases&quot;&gt;&lt;strong&gt;Recommended Spot Instance Use Cases&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Based on these attributes, here are some excellent use cases for spot instances leveraging several AWS service integrations:&lt;/p&gt;
+
+&lt;h3 id=&quot;web-applications-amazon-ec2-auto-scaling-group&quot;&gt;&lt;strong&gt;Web Applications (Amazon EC2 Auto Scaling Group)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;You can configure an Amazon EC2 Auto Scaling Group with a mixed instances group policy. You would use On-Demand instances to support your baseline production traffic and a combination of additional On-Demand and Spot Instances to scale out and cover unexpected usage peaks for a fraction of the cost. Under such a scenario, an interruption would only impact your additional instances, allowing you to avoid disrupting your service while gaining the discounts the spot market provides.&lt;/p&gt;
+
+&lt;p&gt;This scenario can be enabled during the creation of the Auto Scaling Group. In step 2: Choose instance launch options. You can configure the following:&lt;/p&gt;
+
+&lt;h3 id=&quot;network-settings&quot;&gt;&lt;strong&gt;Network settings&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‍&lt;/strong&gt;In this case, follow the flexibility recommended practice and choose as many availability zones as you deem appropriate.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/spot-network.jpg&quot; alt=&quot;Spot Network&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Diversify Availability Zones for your Auto Scaling Group&lt;/p&gt;
+
+&lt;h3 id=&quot;instance-type-requirements&quot;&gt;&lt;strong&gt;Instance type requirements&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‍&lt;/strong&gt;Here it’s also recommended to be flexible and choose different EC2 Instance types based on your needs.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/instance-type-requirements.jpg&quot; alt=&quot;Instance Type Requirements&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Leverage instance type flexibility for your Auto Scaling Group&lt;/p&gt;
+
+&lt;h3 id=&quot;instance-purchase-options&quot;&gt;&lt;strong&gt;Instance purchase options&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‍&lt;/strong&gt;This is where you set the On Demand and Spot instances distribution for your Auto Scaling Group. You can also define a minimum number of On-Demand instances as base capacity.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/instance-purchase-options.jpg&quot; alt=&quot;Instance Purchase Options&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Select the best On-Demand/Spot ratio for your use case&lt;/p&gt;
+
+&lt;h3 id=&quot;allocation-strategies&quot;&gt;&lt;strong&gt;Allocation strategies&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;strong&gt;‍&lt;/strong&gt;When selecting spot instances in your mix, you can choose different approaches to determine where they will land. The recommended method is Price capacity optimized, considering both price and availability within your instance pools. You can also choose to utilize a capacity or a price oriented strategy. You can also enable Capacity Rebalance to take proactive actions before AWS claims back your instances.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/allocation-strategies.jpg&quot; alt=&quot;Allocation Strategies&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Price capacity optimized is the recommended strategy for placing your spot instances&lt;/p&gt;
+
+&lt;p&gt;This same pattern can be applied to your Continuous Integration/Continuous Deployment solutions and lower environments, such as testing or development, where an interruption’s impact is more easily tolerated.&lt;/p&gt;
+
+&lt;h3 id=&quot;big-data-and-analytics-amazon-emr&quot;&gt;&lt;strong&gt;Big Data and Analytics (Amazon EMR)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Cost can quickly get out of hand when dealing with Big Data solutions. However, this kind of workload, implying hyper-scale parallel execution of data analysis, usually supports interruptions and restarts. This is why Spot Instances integration with services like Amazon Elastic Map Reduce can give you steep savings.&lt;/p&gt;
+
+&lt;p&gt;You can select Spot purchases for core and task instance fleets during cluster creation. Similarly to the Auto Scaling Group integration, you can choose ratios between On-Demand and Spot, allocation strategies, and even specific behaviors whenever no spot instances are available.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/scaling-and-provisioning.jpg&quot; alt=&quot;Scaling and Provisioning&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;The same recommendations for flexibility apply to this use case: choose as many Availability Zones and instance types as possible.&lt;/p&gt;
+
+&lt;h3 id=&quot;containerized-workloads-amazon-ecseks&quot;&gt;&lt;strong&gt;Containerized workloads (Amazon ECS/EKS)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Container workloads are almost always stateless and fault tolerant, a perfect match for Spot Instance purchase. You can use them across all container solutions in AWS, be it Amazon ECS or Kubernetes in EKS.&lt;/p&gt;
+
+&lt;p&gt;In your Kubernetes cluster, for example, you can create specific node groups using managed spot instances to host less critical applications, CI/CD workers, or other support components of your architecture.&lt;/p&gt;
+
+&lt;h3 id=&quot;machine-learning-workloads-amazon-sagemaker&quot;&gt;&lt;strong&gt;Machine Learning workloads (Amazon SageMaker)&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;You can also leverage the vast savings that Spot Instances provides thanks to its integration with Amazon SageMaker. Thus, you can train machine learning models using considerable computing power while paying less than the On-Demand alternative. This service’s &lt;strong&gt;Managed Spot Training&lt;/strong&gt; feature allows you to allocate specific training jobs in spot capacity pools, also defining a stopping condition, should no available instances exist.&lt;/p&gt;
+
+&lt;h2 id=&quot;accounting-for-spot-savings&quot;&gt;&lt;strong&gt;Accounting for Spot savings&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;The AWS Cost and Usage Report is an excellent way to review your Spot Instance costs and savings. Feel free to look at our &lt;a href=&quot;https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#spot&quot;&gt;Developer’s Guide to AWS Costs for EC2&lt;/a&gt; for a comprehensive example of how to query this resource for a good understanding of your spot usage costs.&lt;/p&gt;
+
+&lt;p&gt;You can also access a &lt;strong&gt;Savings Summary&lt;/strong&gt; by visiting the AWS EC2 Console inside the Spot Requests section of the dashboard. In there, you will find helpful details such as:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Total number of spot instances&lt;/li&gt;
+  &lt;li&gt;Aggregated CPU/Memory hours and average costs&lt;/li&gt;
+  &lt;li&gt;Aggregated spot costs, including savings compared to on-demand&lt;/li&gt;
+  &lt;li&gt;A detailed list with this specific information for each spot instance&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;Understanding how these charges and discounts operate is essential to help you apply successful cost management strategies while integrating On-Demand, Spot, Reserved Instances, and Savings Plans.&lt;/p&gt;
+
+&lt;h2 id=&quot;key-takeaways&quot;&gt;&lt;strong&gt;Key Takeaways&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Spot Instances are a purchasing model for Amazon EC2 compute instances that offer considerable cost savings compared to On-Demand instances. However, there is a trade-off: since Spot Instances run on unused EC2 capacity, AWS does not guarantee the availability of this capacity at all times. Therefore, your spot instances can be reclaimed by AWS if there is a higher demand.&lt;/p&gt;
+
+&lt;p&gt;Although these interruptions don’t happen frequently, and AWS provides several options to handle them proactively, fault tolerance is essential for any Spot Instances candidate. It is also a best practice to keep your choices flexible regarding EC2 Instance types and Availability Zones to minimize the probability of interruptions.&lt;/p&gt;
+
+&lt;p&gt;Once you decide to make a Spot purchase, several AWS service integrations will simplify your management. From this point on, it’s essential to monitor the fluctuation of Spot prices, leverage other purchasing options, and analyze the costs and savings you get. This will help you implement efficient strategies for optimal cost management.&lt;/p&gt;
 </description>
-                <pubDate>Mon, 19 Apr 2021 06:01:35 -0600</pubDate>
-                <link>http://localhost:4000/this-is-test-3</link>
-                <guid isPermaLink="true">http://localhost:4000/this-is-test-3</guid>
+                <pubDate>Sun, 03 Dec 2023 02:00:00 -0700</pubDate>
+                <link>http://localhost:4000/what-are-aws-spot-instances</link>
+                <guid isPermaLink="true">http://localhost:4000/what-are-aws-spot-instances</guid>
                 
-                <category>travel</category>
-                
-                <category>hobby</category>
+                <category>Cloud</category>
                 
                 
             </item>
         
             <item>
                 <title></title>
-                <description>&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+                <description>&lt;p&gt;You can use this information to compare alternative pricing models, regions, and volume reservation opportunities, including Reserved Instances in its many flavors. Best of all, since it uses standard Google Spreadsheets, collaboration between teams comes right out of the box!&lt;/p&gt;
 
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
+&lt;p&gt;If you’d like to get more information about this tool, visit our &lt;a href=&quot;https://getstrake.com/community/aws-pricing&quot;&gt;AWS Pricing plugin&lt;/a&gt; site.&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;The longer I live, the more I realize that I am never wrong about anything, and that all the pains I have so humbly taken to verify my notions have only wasted my time!&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;h2 id=&quot;the-aws-pricing-formula-builder&quot;&gt;&lt;strong&gt;The AWS Pricing Formula Builder&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;p&gt;One of the most helpful features of the AWS Pricing Add-On is the AWS Pricing Formula Builder. This is a sidebar you can enable within the context of your Google spreadsheet. It allows you to parameterize the AWS pricing values you want for specific cells, automatically generating the formula you require and placing it in place.&lt;/p&gt;
 
-&lt;p&gt;Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.&lt;/p&gt;
+&lt;p&gt;Let’s illustrate this with a simple example. Imagine you want to quickly compare the hourly cost for three types of RDS instances using reserved instances. This would be a regular part of the planning process for optimizing your workloads. You would normally start with something like this:&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/19-1.jpg&quot; alt=&quot;Bikes&quot; loading=&quot;lazy&quot; /&gt;
-&lt;em&gt;Photo by &lt;a href=&quot;https://unsplash.com/photos/VhcxuEGNXo4&quot;&gt;Harley Davidson&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/&quot;&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/instance-comparison.jpg&quot; alt=&quot;Instance Type Comparison&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+&lt;p&gt;Usually, it would require you to go to the AWS pricing page for RDS or use the AWS Pricing calculator to fill those question mark cells. However, with the Pricing Formula builder, it’s as easy as selecting the appropriate parameters from the sidebar and inserting the automatically generated formula in your active cell.&lt;/p&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/formula-builder-1.jpg&quot; alt=&quot;Formula Builder&quot; /&gt;&lt;/p&gt;
 
-&lt;p&gt;Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.&lt;/p&gt;
+&lt;p&gt;You can also check the formula to be added in the sidebar as you play around with database engines, instance types, regions, and purchase types.  You can now complete your analysis within a few seconds.&lt;/p&gt;
 
-&lt;p&gt;Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric “outside the box” thinking. Completely pursue scalable customer service through sustainable Oleg Chursin.&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;/images/instance-calculated.jpg&quot; alt=&quot;Instance Prices Calculated&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;new-compare-functionality&quot;&gt;&lt;strong&gt;NEW: Compare functionality&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;We added a useful new tool to the Formula Builder: the Compare option. It allows you to compare multiple resource dimensions at once by generating a table in a new sheet.&lt;/p&gt;
+
+&lt;p&gt;We will now paint a more complex scenario. You want to compare the benefits of on-demand and reservation instances for a new RDS Aurora workload, considering the possibility of multiple regions and instance types. You would traditionally collect those individual values from the Aurora pricing page or the Pricing Calculator. Although the information is available there, it could take a while to filter and find the specifics you need.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/compare-1.jpg&quot; alt=&quot;Compare 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;List of costs from the RDS Pricing page&lt;/p&gt;
+
+&lt;p&gt;And, let’s face it: most of the time you will end up playing around with values in a spreadsheet anyways. Check out how easy it is to generate a comparison table with this new plugin feature. First, go to the Compare tab in the AWS Pricing Formula Builder:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/compare-2.jpg&quot; alt=&quot;Compare 2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Once you select the service (in this case, RDS), you will be presented with the same filters as before: engines, instance types, region, purchase type, and reservation options. This time, however, you can select multiple values for each dimension:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/compare-3.jpg&quot; alt=&quot;Compare 3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;In our example, we will compare Aurora MySQL from three instance types in four us-regions and consider 1- and 3-year reservations with All Upfront payments. This is what our sidebar looks like:&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/compare-4.jpg&quot; alt=&quot;Compare 4&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;You are now ready to generate the comparison table with the &lt;em&gt;Insert formulas in new sheet&lt;/em&gt; button. In a matter of seconds, you get a new sheet with a complete comparison table you can modify to your heart’s content!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/compare-5.jpg&quot; alt=&quot;Compare 5&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;This was just one example. You can also implement comparative cost analysis for EC2, EBS, and RDS storage.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/compare-6.jpg&quot; alt=&quot;Compare 6&quot; /&gt;&lt;/p&gt;
+
+&lt;h2 id=&quot;learn-more&quot;&gt;&lt;strong&gt;Learn More&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Strake is committed to maintaining the AWS Pricing add-on as an open-source project and expanding it with feedback from the open-source community. Here are some ways to stay up to date and get in touch with our team:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;If you want to learn more about the AWS Pricing project, you can get it free from the &lt;a href=&quot;https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903&quot;&gt;Google Workspace Marketplace.&lt;/a&gt;&lt;/li&gt;
+  &lt;li&gt;Join the &lt;a href=&quot;https://join.slack.com/t/strake-community/shared_invite/zt-1nisfazzn-uO5O_I28Z7N6sZ6iM2H1xA&quot;&gt;Strake Community&lt;/a&gt; on Slack to get in touch with our team.&lt;/li&gt;
+&lt;/ul&gt;
 </description>
-                <pubDate>Mon, 19 Apr 2021 06:01:35 -0600</pubDate>
-                <link>http://localhost:4000/this-is-test-2</link>
-                <guid isPermaLink="true">http://localhost:4000/this-is-test-2</guid>
+                <pubDate>Sat, 02 Dec 2023 02:00:00 -0700</pubDate>
+                <link>http://localhost:4000/aws-pricing-formula-builder</link>
+                <guid isPermaLink="true">http://localhost:4000/aws-pricing-formula-builder</guid>
                 
-                <category>travel</category>
+                <category>Open Source</category>
                 
-                <category>hobby</category>
+                <category>Cloud</category>
                 
                 
             </item>
         
             <item>
                 <title></title>
-                <description>&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+                <description>&lt;h1 id=&quot;an-idea-weve-pushed-forward-pretty-consistently-is-that-cost-management-in-the-cloud-is-a-complex-endeavor-and-actions-must-be-taken-if-you-want-to-avoid-surprises-by-the-time-you-receive-your-monthly-bill&quot;&gt;An idea we’ve pushed forward pretty consistently is that cost management in the cloud is a complex endeavor, and actions must be taken if you want to avoid surprises by the time you receive your monthly bill.&lt;/h1&gt;
 
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
+&lt;p&gt;And yes, for most people, the bill’s section in the AWS Console dashboard is the go-to resource for understanding their cloud expenses. But there is a lot more to it! And hopefully, you will considerably optimize your cost management processes after reading this article. In particular, we will explain a cost optimization method called &lt;strong&gt;Cost Allocation&lt;/strong&gt; and present ways to implement it using &lt;strong&gt;Cost Allocation Tagging&lt;/strong&gt;.&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;The longer I live, the more I realize that I am never wrong about anything, and that all the pains I have so humbly taken to verify my notions have only wasted my time!&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;h2 id=&quot;the-importance-of-cost-measurement-and-accountability&quot;&gt;&lt;strong&gt;The importance of cost measurement and accountability&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;p&gt;To align your cloud usage and billing with your business objectives, you should start by gaining &lt;strong&gt;visibility over your expenses&lt;/strong&gt;. But a birds-eye view of your costs might not be enough to make informed financial decisions since it’s easy to get lost in such a wide variety of services, different charge types, tiered offerings, and discounts.&lt;/p&gt;
 
-&lt;p&gt;Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.&lt;/p&gt;
+&lt;p&gt;This is especially important if you support multiple clients and projects inside your AWS consolidated billing. There are various options here, and no solution fits all. You might already have several accounts mapping to individual clients, projects, environments, and use cases.  It’s pretty much up to your business needs and structure.&lt;/p&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/19-1.jpg&quot; alt=&quot;Bikes&quot; loading=&quot;lazy&quot; /&gt;
-&lt;em&gt;Photo by &lt;a href=&quot;https://unsplash.com/photos/VhcxuEGNXo4&quot;&gt;Harley Davidson&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/&quot;&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;These scenarios can get complicated. And it’s good to know that AWS already provides real-time tools for cost monitoring and insights, such as Cost Explorer or the Cost and Usage Report. But you might need more detailed reports and custom-built categories for your analysis. This is where solutions like &lt;strong&gt;Cost Allocation Tagging&lt;/strong&gt; and &lt;strong&gt;AWS Cost Categories&lt;/strong&gt; come into play.&lt;/p&gt;
 
-&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+&lt;h2 id=&quot;what-is-cost-allocation&quot;&gt;&lt;strong&gt;What is cost allocation?&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;p&gt;Cost Allocation is all about establishing the relationship between costs from AWS spend, how those were incurred, and who or what incurred those costs. This is how you gain the granularity you need when reviewing your costs.&lt;/p&gt;
 
-&lt;p&gt;Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.&lt;/p&gt;
+&lt;p&gt;It allows you to look at specific items within your bills and get immediate answers to questions like:&lt;/p&gt;
 
-&lt;p&gt;Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric “outside the box” thinking. Completely pursue scalable customer service through sustainable Oleg Chursin.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Who is the owner&lt;/strong&gt; and has the responsibility to optimize it?&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;What workload, application, product, or environment&lt;/strong&gt; is causing the expenses?&lt;/li&gt;
+  &lt;li&gt;What are the spending areas experiencing the &lt;strong&gt;highest growth rate&lt;/strong&gt;?&lt;/li&gt;
+  &lt;li&gt;What &lt;strong&gt;budget optimizations&lt;/strong&gt; can we apply based on past trends?&lt;/li&gt;
+  &lt;li&gt;What was the &lt;strong&gt;real impact of our cost optimization efforts&lt;/strong&gt;?&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;But to properly reap its benefits, you must first design a proper cost allocation strategy, which consists of a few steps:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Define your cost allocation boundaries.&lt;/li&gt;
+  &lt;li&gt;Bring in your stakeholders!&lt;/li&gt;
+  &lt;li&gt;Establish cost assignment procedures (showback/chargeback).&lt;/li&gt;
+  &lt;li&gt;Measure with unit metrics as KPIs.&lt;/li&gt;
+  &lt;li&gt;Handle unallocatable expenses.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;Let’s take a deeper look at how you can design your strategy.&lt;/p&gt;
+
+&lt;h2 id=&quot;best-practices-for-your-cost-allocation-strategy&quot;&gt;&lt;strong&gt;Best Practices for Your Cost Allocation Strategy&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;h3 id=&quot;1-define-your-cost-allocation-boundaries&quot;&gt;&lt;strong&gt;1. Define your cost allocation boundaries&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Your cost allocation models can take different forms depending on how you organize your projects across your AWS accounts. They vary in ease of implementation and desired accuracy.&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Model&lt;/th&gt;
+      &lt;th&gt;Details&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Account Based&lt;/td&gt;
+      &lt;td&gt;Straightforward and least effort-intensive. This is ideal for organizations with a well-established account structure, where each account can be treated as its cost category.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Business Unit or Team Based&lt;/td&gt;
+      &lt;td&gt;Slightly higher level of effort in return for improved cost visibility across teams and applications. This is useful when each unit in your organization has multiple accounts for their different use cases or environments.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Tag Based&lt;/td&gt;
+      &lt;td&gt;Provides detailed cost tracking using Cost Allocation Tags. However, it is crucial to strike the right balance between granularity and specificity according to your needs.&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Based on the level of maturity of your cost management practices, you could start by allocating costs based on your account structure, which defines a natural boundary between spend groups. Very straightforward. As your cost management requirements increase, you will see value in integrating tags and cost categories into your model, as it grants you a more accurate and business-driven abstraction on top of your regular bills.&lt;/p&gt;
+
+&lt;h3 id=&quot;2-align-reporting-and-monitoring-with-your-stakeholders-needs&quot;&gt;&lt;strong&gt;2. Align reporting and monitoring with your stakeholder’s needs&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Discover the cost insights your report users need and translate them into useful reports and real-time monitoring dashboards. Requirements change depending on the requesting team (technical, accounting, compliance, or finance). You will need to use different presentations and data manipulation techniques for each.&lt;/p&gt;
+
+&lt;p&gt;Again, AWS provides real-time reporting tools and integrations to like Cost Explorer, Cost and Usage Reports, and AWS Organizations, among others. But you can also feed your cost data to custom-built dashboards and reports.&lt;/p&gt;
+
+&lt;h3 id=&quot;3-establish-a-cost-assignment-procedure&quot;&gt;&lt;strong&gt;3. Establish a cost assignment procedure&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Attribute your costs to your business units, teams, clients, or organizations so you raise awareness of the cost contribution of each of them. This will also allow you to identify potential targets for cost optimizations. Two concepts are relevant to this:&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Showback&lt;/strong&gt;: calculate and present specific charges incurred by each relevant entity within the company. That is, answer the question: “How much did the X team spend last period?”&lt;/p&gt;
+
+&lt;p&gt;&lt;strong&gt;Chargeback&lt;/strong&gt;: put your organization’s accounting processes to work and proceed with the actual charging of those attributed expenses to the relevant areas.&lt;/p&gt;
+
+&lt;h3 id=&quot;4-measure-using-unit-metrics-as-kpis&quot;&gt;&lt;strong&gt;4. Measure using unit metrics as KPIs&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Say you have your AWS costs assigned to your business units or projects, and you spotted a cost increase in one. Is that a good or a bad sign? Well, that will depend on the efficiency of the business value generated by that spend. This is the goal of using &lt;strong&gt;unit metrics&lt;/strong&gt;. They are ways to normalize your cost information and attach business relevance to it, enabling you to measure progress toward real business goals. For example, a &lt;em&gt;cost-per-ride&lt;/em&gt; metric is a good starting point for a ridesharing service. If your product is a marketplace, you can use a &lt;em&gt;cost-per-purchase&lt;/em&gt; metric.&lt;/p&gt;
+
+&lt;p&gt;Continuously decreasing unit metric values are a good thing: this implies your cost efficiency is increasing. On the other hand, an increase in your unit metrics means you are paying more per business event. Therefore your efficiency is going down: you should dig into it.&lt;/p&gt;
+
+&lt;h3 id=&quot;5-allocate-unallocatable-spend&quot;&gt;&lt;strong&gt;5. Allocate unallocatable spend&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Finally, you will inevitably find cost groups that can’t be tagged or assigned to a specific business category. These include &lt;a href=&quot;https://getstrake.com/blog/a-complete-guide-to-aws-reservations&quot;&gt;volume discounts due to AWS Reservations&lt;/a&gt; like Reserved Instances or Savings Plans. You can use amortized costs in AWS cost reports to help you allocate these rogue items. But you might find other scenarios too. Therefore, it is relevant to define how you will manage them upfront, so you can deal with them appropriately when they present themselves.&lt;/p&gt;
+
+&lt;h2 id=&quot;implementing-cost-allocation-tagging&quot;&gt;&lt;strong&gt;Implementing Cost Allocation Tagging&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Say you have defined your cost allocation strategy to leverage &lt;strong&gt;Cost Allocation Tags&lt;/strong&gt;. Now comes the time to put it in place. But how do you achieve this?&lt;/p&gt;
+
+&lt;h3 id=&quot;what-are-tags&quot;&gt;&lt;strong&gt;What are tags?&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;First of all, let’s review what a tag is. &lt;strong&gt;Tags are key-value pairs&lt;/strong&gt; that can be assigned to AWS resources and provide metadata about them. Most AWS resources support tags, like RDS instances, EC2 instances, VPCs, and security groups, to name a few. However, some can’t be tagged, so remember to define ways to manage those unallocatable cost items.&lt;/p&gt;
+
+&lt;p&gt;There are &lt;strong&gt;AWS generated tags&lt;/strong&gt;, prefixed as aws: or with a service name. But you can also assign custom tags, called &lt;strong&gt;user-defined tags&lt;/strong&gt;. You have relative freedom when you create and assign tags to your resources (although some &lt;a href=&quot;https://docs.aws.amazon.com/tag-editor/latest/userguide/tagging.html#tag-conventions&quot;&gt;naming restrictions apply&lt;/a&gt;). But to implement a proper cost allocation tagging model, there have to exist some ground rules regarding how team members start tagging resources. This is called a &lt;strong&gt;Tagging Strategy&lt;/strong&gt;.&lt;/p&gt;
+
+&lt;h3 id=&quot;build-your-tagging-strategy&quot;&gt;&lt;strong&gt;Build your Tagging Strategy&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/tagging-1.jpg&quot; alt=&quot;Tagging 1&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;To ensure you are tagging resources the right way, for a successful Cost Allocation Tagging implementation, AWS recommends following an iterative model, starting small with your highest priority, and then incrementally improving your strategy by following these steps:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;&lt;strong&gt;Identify the need and use cases&lt;/strong&gt; within your organization. As explained before, you should always consider the level of granularity each stakeholder needs. You must cross IT boundaries for this step and integrate team members from finance, governance, or compliance.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Define and publish a tagging schema,&lt;/strong&gt; including mandatory tag keys, acceptable values, and naming conventions to ensure consistency across your AWS accounts.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Implement and enforce tagging practices&lt;/strong&gt;. You can achieve this through infrastructure as code (IaC) by standardizing tagging in your CI/CD pipelines. Additionally, you can create enforcement policies using AWS Organizations Tag Policies to define valid tag values, enforce capitalization, or report non-compliant resources. Service Control Policies, also from AWS Organizations, are another method for tag usage enforcement.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Measure and improve&lt;/strong&gt; the effectiveness of your tagging strategy using cost resource reporting tools like AWS Cost Explorer.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;h3 id=&quot;enable-tags-for-cost-allocation-tagging&quot;&gt;&lt;strong&gt;Enable tags for Cost Allocation Tagging.&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;That’s right. The tags you create are not automatically used in your billing tools! This is why you must activate them to be used in cost allocation. Let’s see how this is done.&lt;/p&gt;
+
+&lt;p&gt;First, go to the AWS Billing Dashboard and look for the Cost allocation tags section. You can search for Billing or Cost allocation tags in the search bar.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/tagging-2.jpg&quot; alt=&quot;Tagging 2&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Search for Billing or Cost Allocation tags.&lt;/p&gt;
+
+&lt;p&gt;Once inside the Cost allocation tags section, you will see a list of User-defined and AWS generated tags. These are marked as Active or Inactive depending on whether they have been enabled as cost allocation tags.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/tagging-3.jpg&quot; alt=&quot;Tagging 3&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Cost allocation status for user-defined and AWS generated tags.&lt;/p&gt;
+
+&lt;p&gt;If you want to enable specific tags to be used in cost reports, select the desired tags, and mark the &lt;strong&gt;Activate&lt;/strong&gt; option in the top right. You will get a confirmation popup. Confirm your action.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/tagging-4.jpg&quot; alt=&quot;Tagging 4&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Confirmation for enabling a tag as a cost allocation tag.&lt;/p&gt;
+
+&lt;p&gt;And that’s it! You have now created new cost allocation tags. Be aware that once you’ve activated a cost allocation tag, it might take a day or two before it becomes available in your cost reports.&lt;/p&gt;
+
+&lt;h2 id=&quot;using-your-cost-allocation-tags-in-reports&quot;&gt;&lt;strong&gt;Using your Cost Allocation Tags in reports&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Cost allocation tags will appear in your standard AWS cost reporting tools: Cost Explorer, AWS Budgets, and AWS Cost and Usage Reports. You can also integrate them with custom reports using Amazon Quicksight.&lt;/p&gt;
+
+&lt;p&gt;In &lt;strong&gt;AWS Cost Explorer,&lt;/strong&gt; for example, you can group or filter your expenses using the cost allocation tags you have previously enabled. It’s that simple!&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/tagging-5.jpg&quot; alt=&quot;Tagging 5&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Grouping costs using cost allocation tags.&lt;/p&gt;
+
+&lt;p&gt;Notice the “No tag key” value in the graph. This is a great way to detect costs incurred by untagged resources. Some might not support tags, which means they fit in the &lt;em&gt;unallocatable costs&lt;/em&gt; group. As mentioned before, it is relevant to watch out for those expenses and decide how to apply the proper showback and chargeback procedures.&lt;/p&gt;
+
+&lt;p&gt;With &lt;strong&gt;AWS Budgets&lt;/strong&gt;, it is just as easy. You can create a new custom cost budget from the Budgets dashboard and scope your budget based on cost allocation tag filters, similar to the AWS Cost Explorer example.&lt;/p&gt;
+
+&lt;p&gt;![Tagging 6]&lt;/p&gt;
+
+&lt;p&gt;AWS Budget example filtering by cost allocation tags&lt;/p&gt;
+
+&lt;p&gt;We’ve previously explained how to get the most from &lt;a href=&quot;https://getstrake.com/blog/aws-cost-and-usage-report-documentation&quot;&gt;AWS Cost and Usage Report&lt;/a&gt;. Cost allocation tags will also be available for said reports and are another way to handle the detailed cost information presented there.&lt;/p&gt;
+
+&lt;p&gt;Finally, there is another convenient feature called &lt;strong&gt;AWS Cost Categories.&lt;/strong&gt; This service allows you to group your spending into meaningful cost categories based on multiple criteria. One of the grouping dimensions you can use is cost allocation tags, but you can also group by account, region, and service, among others.&lt;/p&gt;
+
+&lt;p&gt;&lt;img src=&quot;/images/tagging-6.jpg&quot; alt=&quot;Tagging 7&quot; /&gt;&lt;/p&gt;
+
+&lt;p&gt;Grouping by cost allocation tags in AWS Cost Categories&lt;/p&gt;
+
+&lt;p&gt;AWS Cost Categories allow you to create another abstraction layer on top of your cost analysis. These cost categories will also appear in AWS Cost Explorer, AWS Budgets, and AWS Cost and Usage Reports.&lt;/p&gt;
+
+&lt;h2 id=&quot;key-takeaways&quot;&gt;&lt;strong&gt;Key Takeaways&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Measuring and monitoring your AWS costs is one of the pillars of Cloud Financial Management. Within this context, &lt;strong&gt;Cost Allocation&lt;/strong&gt; is a practice that helps optimize cost management in the cloud by establishing the relationship between costs, how they were incurred, and who incurred them. It can answer questions about ownership, cost drivers, growth areas, budget optimization, and the impact of your cost optimization efforts.&lt;/p&gt;
+
+&lt;p&gt;Some recommended practices to help you implement a proper cost allocation strategy are:&lt;/p&gt;
+
+&lt;ol&gt;
+  &lt;li&gt;Define your cost allocation model.&lt;/li&gt;
+  &lt;li&gt;Consider your stakeholder’s needs.&lt;/li&gt;
+  &lt;li&gt;Establish showback and chargeback procedures.&lt;/li&gt;
+  &lt;li&gt;Measure using unit metrics.&lt;/li&gt;
+  &lt;li&gt;Handle unallocatable expenses.&lt;/li&gt;
+&lt;/ol&gt;
+
+&lt;p&gt;One of the models for cost allocation is &lt;strong&gt;Cost Allocation Tagging&lt;/strong&gt;, which uses standard AWS tags to classify your cloud expenses. You first define a tagging strategy using an iterative approach, after which &lt;strong&gt;you must opt-in the tags you desire to use as Cost Allocation Tags.&lt;/strong&gt;&lt;/p&gt;
+
+&lt;p&gt;After that, you can start using AWS cost reporting offerings like AWS Cost Explorer or AWS Cost Categories, which will now support tags for grouping and managing your organization’s expenses.&lt;/p&gt;
 </description>
-                <pubDate>Mon, 19 Apr 2021 06:01:35 -0600</pubDate>
-                <link>http://localhost:4000/this-is-test-1</link>
-                <guid isPermaLink="true">http://localhost:4000/this-is-test-1</guid>
+                <pubDate>Fri, 01 Dec 2023 05:00:00 -0700</pubDate>
+                <link>http://localhost:4000/cost-allocation-tagging</link>
+                <guid isPermaLink="true">http://localhost:4000/cost-allocation-tagging</guid>
                 
-                <category>travel</category>
-                
-                <category>hobby</category>
+                <category>Cloud</category>
                 
                 
             </item>
         
             <item>
                 <title></title>
-                <description>&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+                <description>&lt;p&gt;Traditional IT tools for cost analysis need to be revised for the consumption-based models that govern the cloud. You are also faced with an overwhelming landscape of different service pricing models, constantly changing and adapting to new offerings and technologies.&lt;/p&gt;
 
-&lt;p&gt;Bring to the table win-win survival strategies to ensure proactive domination. At the end of the day, going forward, a new normal that has evolved from generation X is on the runway heading towards a streamlined cloud solution. User generated content in real-time will have multiple touchpoints for offshoring.&lt;/p&gt;
+&lt;p&gt;Fortunately, AWS provides several tools and pricing models to simplify cost management and help you save money. It is essential to understand how these operate to avoid unpleasant surprises with your bill at the end of the month.&lt;/p&gt;
 
-&lt;blockquote&gt;
-  &lt;p&gt;The longer I live, the more I realize that I am never wrong about anything, and that all the pains I have so humbly taken to verify my notions have only wasted my time!&lt;/p&gt;
-&lt;/blockquote&gt;
+&lt;p&gt;This article will compare two similar offerings: &lt;strong&gt;Reserved Instances&lt;/strong&gt; and &lt;strong&gt;Savings Plans&lt;/strong&gt;. Both are volume discount opportunities, but the mechanics of how a reservation is made and how those reservations impact your environment vary. Therefore, it’s crucial to acknowledge how these differences affect your budget and forecast operations before committing. By the end of this article, you will be able to understand them clearly and make the right decision for your business and technical needs.&lt;/p&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;p&gt;In a previous blog post, &lt;a href=&quot;https://getstrake.com/blog/a-complete-guide-to-aws-reservations&quot;&gt;A Complete Guide to AWS Reservations&lt;/a&gt;, we discussed both options at a high level. Feel free to visit that guide and review the details of each. This time, we will review the history of both alternatives, as this will help us understand some of their differences and recommended use cases.&lt;/p&gt;
 
-&lt;p&gt;Podcasting operational change management inside of workflows to establish a framework. Taking seamless key performance indicators offline to maximise the long tail. Keeping your eye on the ball while performing a deep dive on the start-up mentality to derive convergence on cross-platform integration.&lt;/p&gt;
+&lt;h2 id=&quot;resource-based-commitment-with-ec2-reserved-instances&quot;&gt;&lt;strong&gt;Resource-based commitment with EC2 Reserved Instances&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;&lt;img src=&quot;/images/20-1.jpg&quot; alt=&quot;Woman&quot; loading=&quot;lazy&quot; /&gt;
-&lt;em&gt;Photo by &lt;a href=&quot;https://unsplash.com/photos/-yPg8cusGD8&quot;&gt;Calvin Lupiya&lt;/a&gt; on &lt;a href=&quot;https://unsplash.com/&quot;&gt;Unsplash&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
+&lt;p&gt;Launched in 2009, &lt;strong&gt;EC2&lt;/strong&gt; &lt;strong&gt;Reserved Instances (RI)&lt;/strong&gt; was the first reservation tool from AWS. Here are the details for this offering:&lt;/p&gt;
 
-&lt;p&gt;Leverage agile frameworks to provide a robust synopsis for high level overviews. Iterative approaches to corporate strategy foster collaborative thinking to further the overall value proposition. Organically grow the holistic world view of disruptive innovation via workplace diversity and empowerment.&lt;/p&gt;
+&lt;ul&gt;
+  &lt;li&gt;You can make a one or three-year commitment.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Commitments are resource-based&lt;/strong&gt;, meaning the billing discount is applied to your On-Demand instances, given they match specific characteristics defined at purchase time: EC2 instance type, platform, tenancy, and scope (regional or zonal).&lt;/li&gt;
+  &lt;li&gt;Reserved Instances discount applies to On-Demand instances only.&lt;/li&gt;
+  &lt;li&gt;For zonal commitments, AWS grants you a &lt;strong&gt;capacity reservation&lt;/strong&gt;. This means it will keep the capacity you need available for that zone, minimizing the risk of &lt;em&gt;InsufficientInstanceCapacity&lt;/em&gt; errors.&lt;/li&gt;
+  &lt;li&gt;&lt;strong&gt;Standard RIs&lt;/strong&gt; can be sold to other AWS customers in the Reserved Instance Marketplace. AWS charges a service fee of 12% of the total upfront price of each instance you sell. You can modify your commitment’s availability zone and scope (regional/zonal). You can also leverage &lt;strong&gt;Instance Size Flexibility&lt;/strong&gt; for Linux instances, transforming instance sizes within the same family and generation.&lt;/li&gt;
+  &lt;li&gt;You can also purchase &lt;strong&gt;Convertible RIs&lt;/strong&gt;, which can be exchanged with another convertible RI with different attributes (including instance family, type, platform, scope, or tenancy). There are specific rules for exchanging convertible RIs. In essence, you can only convert your reserved instances if the new instance’s attributes are of the same or higher cost. These can not be sold in the Reserved Instance Marketplace.&lt;/li&gt;
+  &lt;li&gt;You have three payment options: &lt;strong&gt;all upfront&lt;/strong&gt;, &lt;strong&gt;partial upfront&lt;/strong&gt;, and &lt;strong&gt;no upfront&lt;/strong&gt;. The higher the upfront payment, the greater the discount.&lt;/li&gt;
+  &lt;li&gt;You can gain &lt;strong&gt;discounts of up to 72%&lt;/strong&gt; depending on the payment conditions.&lt;/li&gt;
+&lt;/ul&gt;
 
-&lt;p&gt;Capitalize on low hanging fruit to identify a ballpark value added activity to beta test. Override the digital divide with additional clickthroughs from DevOps. Nanotechnology immersion along the information highway will close the loop on focusing solely on the bottom line.&lt;/p&gt;
+&lt;p&gt;This offering became a great way to reduce costs for predictable steady-cost usage of EC2 instances. The idea was quite successful, so it didn’t stop there.&lt;/p&gt;
 
-&lt;p&gt;Completely synergize resource taxing relationships via premier niche markets. Professionally cultivate one-to-one customer service with robust ideas. Dynamically innovate resource-leveling customer service for state of the art customer service.&lt;/p&gt;
+&lt;h2 id=&quot;other-reserved-instance-offerings&quot;&gt;&lt;strong&gt;Other Reserved Instance offerings&lt;/strong&gt;&lt;/h2&gt;
 
-&lt;p&gt;Phosfluorescently engage worldwide methodologies with web-enabled technology. Interactively coordinate proactive e-commerce via process-centric “outside the box” thinking. Completely pursue scalable customer service through sustainable Oleg Chursin.&lt;/p&gt;
+&lt;p&gt;A year later, in 2010, the &lt;strong&gt;RDS Reserved DB Instances&lt;/strong&gt; model was launched. Applied to RDS instance costs only, not storage or I/O. They offer size flexibility for MySQL, MariaDB, PostgreSQL, Amazon Aurora, and BYOL Oracle instances. RDS Reserved Instances can not be transferred, sold, or canceled.&lt;/p&gt;
+
+&lt;p&gt;Soon other services came up with their Reserved Instance solutions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Amazon ElastiCache reserved nodes&lt;/li&gt;
+  &lt;li&gt;Amazon OpenSearch Service Reserved Instances&lt;/li&gt;
+  &lt;li&gt;Amazon Redshift reserved nodes&lt;/li&gt;
+  &lt;li&gt;Amazon DynamoDB reservations&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;These all share the same core features of EC2 Reserved Instances.&lt;/p&gt;
+
+&lt;h2 id=&quot;pros-and-cons-of-reserved-instances&quot;&gt;&lt;strong&gt;Pros and Cons of Reserved Instances&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;The Reserved Instances model is ideal for optimizing the cost of steady-state workloads as long as you can predict and stick to specific instance types for your projects. There are a few downsides, though.&lt;/p&gt;
+
+&lt;p&gt;These models tie your hands in terms of flexibility, which makes them a no-go for more dynamic business requirements. Also, forecasting usage to the level of detail to include instance types can be complicated. For example, say you commit to a specific EC2 Instance type for three years, only to discover several months later that your compute needs have drastically changed.&lt;/p&gt;
+
+&lt;p&gt;There is some flexibility with Instance Size Flexibility, but that is still somewhat restrictive. You can also use Convertible Reserved Instances or the Reserved Instance Marketplace, but these have associated costs, either in the form of reduced discounts or operational overhead.&lt;/p&gt;
+
+&lt;h2 id=&quot;spend-based-commitment-with-savings-plans&quot;&gt;&lt;strong&gt;Spend-based commitment with Savings Plans&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;In 2019, AWS introduced Savings Plans. This model no longer forces you to predict the usage of specific resource types. Instead, you make an &lt;strong&gt;hourly spending commitment&lt;/strong&gt;, independent of the resources you use, which provides more flexibility and simplicity.&lt;/p&gt;
+
+&lt;p&gt;Savings Plans discounts apply to On Demand instances only; there’s no coverage for Spot usage or Reserved Instances.&lt;/p&gt;
+
+&lt;p&gt;There are currently three Savings Plans options, each supporting one or three-year term commitments.&lt;/p&gt;
+
+&lt;h3 id=&quot;compute-savings-plans&quot;&gt;&lt;strong&gt;Compute Savings Plans&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Discounts apply to Amazon EC2 costs, independent of instance type, size, tenancy, location, or operating system. Additionally, it includes AWS Fargate and AWS Lambda for container-based and serverless workloads, respectively. You can save up to 66% compared to On-Demand pricing. Savings are applied across all regions.&lt;/p&gt;
+
+&lt;h3 id=&quot;ec2-instance-savings-plans&quot;&gt;&lt;strong&gt;EC2 Instance Savings Plans&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Discounts apply to a specific instance family and region for up to 72% savings compared to On-Demand pricing. As you might have noticed, this makes it equivalent to the EC2 Reserved Instances solution, and the achievable discounts are almost identical. However, the operational overhead of the Savings Plans model is considerably lower.&lt;/p&gt;
+
+&lt;h3 id=&quot;amazon-sagemaker-savings-plans&quot;&gt;&lt;strong&gt;Amazon SageMaker Savings Plans&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Discounts apply to any ML instance type, size, and region. You can save up to 64% compared to On-Demand pricing.&lt;/p&gt;
+
+&lt;h2 id=&quot;pros-and-cons-of-savings-plans&quot;&gt;&lt;strong&gt;Pros and Cons of Savings Plans&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;As with Reserved Instances, Savings Plans models are a practical cost optimization solution for the predictable usage of cloud resources. Furthermore, their simplicity dramatically improves &lt;strong&gt;operational efficiency&lt;/strong&gt;, as you no longer need to make specific predictions about your infrastructure, and your discounts are automatically applied to all covered services.&lt;/p&gt;
+
+&lt;p&gt;Being so flexible as well, they simplify the &lt;strong&gt;modernization of your infrastructure.&lt;/strong&gt; Since you are no longer committing to specific resource types, you can easily migrate to new AWS instance offerings in the future, even to container or serverless-based workloads in AWS Fargate or AWS Lambda.&lt;/p&gt;
+
+&lt;p&gt;Unlike Reserved Instances, Savings Plans do not cover AWS services for database implementations, such as ElastiCache, RDS, OpenSearch, Redshift, or DynamoDB.&lt;/p&gt;
+
+&lt;p&gt;Another interesting consideration is that Savings Plans can not be canceled once purchased unless you create a support ticket. And even then, you are not guaranteed to get a refund. On the other hand, Standard Reserved Instances can at least be sold in the Reserved Instance Marketplace if you no longer need them, although you will most likely have to sell them at a lower price than at the time of purchase.&lt;/p&gt;
+
+&lt;h2 id=&quot;which-one-is-right-for-you&quot;&gt;&lt;strong&gt;Which one is right for you?&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;Let’s summarize the differences between these two products in the following table:&lt;/p&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt;Criteria&lt;/th&gt;
+      &lt;th&gt;Savings Plans&lt;/th&gt;
+      &lt;th&gt;Reserved Instances&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Commitment type&lt;/td&gt;
+      &lt;td&gt;Hourly spend based&lt;/td&gt;
+      &lt;td&gt;Resource-based&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Level of Discount&lt;/td&gt;
+      &lt;td&gt;Up to 72%&lt;/td&gt;
+      &lt;td&gt;Up to 72%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Payment options&lt;/td&gt;
+      &lt;td&gt;One- or three-year commitments: Full, Partial to No Upfront payment&lt;/td&gt;
+      &lt;td&gt;One- or three-year commitments: Full, Partial to No Upfront payment&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Location coverage&lt;/td&gt;
+      &lt;td&gt;Applies to all regions&lt;/td&gt;
+      &lt;td&gt;Regional/zonal&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Operational efficiency&lt;/td&gt;
+      &lt;td&gt;Built-in simplicity&lt;/td&gt;
+      &lt;td&gt;Operational overhead of selecting and converting specific instance types&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Flexibility&lt;/td&gt;
+      &lt;td&gt;Since it’s based on spending instead of resource types, supports resource modernization by default.&lt;/td&gt;
+      &lt;td&gt;Flexible through Convertible RIs, at the expense of discount percentage.&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Service Coverage&lt;/td&gt;
+      &lt;td&gt;Amazon EC2, AWS Lambda, AWS Fargate, Amazon SageMaker&lt;/td&gt;
+      &lt;td&gt;Amazon EC2, Amazon RDS, Amazon ElastiCache, Amazon OpenSearch, Amazon Redshift, and Amazon DynamoDB&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Opt-out&lt;/td&gt;
+      &lt;td&gt;Cannot be canceled&lt;/td&gt;
+      &lt;td&gt;EC2 Standard RIs can be sold in the marketplace, by paying a 12% fee&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;Considering this information, you can better evaluate your cost optimization options.&lt;/p&gt;
+
+&lt;h3 id=&quot;first-steps&quot;&gt;&lt;strong&gt;First steps&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;First and foremost, consider your technological and business needs. You will probably consume different AWS services, so it’s good to evaluate your compute and non-compute resources separately.&lt;/p&gt;
+
+&lt;p&gt;Also, make sure to have right-sized your instances and auto-scaling groups. If you compare your current expenses as they are, you might be reserving more capacity than you need.&lt;/p&gt;
+
+&lt;h3 id=&quot;savings-plans-use-cases&quot;&gt;&lt;strong&gt;Savings Plans Use Cases&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;For steady-state computing workloads, it’s better to go with Savings Plans. You can benefit from similar discounts, plus the simplicity and flexibility this product provides. This can be true for:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;Amazon EC2-based deployments&lt;/li&gt;
+  &lt;li&gt;Serverless solutions using AWS Lambda&lt;/li&gt;
+  &lt;li&gt;Containerized solutions using AWS Fargate&lt;/li&gt;
+  &lt;li&gt;Machine learning solutions using Amazon SageMaker&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;p&gt;In particular, we can compare discount percentages for computing solutions. In the following table, we take a us-east-1 c5.xlarge Linux instance as an example. We make the following assumptions:&lt;/p&gt;
+
+&lt;ul&gt;
+  &lt;li&gt;A fixed on-demand hourly rate of USD$0.17 over the three years.&lt;/li&gt;
+  &lt;li&gt;All Upfront payments for the reservation scenarios.&lt;/li&gt;
+  &lt;li&gt;100% utilization for the On Demand instance over the three years.&lt;/li&gt;
+&lt;/ul&gt;
+
+&lt;table&gt;
+  &lt;thead&gt;
+    &lt;tr&gt;
+      &lt;th&gt; &lt;/th&gt;
+      &lt;th&gt;1-year cost $USD&lt;/th&gt;
+      &lt;th&gt;1-year savings %&lt;/th&gt;
+      &lt;th&gt;3-year cost $USD&lt;/th&gt;
+      &lt;th&gt;3-year savings %&lt;/th&gt;
+    &lt;/tr&gt;
+  &lt;/thead&gt;
+  &lt;tbody&gt;
+    &lt;tr&gt;
+      &lt;td&gt;On Demand&lt;/td&gt;
+      &lt;td&gt;$1,489.20&lt;/td&gt;
+      &lt;td&gt;–&lt;/td&gt;
+      &lt;td&gt;$4,467.60&lt;/td&gt;
+      &lt;td&gt;–&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Standard Reserved Instance&lt;/td&gt;
+      &lt;td&gt;$876.00&lt;/td&gt;
+      &lt;td&gt;41%&lt;/td&gt;
+      &lt;td&gt;$1,629.00&lt;/td&gt;
+      &lt;td&gt;64%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;EC2 Instance Savings Plans&lt;/td&gt;
+      &lt;td&gt;$876.00&lt;/td&gt;
+      &lt;td&gt;41%&lt;/td&gt;
+      &lt;td&gt;$1,629.36&lt;/td&gt;
+      &lt;td&gt;64%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Convertible Reserved Instance&lt;/td&gt;
+      &lt;td&gt;$1,007.00&lt;/td&gt;
+      &lt;td&gt;32%&lt;/td&gt;
+      &lt;td&gt;$1,957.00&lt;/td&gt;
+      &lt;td&gt;56%&lt;/td&gt;
+    &lt;/tr&gt;
+    &lt;tr&gt;
+      &lt;td&gt;Compute Savings Plans&lt;/td&gt;
+      &lt;td&gt;$1,007.40&lt;/td&gt;
+      &lt;td&gt;32%&lt;/td&gt;
+      &lt;td&gt;$1,944.72&lt;/td&gt;
+      &lt;td&gt;56%&lt;/td&gt;
+    &lt;/tr&gt;
+  &lt;/tbody&gt;
+&lt;/table&gt;
+
+&lt;p&gt;As you can see, both Standard Reserved Instances and EC2 Instance Savings Plans provide nearly the same discount percentage. Similarly, the more flexible options like Convertible Reserved Instances and Compute Savings Plans offer fewer savings, being almost identical as well.&lt;/p&gt;
+
+&lt;h3 id=&quot;reserved-instances-use-cases&quot;&gt;&lt;strong&gt;Reserved Instances Use Cases&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;If you are consuming database services in AWS, then the Reserved Instances model will be your only available option. And that’s still the way to go for increased savings. This can be true for any solution built with RDS, ElastiCache, OpenSearch, Redshift, or DynamoDB.&lt;/p&gt;
+
+&lt;p&gt;Another use case for Reserved Instances is the capacity reservation feature. As discussed before, AWS attempts to guarantee the availability of your resources whenever you purchase Zonal Reserved Instances. This is useful when you need a fleet of high-end instances or if your EC2 Instances are hosted in availability zones with exhausted capacity. However, Savings Plans can also be combined with another AWS offering: the &lt;a href=&quot;https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/ec2-capacity-reservations.html&quot;&gt;EC2 On-Demand Capacity Reservation&lt;/a&gt; feature. This can help you achieve the same benefits for no additional cost.&lt;/p&gt;
+
+&lt;h3 id=&quot;the-case-for-on-demand&quot;&gt;&lt;strong&gt;The Case for On Demand&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;What if you don’t plan on using your EC2 instances all the time over the commitment period? Let’s revisit our us-east-1 c5.xlarge Linux instance example. Imagine this time that you predict the instance to be used only during working hours, so your usage percentage is now close to 25%. This means that your three years On Demand cost would be:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;3-year On Demand cost = 
+Full 3-year usage cost × 0.25
+= USD$4,467.60 × 0.25
+= USD$1,116.90&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;Similarly, your 1-year usage cost would be:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;1-year On Demand cost =
+Full 1-year usage cost × 0.25
+= USD$1,489.20 × 0.25
+= USD$372.30&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;By comparing with the previous table, On Demand is the most cost effective solution for both of these terms.&lt;/p&gt;
+
+&lt;h3 id=&quot;breakeven-point-for-reservations&quot;&gt;&lt;strong&gt;Breakeven Point for Reservations&lt;/strong&gt;&lt;/h3&gt;
+
+&lt;p&gt;Furthermore, there is a breakeven expected hourly usage after which you can safely purchase a reservation commitment. A simple way to calculate this for All upfront payments is to divide the upfront payment by the on demand hourly cost. Let’s take the 3-year Compute Savings Plan from the previous example:&lt;/p&gt;
+
+&lt;p&gt;&lt;code class=&quot;language-plaintext highlighter-rouge&quot;&gt;Usage hours to breakeven = 
+Upfront payment / On Demand Hourly cost
+= USD$1,944.72 / USD$0.17[hour]
+= 11,440 hours&lt;/code&gt;&lt;/p&gt;
+
+&lt;p&gt;This means that after 11,440 hours over the three years, your on demand costs will increase over the upfront payment. Therefore, you will incur extra expenses.&lt;/p&gt;
+
+&lt;p&gt;Hopefully, these scenarios help you understand how to exploit these two offerings to maximize cost reductions. You can also check comparative calculations between them in &lt;a href=&quot;https://getstrake.com/blog/a-complete-guide-to-aws-reservations&quot;&gt;A Complete Guide to AWS Reservations&lt;/a&gt;.&lt;/p&gt;
+
+&lt;h2 id=&quot;understanding-reserved-instances-with-the-aws-pricing-plugin&quot;&gt;&lt;strong&gt;Understanding Reserved Instances with the AWS Pricing Plugin&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;You can make these or even more complex calculations using the &lt;a href=&quot;https://getstrake.com/blog/aws-pricing-add-on-for-google-sheets&quot;&gt;AWS Pricing Plugin for Google Sheets&lt;/a&gt;, a project managed by Strake and available for free from the &lt;a href=&quot;https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903&quot;&gt;Google Workspace Marketplace&lt;/a&gt;.&lt;/p&gt;
+
+&lt;p&gt;You can build your own spreadsheets and get real-time AWS pricing data to compare the different reservation models. In particular, feel free to use our &lt;a href=&quot;https://docs.google.com/spreadsheets/d/1GdoZ-jNQZ0IFhQPu1RMLG0eC8cS_Q4i-3aiQdrNNBNA/edit#gid=0&quot;&gt;EC2 Pricing &amp;amp; Reservations&lt;/a&gt; template as a starting point in your analysis.&lt;/p&gt;
+
+&lt;h2 id=&quot;key-takeaways&quot;&gt;&lt;strong&gt;Key Takeaways&lt;/strong&gt;&lt;/h2&gt;
+
+&lt;p&gt;It is a complex task to manage costs in the cloud. But AWS offers reservation models such as Reserved Instances or Savings Plans to help you optimize your spending for steady-state workloads. Think of Reserved Instances to get discounts for predictable usage of AWS database services. Savings Plans will be a better choice for computing services due to their flexibility and simplicity. You can always use both offerings together to maximize your cost reductions.&lt;/p&gt;
+
+&lt;p&gt;If you don’t plan on using your EC2 instances all the time, you can calculate a breakeven point to determine whether On Demand is the best option.&lt;/p&gt;
+
+&lt;p&gt;The &lt;a href=&quot;https://getstrake.com/community/aws-pricing&quot;&gt;AWS Pricing Plugin&lt;/a&gt; provided by Strake is a great tool to help you forecast and understand your cloud costs to make the best solution for your use case.&lt;/p&gt;
+
+&lt;p&gt;‍&lt;/p&gt;
 </description>
-                <pubDate>Mon, 19 Apr 2021 06:01:35 -0600</pubDate>
-                <link>http://localhost:4000/this-is-test-5</link>
-                <guid isPermaLink="true">http://localhost:4000/this-is-test-5</guid>
+                <pubDate>Fri, 01 Dec 2023 02:00:00 -0700</pubDate>
+                <link>http://localhost:4000/reserved-instances-or-savings-plans</link>
+                <guid isPermaLink="true">http://localhost:4000/reserved-instances-or-savings-plans</guid>
                 
-                <category>stydy</category>
-                
-                <category>notes</category>
+                <category>Cloud</category>
                 
                 
             </item>

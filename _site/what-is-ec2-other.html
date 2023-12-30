@@ -6,22 +6,22 @@
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
-  <title>AWS Update 1.1</title>
-  <meta name='description' content='Major updates from AWS'>
+  <title>What is EC2-Other?</title>
+  <meta name='description' content='EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your ...'>
 
-  <link rel="canonical" href="http://localhost:4000/templates/aws-template">
+  <link rel="canonical" href="http://localhost:4000/what-is-ec2-other">
   <link rel="alternate" type="application/rss+xml" title="EightLake" href="/feed.xml">
 
   <!-- Twitter Card -->
   <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:title" content="AWS Update 1.1 – EightLake">
-  <meta name="twitter:description" content="Major updates from AWS">
-  <meta name="twitter:image:src" content="http://localhost:4000/images/20.jpg">
+  <meta name="twitter:title" content="What is EC2-Other? – EightLake">
+  <meta name="twitter:description" content="EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within &apos;EC2-Other&apos;. All the code in this blog post is included in the Developer&apos;s Guide to AWS Costs guide for EC2.">
+  <meta name="twitter:image:src" content="http://localhost:4000/images/ec2-other.jpg">
 
   <!-- Facebook OpenGraph -->
-  <meta property="og:title" content="AWS Update 1.1 – EightLake">
-  <meta property="og:description" content="Major updates from AWS">
-  <meta property="og:image" content="http://localhost:4000/images/20.jpg">
+  <meta property="og:title" content="What is EC2-Other? – EightLake">
+  <meta property="og:description" content="EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within &apos;EC2-Other&apos;. All the code in this blog post is included in the Developer&apos;s Guide to AWS Costs guide for EC2.">
+  <meta property="og:image" content="http://localhost:4000/images/ec2-other.jpg">
 
   <!-- Fonts -->
   <link rel="preconnect" href="https://fonts.gstatic.com">
@@ -218,31 +218,32 @@
           
           <div class="post__tags">
             
-            <a href="/tags/?tag=aws" class="post__tag">AWS</a>
+            <a href="/tags/?tag=cloud" class="post__tag">Cloud</a>
             
           </div>
           
 
-          <h1 class="post__title">AWS Update 1.1</h1>
+          <h1 class="post__title">What is EC2-Other?</h1>
 
           
-          <p class="post__description">Major updates from AWS</p>
+          <p class="post__description">EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within 'EC2-Other'. All the code in this blog post is included in the Developer's Guide to AWS Costs guide for EC2.</p>
           
 
           <div class="post__meta">
             
 
             
-            <a href="/admin" class="post__author__image">
-              <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+            <a href="/about/" class="post__author__image">
+              <img class="lazy" data-src="/images/lake.jpg"
+                alt="EightLake">
             </a>
             
 
             <div class="post__meta-bottom">
               
-                <a class="post__author__name" href="/admin">Brian Regan</a>
+                <a class="post__author__name" href="/about/">EightLake</a>
               
-              <time class="post__date" datetime="2022-12-31T20:00:00-07:00">31 December 2022</time>
+              <time class="post__date" datetime="2023-12-06T02:00:00-07:00">06 December 2023</time>
             </div>
           </div>
 
@@ -254,10 +255,10 @@
       
       <div class="col col-5 push-1 col-d-12 push-d-0">
         <div class="post-image">
-          <img class="lazy" data-src="/images/20.jpg" alt="AWS Update 1.1">
+          <img class="lazy" data-src="/images/ec2-other.jpg" alt="What is EC2-Other?">
         </div>
         
-          <div class="post-image-caption">If the AWS logo was a member of the Followship of the Ring.
+          <div class="post-image-caption">What is EC2-Other?
 </div>
         
       </div>
@@ -275,11 +276,208 @@
   <article class="post">
 
     <div class="post__content">
-      <h2 id="what-is-new-with-aws">What is new with AWS?</h2>
+      <p>EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within ‘EC2-Other’. All the code in this blog post is included in the <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs">Developer’s Guide to AWS Costs guide for EC2</a>.</p>
 
-<h3 id="why-do-we-care">Why do we care?</h3>
-<p>I don’t know why we care, but we have to!</p>
+<h2 id="understanding-ec2-costs"><strong>Understanding EC2 Costs</strong></h2>
 
+<p>Before we can unpack what costs live in the ‘EC2-Other’ category, you have to understand what this category means to <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs">total EC2 costs</a> and how EC2 costs are calculated in various AWS reporting tools.</p>
+
+<p>After researching this problem, I put together the table below for how different AWS reporting tools display total EC2 costs. Below the table, I summarize the different reporting methodologies and how these values relate. Please note that this is only true for on-demand EC2 usage.</p>
+
+<h3 id="calculating-total-ec2-costs"><strong>Calculating Total EC2 Costs</strong></h3>
+
+<table>
+  <thead>
+    <tr>
+      <th>AWS Bill</th>
+      <th>CUR (ServiceCode)</th>
+      <th>AWS Cost Explorer</th>
+      <th>CUR (ProductCode)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Elastic Compute Cloud</td>
+      <td>AmazonEC2</td>
+      <td>EC2-Instances</td>
+      <td>AmazonEC2</td>
+    </tr>
+    <tr>
+      <td>Data Transfer (partial)</td>
+      <td>AWSDataTransfer (partial)</td>
+      <td>EC2-Other</td>
+      <td>AmazonEC2</td>
+    </tr>
+  </tbody>
+</table>
+
+<h3 id="aws-bill"><strong>‍AWS Bill</strong></h3>
+
+<p>The AWS Bill category ‘Elastic Compute Cloud’ combines EC2 instance running costs, NAT Gateway, EBS, and all EC2 costs <strong>except data transfer</strong>. A second category in the AWS Bill called ‘Data Transfer’ combines data transfer costs for many different AWS Services. Unfortunately, EC2 Data Transfer costs cannot be isolated using only your AWS Bill.</p>
+
+<h3 id="aws-cost-explorer"><strong>AWS Cost Explorer</strong></h3>
+
+<p>When you search for ‘EC2’ under ‘Service’ in Cost Explorer, there are four options that come up:</p>
+
+<ul>
+  <li>EC2-Instances (Elastic Compute Cloud - Compute)</li>
+  <li>EC2-Other</li>
+  <li>EC2-ELB (Elastic Load Balancing)</li>
+  <li>EC2 Container Registry (ECR)</li>
+</ul>
+
+<p>The first two combined, EC2-Instances and EC2-Other, make up your total EC2 costs (including data transfer for EC2). The second two, EC2-ELB and EC2 Container Registry, can be ignored because they are different services altogether.</p>
+
+<p>The EC2-Instances category isolates the hourly cost of running your EC2 instances. One of the benefits of this category is that customers can quickly identify the instance costs that can be covered with reservations. EC2-Other is a calculation that combines all other costs driven by EC2 usage: EBS, NAT Gateway, EC2’s portion of Data Transfer, and others.</p>
+
+<p>With these two categories, EC2-Instances and EC2-Other, customers can get the total cost of running their EC2 instances. However, since this cost includes EC2’s portion of data transfer costs, this will not be the same as the AWS Bill’s cost for ‘Elastic Compute Cloud’ if there is any data transfer cost.</p>
+
+<h3 id="aws-cost-and-usage-report-cur"><strong>AWS Cost and Usage Report (CUR)</strong></h3>
+
+<p>The CUR is the source of truth for all AWS billing. In the Developer’s Guide to AWS, I go into much more detail about the CUR, provide a data dictionary, and share instructions for setting up the CUR in your AWS Account.</p>
+
+<p>For this discussion about EC2-Other costs, there are two fields that matter:</p>
+
+<ol>
+  <li>[lineItem/ProductCode] - the value ‘AmazonEC2’ captures all costs associated with running EC2 instances (including Data Transfer).</li>
+  <li>[product/ServiceCode] - the valued ‘AmazonEC2’ will show all EC2 costs other than Data Transfer, and ‘AWSDataTransfer’ is used for data transfer costs by any AWS Service.</li>
+</ol>
+
+<h3 id="data-sources-key-takeaways"><strong>Data Sources Key Takeaways</strong></h3>
+
+<p>There are three key takeaways from the different AWS data sources before we dig into the cost categories that make up EC2-Other.</p>
+
+<p><strong>First:</strong> EC2-Other is a calculated metric from Cost explorer. This metric calculates the total cost of running your EC2 instances, less the fixed hourly instance running costs.</p>
+
+<p><strong>Second:</strong> If you want to dig into costs for categories on your AWS Bill, the top cost categories on the AWS Bill align to the CUR’s [product/ServiceCode] fields:</p>
+
+<table>
+  <thead>
+    <tr>
+      <th>AWS Bill Categories</th>
+      <th>[product/ServiceCode] Values</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Elastic Compute Cloud</td>
+      <td>AmazonEC2</td>
+    </tr>
+    <tr>
+      <td>Data Transfer</td>
+      <td>AWSDataTransfer</td>
+    </tr>
+  </tbody>
+</table>
+
+<p><strong>Third:</strong> The sum of EC2-Instances and EC2-Other from cost explorer:<strong>‍</strong></p>
+
+<ul>
+  <li><strong>IS</strong> equal to [lineItem/ProductCode] is ‘AmazonEC2’<strong>‍</strong></li>
+  <li><strong>IS NOT</strong> equal to ‘Elastic Compute Cloud’ on the AWS Bill because this field does not include EC2’s portion of Data Transfer costs.</li>
+</ul>
+
+<h2 id="visibility-into-ec2-other-costs"><strong>Visibility into EC2-Other Costs</strong></h2>
+
+<p>In the <a href="https://getstrake.com/community/developers-guide-to-aws-costs">Developer’s Guide to AWS Costs</a>, the first service I posted a guide for was EC2. In this guide, I broke EC2 costs into three logical categories:</p>
+
+<ol>
+  <li><strong><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#existence">Existence Cost</a></strong> - <em>EC2-Instances</em> in cost explorer - This identifies the cost of having an EC2 instance running regardless of the resource activity. This cost is based on an hourly rate determined by your instance type, region, and whether you’re using contractual reservations or spot instances.</li>
+  <li><strong><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#utilization">Utilization Cost</a></strong> - <em>part of</em> <em>EC2 - Other</em> in cost explorer - On top of the flat rate for having an instance running, some costs come from how an EC2 instance is utilized. These costs are driven by a usage-based metric such as $ per GB-month. The most common Utilization cost for EC2 is data transfer.</li>
+  <li><strong><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#subresource">Subresource Cost</a></strong> - <em>the second part of</em> <em>EC2 - Other</em> in cost explorer - This is incurred for resources attached to or directly interacting with your EC2 instance. An easy example of EC2 is EBS Volumes used for EC2 instance storage.</li>
+</ol>
+
+<p>I broke down the ‘EC2-Other’ category from Cost Explorer into Utilization and Subresource costs. Utilization focuses on how your EC2 resources are used, while Subresources isolates other resources (NAT Gateways or EBS Volumes, for example) that contribute to your total EC2 cost.</p>
+
+<h2 id="total-ec2-other-costs"><strong>Total EC2-Other Costs</strong></h2>
+
+<h3 id="utilization-costs"><strong>Utilization Costs</strong></h3>
+
+<p>To isolate <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#utilization">Utilization Costs</a> by Operation, use the query below. This query isolates your EC2 instances using the <strong>[lineItem/ResourceId]</strong> field and filters out types <strong>[lineItem/UsageType]</strong> and <strong>[lineItem/Operation]</strong> fields that indicate Existence cost.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-Utilization Costs
+--Utilization costs for EC2 by line item operation
+SELECT	[lineItem/Operation],	round(sum([lineItem/UnblendedCost]), 4) as utilization_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is 'AmazonEC2'	and [lineItem/ResourceId] LIKE 'i-%'	and [lineItem/UsageType] NOT LIKE     '%BoxUsage%'	and [lineItem/Operation] NOT LIKE 'RunInstances%'	and [lineItem/LineItemType] is 'Usage'
+GROUP BY	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);`
+</code></pre></div></div>
+
+<p>Some of the sample values from <strong>[lineItem/Operation]</strong> that indicate Utilization costs include:</p>
+
+<ul>
+  <li>VPCPeering-In and VPCPeering-Out - VPC Peering connections between the VPCs allow you to route traffic using private IP Addresses. All VPC Peering connections in the same AWS Region are charged at <strong>$0.01/GB</strong>.</li>
+  <li>PublicIP-In and PublicIP-Out - These track the costs of transferring data ‘in’ or ‘out’ from a public or Elastic IPv4 address. This traffic is charged at <strong>$0.01/GB</strong> in each direction.</li>
+  <li>InterZone-In and InterZone-Out - These are the costs associated with transferring data ‘In’ or ‘Out’ of EC2. Data transfer ‘In’ from the internet is free, but there are charges for data transfer ‘out’ to either the internet or other AWS Services. If you want to see the costs from AWS that show data transfer costs from EC2 to each region or product, those are posted on the <a href="https://aws.amazon.com/ec2/pricing/on-demand/">EC2 pricing page</a> under Data Transfer.</li>
+</ul>
+
+<p>If you add the <strong>[product/ServiceCode]</strong> field to the SELECT statement of this query, you will be able to see which costs are categorized as ‘AWSDataTransfer’ and which are ‘AmazonEC2’.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-Subresource Costs
+--Subresource costs for EBS Volumes
+SELECT DISTINCT	[lineItem/ResourceID],	[lineItem/LineItemType],	[lineItem/Operation],	round(sum([lineItem/    UnblendedCost]), 4) as subresource_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is 'AmazonEC2'	and [lineItem/ResourceId] LIKE 'vol-%'
+GROUP BY	[lineItem/ResourceID],	[lineitem/lineitemtype],	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);`
+</code></pre></div></div>
+
+<h2 id="subresource-cost"><strong>‍Subresource Cost</strong></h2>
+
+<p>There are three main categories of <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#subresource">Subresources</a> customers should have the ability to analyze in more detail:</p>
+
+<h3 id="ebs-volumes"><strong>EBS Volumes</strong></h3>
+
+<ul>
+  <li><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#ebs">EBS volumes</a> are identified by filtering the <strong>[lineItem/ResourceID]</strong> field for items that contain <em>vol-%</em>.</li>
+  <li>There are two main types of costs for EBS Volumes that show up in the <strong>[lineItem/Operation]</strong> field: IO Usage: read and write costs and CreateVolume: costs for creating provisioned EBS Volumes.</li>
+  <li><code class="language-plaintext highlighter-rouge">-Subresource Costs
+--Subresource costs for EBS Volumes
+SELECT DISTINCT	[lineItem/ResourceID],	[lineItem/LineItemType],	[lineItem/Operation],	round(sum([lineItem/UnblendedCost]), 4) as subresource_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is 'AmazonEC2'	and [lineItem/ResourceId] LIKE 'vol-%'
+GROUP BY	[lineItem/ResourceID],	[lineitem/lineitemtype],	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);</code></li>
+</ul>
+
+<h3 id="ebs-volume-snapshots"><strong>‍EBS Volume Snapshots</strong></h3>
+
+<ul>
+  <li><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#snapshots">EBS Volume Snapshots</a> are identified by filtering the <strong>[lineItem/ResourceID]</strong> field for items that contain <em>%snapshot%</em>.</li>
+  <li>Only one main cost category for EBS Volume Snapshots shows up in the <strong>[lineItem/Operation]</strong> field: CreateSnapshot, which captures the cost per GB for storing snapshots.</li>
+  <li><code class="language-plaintext highlighter-rouge">-Subresource Costs
+--Subresource costs for EBS Volume Snapshots
+SELECT DISTINCT	[lineItem/ResourceID],	[lineItem/LineItemType],	[lineItem/Operation],	round(sum([lineItem/UnblendedCost]), 4) as subresource_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is 'AmazonEC2'	and [lineItem/ResourceId] LIKE '%snapshot%'
+GROUP BY	[lineItem/ResourceID],	[lineitem/lineitemtype],	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);</code></li>
+</ul>
+
+<h3 id="nat-gateways"><strong>‍NAT Gateways</strong></h3>
+
+<ul>
+  <li><a href="https://strake.webflow.io/blog/aws-cost-analysis-amazon-ec2-costs#nat-gateway">NAT Gateways</a> are identified by filtering the <strong>[lineItem/ResourceID]</strong> field for items that contain <em>%natgateway%</em>.</li>
+  <li>There are many different cost categories for NAT Gateways, but they are primarily driven by data transfer or data processing fees.</li>
+  <li><code class="language-plaintext highlighter-rouge">-Subresource Costs
+--Subresource costs for NAT Gateways
+SELECT DISTINCT	[lineItem/ResourceID],	[lineItem/LineItemType],	[lineItem/Operation],	round(sum([lineItem/UnblendedCost]), 4) as subresource_cost
+FROM CUR
+WHERE	[lineItem/ProductCode] is 'AmazonEC2'	and [lineItem/ResourceId] LIKE '%natgateway%'
+GROUP BY	[lineItem/ResourceID],	[lineitem/lineitemtype],	[lineItem/Operation]
+ORDER BY	sum([lineItem/UnblendedCost]);</code></li>
+</ul>
+
+<h2 id="further-reading"><strong>Further Reading</strong></h2>
+
+<p>Thank you for reading! If you are looking for more information on EC2 Costs, you can read the full <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs">EC2 Cost Guide</a> on the <a href="https://getstrake.com/community/developers-guide-to-aws-costs">Developer’s Guide to AWS Costs</a>. If your team is working to understand your AWS costs, here are some additional resources for you:</p>
+
+<ol>
+  <li>A <a href="https://getstrake.com/blog/cost-and-usage-report-setup">Cost and Usage Report Setup Guide</a> including IAM Permissions</li>
+  <li><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-rds-costs">Relational Database Service Cost Guide</a> to understand your RDS costs</li>
+  <li>To get in touch with our team with additional questions, <a href="mailto:developer-relations@getstrake.com">email us</a> or leave us a message on our <a href="https://github.com/getstrake/developer-cost-guide/discussions">GitHub Discussions page</a>!</li>
+</ol>
 
     </div>
 
@@ -287,17 +485,17 @@
       <ul class="share__list list-reset">
         <li class="share__item">
           <a class="share__link share__twitter"
-            href="https://twitter.com/intent/tweet?text=AWS%20Update%201.1&url=http://localhost:4000/templates/aws-template"
+            href="https://twitter.com/intent/tweet?text=What%20is%20EC2-Other?&url=http://localhost:4000/what-is-ec2-other"
             onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
             title="Share on Twitter" rel="nofollow"><i class="ion ion-logo-twitter"></i></a>
         </li>
         <li class="share__item">
-          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/templates/aws-template"
+          <a class="share__link share__facebook" href="https://www.facebook.com/sharer/sharer.php?u=http://localhost:4000/what-is-ec2-other"
             onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;"
             title="Share on Facebook" rel="nofollow"><i class="ion ion-logo-facebook"></i></a>
         </li>
         <li class="share__item">
-          <a class="share__link share__pinterest" href="http://pinterest.com/pin/create/button/?url=http://localhost:4000/templates/aws-template&amp;media=http://localhost:4000/images/20.jpg&amp;description=AWS%20Update%201.1"
+          <a class="share__link share__pinterest" href="http://pinterest.com/pin/create/button/?url=http://localhost:4000/what-is-ec2-other&amp;media=http://localhost:4000/images/ec2-other.jpg&amp;description=What%20is%20EC2-Other?"
           onclick="window.open(this.href, 'pop-up', 'left=20,top=20,width=900,height=500,toolbar=1,resizable=0'); return false;" title="Share on Pinterest"
           rel="nofollow"><i class="ion ion-logo-pinterest"></i></a>
         </li>
@@ -311,6 +509,19 @@
 
 <div class="container">
   <div class="post__navigation animate">
+    
+    <div class="post__prev">
+      <a href="/what-is-cloudtrail" class="prev__image">
+        <img class="lazy" data-src="/images/cloudtrail.jpg" alt="What is EC2-Other?">
+      </a>
+      <div class="prev__box">
+        <span class="post__nav post__nav__prev">Older post</span>
+        <h2 class="post__nav__title"><a href="/what-is-cloudtrail">What is AWS CloudTrail?</a></h2>
+        <p class="post__nav__excerpt">
+          AWS CloudTrail is a crucial governance and auditing tool for any company operating in the cloud. At its core, this service records all activity in your AWS environments in the form of CloudTrail Events, which are specific API requests that can originate from.
+        </p>
+      </div>
+    </div>
     
 
     
@@ -326,7 +537,7 @@
 
 <!-- begin related posts -->
 <div class="container">
-  <section class="related-posts  animate">
+  <section class="related-posts is-related animate">
     <div class="row">
       <div class="col col-12">
         <div class="container__inner">
@@ -336,7 +547,7 @@
                 
                 
                   
-                    <a href="/tags/?tag=aws" class="section__link related-tag"><div>See all <span>AWS</span></div> <i class="ion ion-ios-arrow-round-forward"></i></a>
+                    <a href="/tags/?tag=cloud" class="section__link related-tag"><div>See all <span>Cloud</span></div> <i class="ion ion-ios-arrow-round-forward"></i></a>
                   
                 
               
@@ -359,6 +570,41 @@
             
 
             
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/what-is-cloudtrail">
+                    <img class="lazy" data-src="/images/cloudtrail.jpg" alt="What is AWS CloudTrail?">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/what-is-cloudtrail">What is AWS CloudTrail?</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
             
             
             
@@ -366,6 +612,41 @@
             
 
             
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/what-are-aws-spot-instances">
+                    <img class="lazy" data-src="/images/spot-instances.jpg" alt="What Are AWS EC2 Spot Instances?">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/what-are-aws-spot-instances">What Are AWS EC2 Spot Instances?</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
             
             
             
@@ -373,6 +654,41 @@
             
 
             
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/aws-pricing-formula-builder">
+                    <img class="lazy" data-src="/images/formula-builder.jpg" alt="Formula Building and Compare Functionality for AWS Pricing">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/aws-pricing-formula-builder">Formula Building and Compare Functionality for AWS Pricing</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
+
+            
+                
+              
             
             
             
@@ -380,14 +696,41 @@
             
 
             
-            
-            
-            
+
+            <div class="article col col-3 col-d-6 col-m-12">
+
+              <div class="article__inner">
+                <div class="article__head">
+                  
+
+                  
+                  <a class="article__image" href="/cost-allocation-tagging">
+                    <img class="lazy" data-src="/images/cost-allocation-tagging.jpg" alt="Cost Allocation Tagging">
+                  </a>
+                  
+
+                  <div class="article__meta">
+                    
+                    
+                    <a href="/admin" class="article__author__image" title="Brian Regan">
+                      <img class="lazy" data-src="/favicon.ico" alt="Brian Regan">
+                    </a>
+                    
+                  </div>
+                </div>
+
+                <div class="article__content">
+                  <h2 class="article__title">
+                    <a href="/cost-allocation-tagging">Cost Allocation Tagging</a>
+                  </h2>
+                </div>
+              </div>
+
+            </div>
 
             
-
-            
-            
+                
+                  
           </div>
         </div>
       </div>
