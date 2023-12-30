@@ -13,7 +13,7 @@ The Cost and Usage Report is the standard report from AWS for customers to under
 
 ## **The Cost and Usage Report**
 
-The Cost and Usage Report is the standard billing report for AWS Customers. This report is free (except for the S3 storage costs) and can be created by anyone with the proper billing permissions. For more details on the Cost and Usage Report, how to make a report, and getting started with analysis, check out [this guide](https://getstrake.com/blog/cost-and-usage-report-setup) on the Strake blog.
+The Cost and Usage Report is the standard billing report for AWS Customers. This report is free (except for the S3 storage costs) and can be created by anyone with the proper billing permissions. For more details on the Cost and Usage Report, how to make a report, and getting started with analysis, check out [this guide](https://eightlake.com/cost-and-usage-report-setup) on the Strake blog.
 
 This report contains over 200 fields and can be millions of records for a single month of usage. Using the documentation below, we are taking the ~200 fields in the Cost and Usage Report and filtering it down to only 30 of the most critical fields. These 30 fields will answer most of your cost management questions and greatly simplify your cloud cost management practices.
 

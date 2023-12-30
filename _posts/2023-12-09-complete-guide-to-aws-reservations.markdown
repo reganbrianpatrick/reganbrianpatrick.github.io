@@ -39,7 +39,7 @@ Payment terms for Compute Savings Plans determine whether the contract is paid u
 
 ### **Compute Savings Plan Reservation Calculation**
 
-To calculate the compute savings plan commitment your team should make, you need to understand how much for On-Demand usage is in your account. To do that, you can either use the AWS Cost Explorer or query your Cost and Usage Report. For a full walkthrough of how to query your Cost and Usage Report, check out this walkthrough on the [Developer's Guide to AWS Costs](https://getstrake.com/community/developers-guide-to-aws-costs).
+To calculate the compute savings plan commitment your team should make, you need to understand how much for On-Demand usage is in your account. To do that, you can either use the AWS Cost Explorer or query your Cost and Usage Report. For a full walkthrough of how to query your Cost and Usage Report, check out this walkthrough on the [Developer's Guide to AWS Costs](https://eightlake.com/developer-guide-to-aws-costs).
 
 Once you understand the On-Demand usage in your account, you need to calculate what that usage would cost if a Compute Savings Plan covered the usage.
 
@@ -65,7 +65,7 @@ The additional restrictions on EC2 Savings Plans require more planning and align
 
 Similar to Compute Savings Plans, an EC2 Savings Plan commitment is made in dollars per hour.
 
-!https://assets-global.website-files.com/62ab213c651781d4e1b9cb4d/635c0162e221d2b0fdc8e3fa_money-pile.jpg
+![Money](/images/money.jpg)
 
 ### **EC2 Savings Plan Options**
 
