@@ -1,6 +1,78 @@
 [
   
     {
+      "title"    : "AWS Pricing Formulas for EC2 and EBS",
+      "category" : "",
+      "tags"     : "Cloud and AWS Pricing",
+      "url"      : "/aws-test-ebs-formulas",
+      "image"    : "/images/aws-pricing-1.jpg"
+    } ,
+  
+    {
+      "title"    : "AWS Pricing for Google Sheets",
+      "category" : "",
+      "tags"     : "Cloud and AWS Pricing",
+      "url"      : "/aws-pricing-for-google-sheets",
+      "image"    : "/images/aws-pricing.jpg"
+    } ,
+  
+    {
+      "title"    : "AWS Cost Analysis - Amazon RDS Costs",
+      "category" : "",
+      "tags"     : "Cloud and DGAC",
+      "url"      : "/aws-rds-cost-analysis",
+      "image"    : "/images/rds.jpg"
+    } ,
+  
+    {
+      "title"    : "AWS Cost Analysis - Amazon EC2 Costs",
+      "category" : "",
+      "tags"     : "Cloud and DGAC",
+      "url"      : "/aws-ec2-cost-analysis",
+      "image"    : "/images/ec2.jpg"
+    } ,
+  
+    {
+      "title"    : "AWS Cost and Usage Report Setup",
+      "category" : "",
+      "tags"     : "Cloud and DGAC",
+      "url"      : "/cost-and-usage-report-setup",
+      "image"    : "/images/setup.jpg"
+    } ,
+  
+    {
+      "title"    : "AWS Cost and Usage Report Documentation",
+      "category" : "",
+      "tags"     : "Cloud",
+      "url"      : "/complete-guide-to-aws-reservations-copy",
+      "image"    : "/images/cur.jpg"
+    } ,
+  
+    {
+      "title"    : "A Complete Guide to AWS Reservations",
+      "category" : "",
+      "tags"     : "Cloud and DGAC",
+      "url"      : "/complete-guide-to-aws-reservations",
+      "image"    : "/images/reservations.jpg"
+    } ,
+  
+    {
+      "title"    : "Developer&#39;s Guide to AWS Costs",
+      "category" : "",
+      "tags"     : "Cloud and DGAC",
+      "url"      : "/developer-guide-to-aws-costs",
+      "image"    : "/images/dgac.jpg"
+    } ,
+  
+    {
+      "title"    : "What is EC2-Other?",
+      "category" : "",
+      "tags"     : "Cloud",
+      "url"      : "/enterprise-discount-program",
+      "image"    : "/images/edp.jpg"
+    } ,
+  
+    {
       "title"    : "What is EC2-Other?",
       "category" : "",
       "tags"     : "Cloud",
@@ -27,7 +99,7 @@
     {
       "title"    : "Formula Building and Compare Functionality for AWS Pricing",
       "category" : "",
-      "tags"     : "Open Source and Cloud",
+      "tags"     : "AWS Pricing and Cloud",
       "url"      : "/aws-pricing-formula-builder",
       "image"    : "/images/formula-builder.jpg"
     } ,
