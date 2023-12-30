@@ -7,11 +7,11 @@ author: admin
 image: '/images/formula-builder.jpg'
 image_caption: 'Photo of AWS Pricing formula builder for Google Sheets'
 tags: [AWS Pricing, Cloud]
-featured: true
+featured: false
 ---
 You can use this information to compare alternative pricing models, regions, and volume reservation opportunities, including Reserved Instances in its many flavors. Best of all, since it uses standard Google Spreadsheets, collaboration between teams comes right out of the box!
 
-If you’d like to get more information about this tool, visit our [AWS Pricing plugin](https://getstrake.com/community/aws-pricing) site.
+If you’d like to get more information about this tool, visit our [AWS Pricing plugin](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903) site.
 
 ## **The AWS Pricing Formula Builder**
 
@@ -64,4 +64,3 @@ This was just one example. You can also implement comparative cost analysis for 
 Strake is committed to maintaining the AWS Pricing add-on as an open-source project and expanding it with feedback from the open-source community. Here are some ways to stay up to date and get in touch with our team:
 
 - If you want to learn more about the AWS Pricing project, you can get it free from the [Google Workspace Marketplace.](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903)
-- Join the [Strake Community](https://join.slack.com/t/strake-community/shared_invite/zt-1nisfazzn-uO5O_I28Z7N6sZ6iM2H1xA) on Slack to get in touch with our team.

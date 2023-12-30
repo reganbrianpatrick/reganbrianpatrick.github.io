@@ -131,13 +131,13 @@
           
           <div class="search-recent__item">
             
-              <a class="search-recent__image" href="/aws-test-ebs-formulas"><img class="lazy" data-src="/images/aws-pricing-1.jpg" alt="AWS Pricing Formulas for EC2 and EBS"></a>
+              <a class="search-recent__image" href="/aws-ec2-ebs-formulas"><img class="lazy" data-src="/images/aws-pricing-1.jpg" alt="AWS Pricing Formulas for EC2 and EBS"></a>
             
             <div class="search-recent__content">
               <div class="search-recent__meta">
                 <time class="search-recent__date" datetime="2023-12-15T02:00:00-07:00">15 Dec 2023</time>
               </div>
-              <h4 class="search-recent__title"><a href="/aws-test-ebs-formulas">AWS Pricing Formulas for EC2 and EBS</a></h4>
+              <h4 class="search-recent__title"><a href="/aws-ec2-ebs-formulas">AWS Pricing Formulas for EC2 and EBS</a></h4>
             </div>
           </div>
           
@@ -279,11 +279,11 @@
   <article class="post">
 
     <div class="post__content">
-      <p>EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within ‘EC2-Other’. All the code in this blog post is included in the <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs">Developer’s Guide to AWS Costs guide for EC2</a>.</p>
+      <p>EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within ‘EC2-Other’. All the code in this blog post is included in the <a href="https://eightlake.com/aws-ec2-cost-analysis">Developer’s Guide to AWS Costs guide for EC2</a>.</p>
 
 <h2 id="understanding-ec2-costs"><strong>Understanding EC2 Costs</strong></h2>
 
-<p>Before we can unpack what costs live in the ‘EC2-Other’ category, you have to understand what this category means to <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs">total EC2 costs</a> and how EC2 costs are calculated in various AWS reporting tools.</p>
+<p>Before we can unpack what costs live in the ‘EC2-Other’ category, you have to understand what this category means to <a href="https://eightlake.com/aws-ec2-cost-analysis">total EC2 costs</a> and how EC2 costs are calculated in various AWS reporting tools.</p>
 
 <p>After researching this problem, I put together the table below for how different AWS reporting tools display total EC2 costs. Below the table, I summarize the different reporting methodologies and how these values relate. Please note that this is only true for on-demand EC2 usage.</p>
 
@@ -382,12 +382,12 @@
 
 <h2 id="visibility-into-ec2-other-costs"><strong>Visibility into EC2-Other Costs</strong></h2>
 
-<p>In the <a href="https://getstrake.com/community/developers-guide-to-aws-costs">Developer’s Guide to AWS Costs</a>, the first service I posted a guide for was EC2. In this guide, I broke EC2 costs into three logical categories:</p>
+<p>In the <a href="https://eightlake.com/developer-guide-to-aws-costs">Developer’s Guide to AWS Costs</a>, the first service I posted a guide for was EC2. In this guide, I broke EC2 costs into three logical categories:</p>
 
 <ol>
-  <li><strong><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#existence">Existence Cost</a></strong> - <em>EC2-Instances</em> in cost explorer - This identifies the cost of having an EC2 instance running regardless of the resource activity. This cost is based on an hourly rate determined by your instance type, region, and whether you’re using contractual reservations or spot instances.</li>
-  <li><strong><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#utilization">Utilization Cost</a></strong> - <em>part of</em> <em>EC2 - Other</em> in cost explorer - On top of the flat rate for having an instance running, some costs come from how an EC2 instance is utilized. These costs are driven by a usage-based metric such as $ per GB-month. The most common Utilization cost for EC2 is data transfer.</li>
-  <li><strong><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#subresource">Subresource Cost</a></strong> - <em>the second part of</em> <em>EC2 - Other</em> in cost explorer - This is incurred for resources attached to or directly interacting with your EC2 instance. An easy example of EC2 is EBS Volumes used for EC2 instance storage.</li>
+  <li><strong><a href="https://eightlake.com/aws-ec2-cost-analysis">Existence Cost</a></strong> - <em>EC2-Instances</em> in cost explorer - This identifies the cost of having an EC2 instance running regardless of the resource activity. This cost is based on an hourly rate determined by your instance type, region, and whether you’re using contractual reservations or spot instances.</li>
+  <li><strong><a href="https://eightlake.com/aws-ec2-cost-analysis">Utilization Cost</a></strong> - <em>part of</em> <em>EC2 - Other</em> in cost explorer - On top of the flat rate for having an instance running, some costs come from how an EC2 instance is utilized. These costs are driven by a usage-based metric such as $ per GB-month. The most common Utilization cost for EC2 is data transfer.</li>
+  <li><strong><a href="https://eightlake.com/aws-ec2-cost-analysis">Subresource Cost</a></strong> - <em>the second part of</em> <em>EC2 - Other</em> in cost explorer - This is incurred for resources attached to or directly interacting with your EC2 instance. An easy example of EC2 is EBS Volumes used for EC2 instance storage.</li>
 </ol>
 
 <p>I broke down the ‘EC2-Other’ category from Cost Explorer into Utilization and Subresource costs. Utilization focuses on how your EC2 resources are used, while Subresources isolates other resources (NAT Gateways or EBS Volumes, for example) that contribute to your total EC2 cost.</p>
@@ -396,7 +396,7 @@
 
 <h3 id="utilization-costs"><strong>Utilization Costs</strong></h3>
 
-<p>To isolate <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#utilization">Utilization Costs</a> by Operation, use the query below. This query isolates your EC2 instances using the <strong>[lineItem/ResourceId]</strong> field and filters out types <strong>[lineItem/UsageType]</strong> and <strong>[lineItem/Operation]</strong> fields that indicate Existence cost.</p>
+<p>To isolate <a href="https://eightlake.com/aws-ec2-cost-analysis">Utilization Costs</a> by Operation, use the query below. This query isolates your EC2 instances using the <strong>[lineItem/ResourceId]</strong> field and filters out types <strong>[lineItem/UsageType]</strong> and <strong>[lineItem/Operation]</strong> fields that indicate Existence cost.</p>
 
 <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>-Utilization Costs
 --Utilization costs for EC2 by line item operation
@@ -428,12 +428,12 @@ ORDER BY	sum([lineItem/UnblendedCost]);`
 
 <h2 id="subresource-cost"><strong>‍Subresource Cost</strong></h2>
 
-<p>There are three main categories of <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#subresource">Subresources</a> customers should have the ability to analyze in more detail:</p>
+<p>There are three main categories of <a href="https://eightlake.com/aws-ec2-cost-analysis">Subresources</a> customers should have the ability to analyze in more detail:</p>
 
 <h3 id="ebs-volumes"><strong>EBS Volumes</strong></h3>
 
 <ul>
-  <li><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#ebs">EBS volumes</a> are identified by filtering the <strong>[lineItem/ResourceID]</strong> field for items that contain <em>vol-%</em>.</li>
+  <li><a href="https://eightlake.com/aws-ec2-cost-analysis">EBS volumes</a> are identified by filtering the <strong>[lineItem/ResourceID]</strong> field for items that contain <em>vol-%</em>.</li>
   <li>There are two main types of costs for EBS Volumes that show up in the <strong>[lineItem/Operation]</strong> field: IO Usage: read and write costs and CreateVolume: costs for creating provisioned EBS Volumes.</li>
   <li><code class="language-plaintext highlighter-rouge">-Subresource Costs
 --Subresource costs for EBS Volumes
@@ -447,7 +447,7 @@ ORDER BY	sum([lineItem/UnblendedCost]);</code></li>
 <h3 id="ebs-volume-snapshots"><strong>‍EBS Volume Snapshots</strong></h3>
 
 <ul>
-  <li><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#snapshots">EBS Volume Snapshots</a> are identified by filtering the <strong>[lineItem/ResourceID]</strong> field for items that contain <em>%snapshot%</em>.</li>
+  <li><a href="https://eightlake.com/aws-ec2-cost-analysis">EBS Volume Snapshots</a> are identified by filtering the <strong>[lineItem/ResourceID]</strong> field for items that contain <em>%snapshot%</em>.</li>
   <li>Only one main cost category for EBS Volume Snapshots shows up in the <strong>[lineItem/Operation]</strong> field: CreateSnapshot, which captures the cost per GB for storing snapshots.</li>
   <li><code class="language-plaintext highlighter-rouge">-Subresource Costs
 --Subresource costs for EBS Volume Snapshots
@@ -461,7 +461,7 @@ ORDER BY	sum([lineItem/UnblendedCost]);</code></li>
 <h3 id="nat-gateways"><strong>‍NAT Gateways</strong></h3>
 
 <ul>
-  <li><a href="https://strake.webflow.io/blog/aws-cost-analysis-amazon-ec2-costs#nat-gateway">NAT Gateways</a> are identified by filtering the <strong>[lineItem/ResourceID]</strong> field for items that contain <em>%natgateway%</em>.</li>
+  <li><a href="https://eightlake.com/aws-ec2-cost-analysis">NAT Gateways</a> are identified by filtering the <strong>[lineItem/ResourceID]</strong> field for items that contain <em>%natgateway%</em>.</li>
   <li>There are many different cost categories for NAT Gateways, but they are primarily driven by data transfer or data processing fees.</li>
   <li><code class="language-plaintext highlighter-rouge">-Subresource Costs
 --Subresource costs for NAT Gateways
@@ -474,12 +474,12 @@ ORDER BY	sum([lineItem/UnblendedCost]);</code></li>
 
 <h2 id="further-reading"><strong>Further Reading</strong></h2>
 
-<p>Thank you for reading! If you are looking for more information on EC2 Costs, you can read the full <a href="https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs">EC2 Cost Guide</a> on the <a href="https://getstrake.com/community/developers-guide-to-aws-costs">Developer’s Guide to AWS Costs</a>. If your team is working to understand your AWS costs, here are some additional resources for you:</p>
+<p>Thank you for reading! If you are looking for more information on EC2 Costs, you can read the full <a href="https://eightlake.com/aws-ec2-cost-analysis">EC2 Cost Guide</a> on the <a href="https://eightlake.com/developer-guide-to-aws-costs">Developer’s Guide to AWS Costs</a>. If your team is working to understand your AWS costs, here are some additional resources for you:</p>
 
 <ol>
-  <li>A <a href="https://getstrake.com/blog/cost-and-usage-report-setup">Cost and Usage Report Setup Guide</a> including IAM Permissions</li>
-  <li><a href="https://getstrake.com/blog/aws-cost-analysis-amazon-rds-costs">Relational Database Service Cost Guide</a> to understand your RDS costs</li>
-  <li>To get in touch with our team with additional questions, <a href="mailto:developer-relations@getstrake.com">email us</a> or leave us a message on our <a href="https://github.com/getstrake/developer-cost-guide/discussions">GitHub Discussions page</a>!</li>
+  <li>A <a href="https://eightlake.com/cost-and-usage-report-setup">Cost and Usage Report Setup Guide</a> including IAM Permissions</li>
+  <li><a href="https://eightlake.com/aws-rds-cost-analysis">Relational Database Service Cost Guide</a> to understand your RDS costs</li>
+  <li>To get in touch with our team with additional questions, <a href="mailto:brian@eightlake.com">email us</a> or leave us a message on our <a href="https://github.com/getstrake/developer-cost-guide/discussions">GitHub Discussions page</a>!</li>
 </ol>
 
     </div>
@@ -587,7 +587,7 @@ ORDER BY	sum([lineItem/UnblendedCost]);</code></li>
                   
 
                   
-                  <a class="article__image" href="/aws-test-ebs-formulas">
+                  <a class="article__image" href="/aws-ec2-ebs-formulas">
                     <img class="lazy" data-src="/images/aws-pricing-1.jpg" alt="AWS Pricing Formulas for EC2 and EBS">
                   </a>
                   
@@ -604,7 +604,7 @@ ORDER BY	sum([lineItem/UnblendedCost]);</code></li>
 
                 <div class="article__content">
                   <h2 class="article__title">
-                    <a href="/aws-test-ebs-formulas">AWS Pricing Formulas for EC2 and EBS</a>
+                    <a href="/aws-ec2-ebs-formulas">AWS Pricing Formulas for EC2 and EBS</a>
                   </h2>
                 </div>
               </div>

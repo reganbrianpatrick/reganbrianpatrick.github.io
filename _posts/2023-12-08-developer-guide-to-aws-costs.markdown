@@ -11,7 +11,7 @@ featured: true
 ---
 ## Introduction to AWS Costs
 
-The [Developer's Guide to AWS Costs](https://getstrake.com/community/developers-guide-to-aws-costs) is a project created and maintained by the team here at Strake. This project provides engineers with the code and insights to answer the most common AWS Cost questions using the Cost and Usage Report (CUR). The analysis is formatted as a series of 'guides' that focus on key AWS services and cost problems.
+The [Developer's Guide to AWS Costs](https://eightlake.com/developer-guide-to-aws-costs) is a project created and maintained by the team here at Strake. This project provides engineers with the code and insights to answer the most common AWS Cost questions using the Cost and Usage Report (CUR). The analysis is formatted as a series of 'guides' that focus on key AWS services and cost problems.
 
 AWS Billing is seriously overcomplicated. Our goal with this series of guides is to remove the confusion around AWS Cost Analysis and help engineers expedite cloud cost reduction.
 
@@ -37,7 +37,7 @@ Since I am using SQLite3 in these guides and I don't make any changes to the Cos
 
 ## **Cost and Usage Report**
 
-The main data source we will use for this analysis is the [AWS Cost and Usage Report (CUR)](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html). This is the most detailed billing report offered by AWS and the 'source of truth' for what shows up on your bill.  In the [first guide](https://getstrake.com/blog/cost-and-usage-report-setup), I go through the setup and IAM policies required for creating this data source. There is a pretty good [data dictionary](https://docs.aws.amazon.com/cur/latest/userguide/data-dictionary.html) for the cost and usage report on the AWS documentation, but I will go into more detail about the fields used for analysis in each guide.
+The main data source we will use for this analysis is the [AWS Cost and Usage Report (CUR)](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html). This is the most detailed billing report offered by AWS and the 'source of truth' for what shows up on your bill.  In the [first guide](https://eightlake.com/cost-and-usage-report-setup), I go through the setup and IAM policies required for creating this data source. There is a pretty good [data dictionary](https://docs.aws.amazon.com/cur/latest/userguide/data-dictionary.html) for the cost and usage report on the AWS documentation, but I will go into more detail about the fields used for analysis in each guide.
 
 The CUR is free, but you will have to pay S3 charges to store the billing data (yes, AWS makes you pay to store your bill). This should be an insignificant amount of money, less than $5 per month for storing a year of billing data for most customers.
 

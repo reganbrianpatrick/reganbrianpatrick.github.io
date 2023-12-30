@@ -15,7 +15,7 @@ Fortunately, AWS provides several tools and pricing models to simplify cost mana
 
 This article will compare two similar offerings: **Reserved Instances** and **Savings Plans**. Both are volume discount opportunities, but the mechanics of how a reservation is made and how those reservations impact your environment vary. Therefore, it’s crucial to acknowledge how these differences affect your budget and forecast operations before committing. By the end of this article, you will be able to understand them clearly and make the right decision for your business and technical needs.
 
-In a previous blog post, [A Complete Guide to AWS Reservations](https://getstrake.com/blog/a-complete-guide-to-aws-reservations), we discussed both options at a high level. Feel free to visit that guide and review the details of each. This time, we will review the history of both alternatives, as this will help us understand some of their differences and recommended use cases.
+In a previous blog post, [A Complete Guide to AWS Reservations](https://eightlake.com/complete-guide-to-aws-reservations), we discussed both options at a high level. Feel free to visit that guide and review the details of each. This time, we will review the history of both alternatives, as this will help us understand some of their differences and recommended use cases.
 
 ## **Resource-based commitment with EC2 Reserved Instances**
 
@@ -166,13 +166,13 @@ Upfront payment / On Demand Hourly cost
 
 This means that after 11,440 hours over the three years, your on demand costs will increase over the upfront payment. Therefore, you will incur extra expenses.
 
-Hopefully, these scenarios help you understand how to exploit these two offerings to maximize cost reductions. You can also check comparative calculations between them in [A Complete Guide to AWS Reservations](https://getstrake.com/blog/a-complete-guide-to-aws-reservations).
+Hopefully, these scenarios help you understand how to exploit these two offerings to maximize cost reductions. You can also check comparative calculations between them in [A Complete Guide to AWS Reservations](https://eightlake.com/complete-guide-to-aws-reservations).
 
 ## **Understanding Reserved Instances with the AWS Pricing Plugin**
 
-You can make these or even more complex calculations using the [AWS Pricing Plugin for Google Sheets](https://getstrake.com/blog/aws-pricing-add-on-for-google-sheets), a project managed by Strake and available for free from the [Google Workspace Marketplace](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903).
+You can make these or even more complex calculations using the [AWS Pricing Plugin for Google Sheets](https://eightlake.com/aws-pricing-for-google-sheets), a project managed by Strake and available for free from the [Google Workspace Marketplace](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903).
 
-You can build your own spreadsheets and get real-time AWS pricing data to compare the different reservation models. In particular, feel free to use our [EC2 Pricing & Reservations](https://docs.google.com/spreadsheets/d/1GdoZ-jNQZ0IFhQPu1RMLG0eC8cS_Q4i-3aiQdrNNBNA/edit#gid=0) template as a starting point in your analysis.
+You can build your own spreadsheets and get real-time AWS pricing data to compare the different reservation models. In particular, feel free to use our [EC2 Pricing & Reservations](https://docs.google.com/spreadsheets/d/1_kGiAaWzShNfDuMRF9icCzQotIkaTOu5hex9v7YNL_0/edit?usp=sharing) template as a starting point in your analysis.
 
 ## **Key Takeaways**
 
@@ -180,6 +180,6 @@ It is a complex task to manage costs in the cloud. But AWS offers reservation mo
 
 If you don’t plan on using your EC2 instances all the time, you can calculate a breakeven point to determine whether On Demand is the best option.
 
-The [AWS Pricing Plugin](https://getstrake.com/community/aws-pricing) provided by Strake is a great tool to help you forecast and understand your cloud costs to make the best solution for your use case.
+The [AWS Pricing Plugin](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903) provided by Strake is a great tool to help you forecast and understand your cloud costs to make the best solution for your use case.
 
 ‍

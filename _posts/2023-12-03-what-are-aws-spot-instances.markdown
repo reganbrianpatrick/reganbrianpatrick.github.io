@@ -85,7 +85,7 @@ For a list of up-to-date spot capacity pool prices, you can check the Amazon EC2
 
 ## **What about other purchasing options?**
 
-Besides On-Demand and Spot Instances, other EC2 purchasing options also offer great discounts: Reserved Instances and Savings Plans. We’ve discussed both models in a previous blog post: [A Complete Guide to AWS Reservations](https://getstrake.com/blog/a-complete-guide-to-aws-reservations).
+Besides On-Demand and Spot Instances, other EC2 purchasing options also offer great discounts: Reserved Instances and Savings Plans. We’ve discussed both models in a previous blog post: [A Complete Guide to AWS Reservations](https://eightlake.com/complete-guide-to-aws-reservations).
 
 They are volume discount options, where you commit to pay for a certain amount of compute instances/dollars for one to three years. It is important to note that both Reserved Instances and Savings Plans only apply to On-Demand usage, not Spot Instances.
 
@@ -93,7 +93,7 @@ Although they don’t apply to Spot Instances, they work together well, allowing
 
 Some valuable integrations between Spot Instances and Amazon EC2 Auto Scaling or EC2 Fleet make combining these different purchasing models easy.
 
-If mixing them makes it difficult to analyze and manage your costs, you can head to our [Developer’s Guide to AWS Costs for EC2](https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#spot), an invaluable resource to learn the difference between each model by analyzing your spending and selecting discounts individually.
+If mixing them makes it difficult to analyze and manage your costs, you can head to our [Developer’s Guide to AWS Costs for EC2](https://eightlake.com/aws-ec2-cost-analysis), an invaluable resource to learn the difference between each model by analyzing your spending and selecting discounts individually.
 
 ## **Are my workloads appropriate for Spot?**
 
@@ -183,7 +183,7 @@ You can also leverage the vast savings that Spot Instances provides thanks to it
 
 ## **Accounting for Spot savings**
 
-The AWS Cost and Usage Report is an excellent way to review your Spot Instance costs and savings. Feel free to look at our [Developer’s Guide to AWS Costs for EC2](https://getstrake.com/blog/aws-cost-analysis-amazon-ec2-costs#spot) for a comprehensive example of how to query this resource for a good understanding of your spot usage costs.
+The AWS Cost and Usage Report is an excellent way to review your Spot Instance costs and savings. Feel free to look at our [Developer’s Guide to AWS Costs for EC2](https://eightlake.com/aws-ec2-cost-analysis) for a comprehensive example of how to query this resource for a good understanding of your spot usage costs.
 
 You can also access a **Savings Summary** by visiting the AWS EC2 Console inside the Spot Requests section of the dashboard. In there, you will find helpful details such as:
 

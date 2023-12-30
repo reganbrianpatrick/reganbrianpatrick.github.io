@@ -4,7 +4,7 @@
       "title"    : "AWS Pricing Formulas for EC2 and EBS",
       "category" : "",
       "tags"     : "Cloud and AWS Pricing",
-      "url"      : "/aws-test-ebs-formulas",
+      "url"      : "/aws-ec2-ebs-formulas",
       "image"    : "/images/aws-pricing-1.jpg"
     } ,
   
@@ -44,7 +44,7 @@
       "title"    : "AWS Cost and Usage Report Documentation",
       "category" : "",
       "tags"     : "Cloud",
-      "url"      : "/complete-guide-to-aws-reservations-copy",
+      "url"      : "/aws-cost-and-usage-report-documentation",
       "image"    : "/images/cur.jpg"
     } ,
   
