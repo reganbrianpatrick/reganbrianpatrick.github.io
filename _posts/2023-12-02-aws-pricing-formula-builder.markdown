@@ -6,7 +6,7 @@ date: 2023-12-02 12:00:00 +0300
 author: admin
 image: '/images/formula-builder.jpg'
 image_caption: 'Photo of AWS Pricing formula builder for Google Sheets'
-tags: [Open Source, Cloud]
+tags: [AWS Pricing, Cloud]
 featured: true
 ---
 You can use this information to compare alternative pricing models, regions, and volume reservation opportunities, including Reserved Instances in its many flavors. Best of all, since it uses standard Google Spreadsheets, collaboration between teams comes right out of the box!
