@@ -1,13 +1,13 @@
 ---
 layout: post
-title: Startup Finances 101
-description: How to handle Startup Finance when you know (almost) nothing about finance. 
-date: 2024-01-03 12:00:00 +0300
+title: Startup Finance for Founders
+description: Tools for founders to understand your burn rate and the financial impact of your decisions. 
+date: 2024-01-02 01:00:00 +0300
 author: admin
 image: '/images/finance-2.jpg'
 image_caption: 'Screenshot from EightLake Finance Template. Availalbe for free download.'
 tags: [Finance]
-featured: false
+featured: true
 ---
 # No CFO, No Problem
 
