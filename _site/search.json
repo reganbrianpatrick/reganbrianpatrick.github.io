@@ -1,6 +1,22 @@
 [
   
     {
+      "title"    : "Strake",
+      "category" : "",
+      "tags"     : "Strake",
+      "url"      : "/strake",
+      "image"    : "/images/strake-4.jpg"
+    } ,
+  
+    {
+      "title"    : "Startup Finance for Founders",
+      "category" : "",
+      "tags"     : "Finance",
+      "url"      : "/startup-finance",
+      "image"    : "/images/finance-2.jpg"
+    } ,
+  
+    {
       "title"    : "AWS Pricing Formulas for EC2 and EBS",
       "category" : "",
       "tags"     : "Cloud and AWS Pricing",
@@ -65,7 +81,7 @@
     } ,
   
     {
-      "title"    : "What is EC2-Other?",
+      "title"    : "How to Negotiate an AWS Enterprise Discount Program (EDP)",
       "category" : "",
       "tags"     : "Cloud",
       "url"      : "/enterprise-discount-program",

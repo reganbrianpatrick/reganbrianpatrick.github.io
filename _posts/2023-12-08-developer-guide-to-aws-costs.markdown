@@ -7,7 +7,7 @@ author: admin
 image: '/images/dgac.jpg'
 image_caption: 'The Developer`s Guide to AWS Costs'
 tags: [Cloud, DGAC]
-featured: true
+featured: false
 ---
 ## Introduction to AWS Costs
 

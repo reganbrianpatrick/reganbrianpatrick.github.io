@@ -7,7 +7,7 @@ author: admin
 image: '/images/ec2-other.jpg'
 image_caption: 'What is EC2-Other?'
 tags: [Cloud]
-featured: true
+featured: false
 ---
 EC2-Other is a cost category created by Amazon that causes a lot of heartburn for the Engineering community. If you are a heavy EC2 user, this could be your second largest cost category on your AWS Bill. This post will dive into this category to help AWS users understand what they are getting billed for and how to isolate individual cost categories within 'EC2-Other'. All the code in this blog post is included in the [Developer's Guide to AWS Costs guide for EC2](https://eightlake.com/aws-ec2-cost-analysis).
 

@@ -1,6 +1,6 @@
 ---
 layout: post
-title: What is EC2-Other?
+title: How to Negotiate an AWS Enterprise Discount Program (EDP)
 description: The Enterprise Discount Program (EDP) is a tool for enterprise customers willing to make a long-term commitment to the AWS platform for a significant discount. EDPs differ from other AWS Reservations like Savings Plans or Reserved Instances because an EDP applies to most AWS Services.
 date: 2023-12-07 12:00:00 +0300
 author: admin
