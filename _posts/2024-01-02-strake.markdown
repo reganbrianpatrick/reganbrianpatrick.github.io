@@ -1,0 +1,72 @@
+---
+layout: post
+title: Strake
+description: Strake will be shutting down at the end of January 2024. This post is to share some details on our team, an update on our open source projects, and other developer content.
+date: 2024-01-02 01:00:00 +0300
+author: admin
+image: '/images/strake-4.jpg'
+image_caption: 'Strake Company Logo'
+tags: [Strake]
+featured: true
+---
+Today, I'm sharing the unfortunate news that Strake will shut down on January 31st, 2024. Over the past three years, our team has done fantastic work taking a different approach to solving the FinOps problem for engineers. I want to thank all Strake's employees, investors, and customers who were with us on this journey.
+
+---
+
+## Talent
+
+I can't speak highly enough about the team at Strake. With their technical expertise, determination, and team values, these people will add tremendous value wherever they end up next. I'm providing links to everyone's LinkedIn profile below with their job title for anyone interested in adding great people to their team.
+
+If you have questions or want a reference for anyone, please [email me]([mailto:brian@eightlake.com](mailto:brian@eightlake.com)). 
+
+[Niels Nielsen](https://www.linkedin.com/in/ACoAAAqmKQAB9KeqE_ZJYp5Uh_VVTBWsWwuxocE) - (Front-end, Typescript/React)
+
+[Matt Howe](https://www.linkedin.com/in/ACoAACWckcgBg1Q9GwIGP16DUUMw3lQToyGeCTs) - (API/Backend, Golang)
+
+[Ryan Burney](https://www.linkedin.com/in/ryan-burney/) - (UI/UX, Design)
+
+[Jonathan Hunt](https://www.linkedin.com/in/ACoAAAAy6iwBhLaUvn_-SXEDEjDSNtKvlAsPY7c) - (API/Backend, Golang)
+
+[John Greve](https://www.linkedin.com/in/ACoAAAFlHdQByDvuUgjpovF5wgCTZVTx5xOiFzA) - (Data Engineering)
+
+[Ken Farmer](https://www.linkedin.com/in/ACoAAAE0ho0BjNqU_XEJmkwIxDWBY_RoECU9vRI) - (Data Engineering)
+
+[Joseph (Joey) Muller](https://www.linkedin.com/in/ACoAABUbHqcB3qu9CXfJAldrBeKOMV6KDqV60Bk) - (Data Engineering)
+
+[Kevin Depue](https://www.linkedin.com/in/ACoAAACb-iEBYBvRvKa7guyJWtJTuHKmvKZQzwE) - (API/Backend, Golang)
+
+[Cody Kochmann](https://www.linkedin.com/in/ACoAAAv2Z-UByjacWpgsiPLH3dW9-GhRzZVGeYY) - (Cloud Infrastructure)
+
+---
+
+## Cloud Resources
+
+Even though Strake did not have the outcome I hoped it would, there was a tremendous amount of value created by this team. I've been working on adding blog posts, open-source projects, and other startup tools we used to [eightlake.com](https://eightlake.com) (Finally, a use for that email domain I've had for years). These resources will always be free to help development teams and startups operate smoothly.
+
+#### AWS Research
+
+All of Strake's blog posts will be hosted on [eightlake.com](https://eightlake.com). We invested a lot of effort into writing developer-focused content on AWS topics our customers needed help with. These blog posts will be tagged with "Cloud" for searching on the website. Some examples of these posts include:
+1. [What is EC2-Other?](https://eightlake.com/what-is-ec2-other)
+2. [How to Negotiate an AWS Enterprise Discount Program (EDP)](https://eightlake.com/enterprise-discount-program)
+3. [Reserved Instances or Savings Plans?](https://eightlake.com/reserved-instances-or-savings-plans)
+
+
+#### Open-Source Projects
+
+Strake took over ownership and maintenance of [AWS Pricing by Strake](https://eightlake.com/aws-pricing-for-google-sheets) in 2021. This project will continue to be maintained by [Adam Younce](https://github.com/aryounce). This add-on to Google Sheets to analyze public AWS Pricing data will still be available from the [Google Workspace Marketplace](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903).
+
+Strake also created the [Developer's Guide to AWS Costs](), which used SQLite to analyze the Cost and Usage Report for key AWS Services. That project and the content in blog form will live on [eightlake.com](https://eightlake.com/developer-guide-to-aws-costs) with the tag "DGAC" for easy search, and the GitHub repo will be hosted by [Brian Regan](https://github.com/reganbrianpatrick). 
+
+---
+
+## Startup Resources
+
+I'm lucky to have spent some time studying finance and have spent time working with several other founding teams on financial planning. As the markets started to decline, understanding expenses and run rates became critical for startups at every stage of growth. 
+
+To make this more accessible to any founding team, I have created a basic version of the template I used to plan Strake's finances and documented how to use it in a [Startup Finance](https://eightlake.com/startup-finance) blog post. If you have questions about the template, please reach out.
+
+---
+
+Thank you again, please [reach out](mailto:brian@eightlake.com) with any questions.
+
+Brian Regan
