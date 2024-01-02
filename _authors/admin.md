@@ -1,7 +1,7 @@
 ---
 username: admin
 name: Brian Regan
-image: '/favicon.ico'
+image: '/images/lake-1.jpg'
 website: eightlake.com
 #twitter: 
 #facebook: 
