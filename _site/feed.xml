@@ -5,8 +5,8 @@
         <description>EightLake</description>
         <link>http://localhost:4000/</link>
         <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Mon, 01 Jan 2024 17:00:28 -0700</pubDate>
-        <lastBuildDate>Mon, 01 Jan 2024 17:00:28 -0700</lastBuildDate>
+        <pubDate>Mon, 01 Jan 2024 17:09:59 -0700</pubDate>
+        <lastBuildDate>Mon, 01 Jan 2024 17:09:59 -0700</lastBuildDate>
         <generator>Jekyll v4.3.2</generator>
         
             <item>
