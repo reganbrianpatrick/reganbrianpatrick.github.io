@@ -6,7 +6,7 @@ date: 2023-12-14 12:00:00 +0300
 author: admin
 image: '/images/aws-pricing.jpg'
 image_caption: 'AWS Pricing for Google Sheets'
-tags: [Cloud, AWS Pricing]
+tags: [Cloud, OpenSource]
 featured: true
 ---
 Strake, the AWS cost management platform built for engineers, is excited to announce that we have entered into an agreement with Mike Heffner to assume ownership and maintenance of the AWS Pricing add-on for Google Sheets. This project is available for free from the [Google Workspace Marketplace](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903).

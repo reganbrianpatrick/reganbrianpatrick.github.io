@@ -19,7 +19,7 @@
     {
       "title"    : "AWS Pricing Formulas for EC2 and EBS",
       "category" : "",
-      "tags"     : "Cloud and AWS Pricing",
+      "tags"     : "Cloud and OpenSource",
       "url"      : "/aws-ec2-ebs-formulas",
       "image"    : "/images/aws-pricing-1.jpg"
     } ,
@@ -27,7 +27,7 @@
     {
       "title"    : "AWS Pricing for Google Sheets",
       "category" : "",
-      "tags"     : "Cloud and AWS Pricing",
+      "tags"     : "Cloud and OpenSource",
       "url"      : "/aws-pricing-for-google-sheets",
       "image"    : "/images/aws-pricing.jpg"
     } ,
@@ -115,7 +115,7 @@
     {
       "title"    : "Formula Building and Compare Functionality for AWS Pricing",
       "category" : "",
-      "tags"     : "AWS Pricing and Cloud",
+      "tags"     : "OpenSource and Cloud",
       "url"      : "/aws-pricing-formula-builder",
       "image"    : "/images/formula-builder.jpg"
     } ,
