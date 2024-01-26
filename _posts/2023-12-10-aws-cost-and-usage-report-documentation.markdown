@@ -6,7 +6,7 @@ date: 2023-12-10 12:00:00 +0300
 author: admin
 image: '/images/cur.jpg'
 image_caption: 'AWS Cost and Usage Report Documentation'
-tags: [Cloud]
+tags: [cloud]
 featured: false
 ---
 The Cost and Usage Report is the standard report from AWS for customers to understand and manage their costs. The [Cost and Usage Report](https://docs.aws.amazon.com/cur/latest/userguide/what-is-cur.html) drives most cloud cost management tools, including AWS Cost Explorer. This documentation will outline the essential fields in the Cost and Usage Report, explain how those fields can be used for cloud cost management, and provide sample values users can use to build queries based on usage in their accounts.

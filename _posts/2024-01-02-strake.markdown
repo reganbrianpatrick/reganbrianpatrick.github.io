@@ -6,7 +6,7 @@ date: 2024-01-02 01:00:00 +0300
 author: admin
 image: '/images/strake-4.jpg'
 image_caption: 'Strake Company Logo'
-tags: [Strake]
+tags: [strake]
 featured: true
 ---
 Today, I'm sharing the unfortunate news that Strake will shut down on January 31st, 2024. Over the past three years, our team has done fantastic work taking a different approach to solving the FinOps problem for engineers. I want to thank all Strake's employees, investors, and customers who were with us on this journey.

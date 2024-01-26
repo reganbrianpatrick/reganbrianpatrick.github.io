@@ -43,7 +43,7 @@ blog:
 #-------------------------------
 # Recommended Tag Settings
 tag:
-  enable: false
+  enable: true
   tag__title: Recommended
   tag__name: Motivation
 
@@ -68,14 +68,14 @@ footer__menu__settings:
   menu__items:
     - title: 'Home'
       url: '/'
-    - title: 'About'
-      url: '/about/'
+#    - title: 'About'
+#     url: '/about/'
     - title: 'Contact'
       url: '/contact/'
     - title: 'Authors'
       url: '/authors/'
-    - title: 'Elements'
-      url: '/elements/'
+#    - title: 'Elements'
+#      url: '/elements/'
 
 
  #Social Links

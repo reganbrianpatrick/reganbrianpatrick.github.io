@@ -6,7 +6,7 @@ date: 2023-12-03 12:00:00 +0300
 author: admin
 image: '/images/spot-instances.jpg'
 image_caption: 'Photo for AWS Spot instances on AWS'
-tags: [Cloud]
+tags: [cloud]
 featured: false
 ---
 Sounds great, right? So why don’t we use Spot all the time? Because, of course, there is a downside: spot instances run on **unused EC2 compute capacity**, and since cloud usage constantly fluctuates over time, AWS does not guarantee enough room to keep your spot workloads running. That is, your instances could get reclaimed unilaterally by AWS at any time.

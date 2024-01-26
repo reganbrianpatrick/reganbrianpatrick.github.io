@@ -6,7 +6,7 @@ date: 2023-12-12 12:00:00 +0300
 author: admin
 image: '/images/ec2.jpg'
 image_caption: 'AWS Cost Analysis - Amazon EC2 Costs'
-tags: [Cloud, DGAC]
+tags: [cloud, dgac]
 featured: false
 ---
 [Elastic Compute Cloud (EC2)](https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/concepts.html) is the backbone of AWS. EC2 allows customers to access hundreds of different instance types across the globe in seconds.

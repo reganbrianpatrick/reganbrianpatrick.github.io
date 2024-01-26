@@ -6,7 +6,7 @@ date: 2023-12-08 12:00:00 +0300
 author: admin
 image: '/images/dgac.jpg'
 image_caption: 'The Developer`s Guide to AWS Costs'
-tags: [Cloud, DGAC]
+tags: [cloud, dgac]
 featured: false
 ---
 ## Introduction to AWS Costs
