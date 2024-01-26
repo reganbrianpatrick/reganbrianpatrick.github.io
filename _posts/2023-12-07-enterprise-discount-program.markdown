@@ -6,7 +6,7 @@ date: 2023-12-07 12:00:00 +0300
 author: admin
 image: '/images/edp.jpg'
 image_caption: 'Amazon Enterprise Discount Program'
-tags: [Cloud]
+tags: [cloud]
 featured: false
 ---
 The [Enterprise Discount Program](https://aws.amazon.com/pricing/enterprise/) (EDP) is a tool for enterprise customers willing to make a long-term commitment to the AWS platform for a significant discount. EDPs differ from other AWS Reservations like Savings Plans or Reserved Instances because an EDP applies to *most* AWS Services.

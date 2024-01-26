@@ -6,7 +6,7 @@ date: 2023-12-04 12:00:00 +0300
 author: admin
 image: '/images/cloudtrail.jpg'
 image_caption: 'What is AWS CloudTrail?'
-tags: [Cloud]
+tags: [cloud]
 featured: false
 ---
 AWS CloudTrail is a crucial governance and auditing tool for any company operating in the cloud. At its core, this service records all activity in your AWS environments in the form of **CloudTrail Events**, which are specific API requests that can originate from:

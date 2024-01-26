@@ -6,7 +6,7 @@ date: 2024-01-02 01:00:00 +0300
 author: admin
 image: '/images/finance-2.jpg'
 image_caption: 'Screenshot from EightLake Finance Template. Availalbe for free download.'
-tags: [Finance]
+tags: [finance]
 featured: true
 ---
 # No CFO, No Problem

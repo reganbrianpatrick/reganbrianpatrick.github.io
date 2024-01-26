@@ -3,7 +3,7 @@
     {
       "title"    : "Strake",
       "category" : "",
-      "tags"     : "Strake",
+      "tags"     : "strake",
       "url"      : "/strake",
       "image"    : "/images/strake-4.jpg"
     } ,
@@ -11,7 +11,7 @@
     {
       "title"    : "Startup Finance for Founders",
       "category" : "",
-      "tags"     : "Finance",
+      "tags"     : "finance",
       "url"      : "/startup-finance",
       "image"    : "/images/finance-2.jpg"
     } ,
@@ -19,7 +19,7 @@
     {
       "title"    : "AWS Pricing Formulas for EC2 and EBS",
       "category" : "",
-      "tags"     : "Cloud and OpenSource",
+      "tags"     : "cloud and opensource",
       "url"      : "/aws-ec2-ebs-formulas",
       "image"    : "/images/aws-pricing-1.jpg"
     } ,
@@ -27,7 +27,7 @@
     {
       "title"    : "AWS Pricing for Google Sheets",
       "category" : "",
-      "tags"     : "Cloud and OpenSource",
+      "tags"     : "cloud and opensource",
       "url"      : "/aws-pricing-for-google-sheets",
       "image"    : "/images/aws-pricing.jpg"
     } ,
@@ -35,7 +35,7 @@
     {
       "title"    : "AWS Cost Analysis - Amazon RDS Costs",
       "category" : "",
-      "tags"     : "Cloud and DGAC",
+      "tags"     : "cloud and dgac",
       "url"      : "/aws-rds-cost-analysis",
       "image"    : "/images/rds.jpg"
     } ,
@@ -43,7 +43,7 @@
     {
       "title"    : "AWS Cost Analysis - Amazon EC2 Costs",
       "category" : "",
-      "tags"     : "Cloud and DGAC",
+      "tags"     : "cloud and dgac",
       "url"      : "/aws-ec2-cost-analysis",
       "image"    : "/images/ec2.jpg"
     } ,
@@ -51,7 +51,7 @@
     {
       "title"    : "AWS Cost and Usage Report Setup",
       "category" : "",
-      "tags"     : "Cloud and DGAC",
+      "tags"     : "cloud and dgac",
       "url"      : "/cost-and-usage-report-setup",
       "image"    : "/images/setup.jpg"
     } ,
@@ -59,7 +59,7 @@
     {
       "title"    : "AWS Cost and Usage Report Documentation",
       "category" : "",
-      "tags"     : "Cloud",
+      "tags"     : "cloud",
       "url"      : "/aws-cost-and-usage-report-documentation",
       "image"    : "/images/cur.jpg"
     } ,
@@ -67,7 +67,7 @@
     {
       "title"    : "A Complete Guide to AWS Reservations",
       "category" : "",
-      "tags"     : "Cloud and DGAC",
+      "tags"     : "cloud and dgac",
       "url"      : "/complete-guide-to-aws-reservations",
       "image"    : "/images/reservations.jpg"
     } ,
@@ -75,7 +75,7 @@
     {
       "title"    : "Developer&#39;s Guide to AWS Costs",
       "category" : "",
-      "tags"     : "Cloud and DGAC",
+      "tags"     : "cloud and dgac",
       "url"      : "/developer-guide-to-aws-costs",
       "image"    : "/images/dgac.jpg"
     } ,
@@ -83,7 +83,7 @@
     {
       "title"    : "How to Negotiate an AWS Enterprise Discount Program (EDP)",
       "category" : "",
-      "tags"     : "Cloud",
+      "tags"     : "cloud",
       "url"      : "/enterprise-discount-program",
       "image"    : "/images/edp.jpg"
     } ,
@@ -91,7 +91,7 @@
     {
       "title"    : "What is EC2-Other?",
       "category" : "",
-      "tags"     : "Cloud",
+      "tags"     : "cloud",
       "url"      : "/what-is-ec2-other",
       "image"    : "/images/ec2-other.jpg"
     } ,
@@ -99,7 +99,7 @@
     {
       "title"    : "What is AWS CloudTrail?",
       "category" : "",
-      "tags"     : "Cloud",
+      "tags"     : "cloud",
       "url"      : "/what-is-cloudtrail",
       "image"    : "/images/cloudtrail.jpg"
     } ,
@@ -107,7 +107,7 @@
     {
       "title"    : "What Are AWS EC2 Spot Instances?",
       "category" : "",
-      "tags"     : "Cloud",
+      "tags"     : "cloud",
       "url"      : "/what-are-aws-spot-instances",
       "image"    : "/images/spot-instances.jpg"
     } ,
@@ -115,7 +115,7 @@
     {
       "title"    : "Formula Building and Compare Functionality for AWS Pricing",
       "category" : "",
-      "tags"     : "OpenSource and Cloud",
+      "tags"     : "opensource and cloud",
       "url"      : "/aws-pricing-formula-builder",
       "image"    : "/images/formula-builder.jpg"
     } ,
@@ -123,7 +123,7 @@
     {
       "title"    : "Cost Allocation Tagging",
       "category" : "",
-      "tags"     : "Cloud",
+      "tags"     : "cloud",
       "url"      : "/cost-allocation-tagging",
       "image"    : "/images/cost-allocation-tagging.jpg"
     } ,
@@ -131,7 +131,7 @@
     {
       "title"    : "Reserved Instances or Savings Plans",
       "category" : "",
-      "tags"     : "Cloud",
+      "tags"     : "cloud",
       "url"      : "/reserved-instances-or-savings-plans",
       "image"    : "/images/ri-sp.jpg"
     } 

@@ -6,7 +6,7 @@ date: 2023-12-01 12:00:00
 author: admin
 image: '/images/cost-allocation-tagging.jpg'
 image_caption: 'Cost Allocation Tagging in AWS'
-tags: [Cloud]
+tags: [cloud]
 featured: false
 ---
 

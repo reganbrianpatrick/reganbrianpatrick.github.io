@@ -6,7 +6,7 @@ date: 2023-12-15 12:00:00 +0300
 author: admin
 image: '/images/aws-pricing-1.jpg'
 image_caption: 'AWS Pricing Formulas for EC2 and EBS'
-tags: [Cloud, OpenSource]
+tags: [cloud, opensource]
 featured: false
 ---
 [AWS Pricing by Strake](https://workspace.google.com/marketplace/app/aws_pricing_by_strake/378787760903) is an open-source project that allows anyone to bring AWS Public pricing into Google Sheets using Strake's custom functions. To help the community get started with this project, Strake published several free templates to help engineers answer critical questions about AWS Pricing. Today, we will use Google Sheets templates to analyze Amazon EC2 Instance and EBS Pricing.

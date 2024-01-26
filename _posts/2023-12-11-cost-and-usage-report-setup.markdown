@@ -6,7 +6,7 @@ date: 2023-12-11 12:00:00 +0300
 author: admin
 image: '/images/setup.jpg'
 image_caption: 'AWS Cost and Usage Report Documentation'
-tags: [Cloud, DGAC]
+tags: [cloud, dgac]
 featured: false
 ---
 This Cost and Usage Report overview will go through the required IAM permissions for billing analysis, how to create a cost and usage report (CUR), and how to set up a local analysis environment using SQLite3.
