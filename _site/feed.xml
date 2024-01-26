@@ -5,8 +5,8 @@
         <description>EightLake</description>
         <link>http://localhost:4000/</link>
         <atom:link href="http://localhost:4000/feed.xml" rel="self" type="application/rss+xml"/>
-        <pubDate>Sun, 07 Jan 2024 14:16:13 -0700</pubDate>
-        <lastBuildDate>Sun, 07 Jan 2024 14:16:13 -0700</lastBuildDate>
+        <pubDate>Fri, 26 Jan 2024 14:16:40 -0700</pubDate>
+        <lastBuildDate>Fri, 26 Jan 2024 14:16:40 -0700</lastBuildDate>
         <generator>Jekyll v4.3.2</generator>
         
             <item>
@@ -78,7 +78,7 @@
                 <link>http://localhost:4000/strake</link>
                 <guid isPermaLink="true">http://localhost:4000/strake</guid>
                 
-                <category>Strake</category>
+                <category>strake</category>
                 
                 
             </item>
@@ -208,7 +208,7 @@
                 <link>http://localhost:4000/startup-finance</link>
                 <guid isPermaLink="true">http://localhost:4000/startup-finance</guid>
                 
-                <category>Finance</category>
+                <category>finance</category>
                 
                 
             </item>
@@ -335,9 +335,9 @@
                 <link>http://localhost:4000/aws-ec2-ebs-formulas</link>
                 <guid isPermaLink="true">http://localhost:4000/aws-ec2-ebs-formulas</guid>
                 
-                <category>Cloud</category>
+                <category>cloud</category>
                 
-                <category>OpenSource</category>
+                <category>opensource</category>
                 
                 
             </item>
@@ -376,9 +376,9 @@
                 <link>http://localhost:4000/aws-pricing-for-google-sheets</link>
                 <guid isPermaLink="true">http://localhost:4000/aws-pricing-for-google-sheets</guid>
                 
-                <category>Cloud</category>
+                <category>cloud</category>
                 
-                <category>OpenSource</category>
+                <category>opensource</category>
                 
                 
             </item>
@@ -916,9 +916,9 @@ ORDER BY [lineItem/UsageStartDate], [lineItem/LineItemType], [lineItem/Operation
                 <link>http://localhost:4000/aws-rds-cost-analysis</link>
                 <guid isPermaLink="true">http://localhost:4000/aws-rds-cost-analysis</guid>
                 
-                <category>Cloud</category>
+                <category>cloud</category>
                 
-                <category>DGAC</category>
+                <category>dgac</category>
                 
                 
             </item>
@@ -1395,9 +1395,9 @@ ORDER BY sum([lineItem/UnblendedCost]);
                 <link>http://localhost:4000/aws-ec2-cost-analysis</link>
                 <guid isPermaLink="true">http://localhost:4000/aws-ec2-cost-analysis</guid>
                 
-                <category>Cloud</category>
+                <category>cloud</category>
                 
-                <category>DGAC</category>
+                <category>dgac</category>
                 
                 
             </item>
@@ -1685,9 +1685,9 @@ ORDER BY sum([lineItem/UnblendedCost]);
                 <link>http://localhost:4000/cost-and-usage-report-setup</link>
                 <guid isPermaLink="true">http://localhost:4000/cost-and-usage-report-setup</guid>
                 
-                <category>Cloud</category>
+                <category>cloud</category>
                 
-                <category>DGAC</category>
+                <category>dgac</category>
                 
                 
             </item>
@@ -2075,7 +2075,7 @@ arn:aws:savingsplans::0291987654321:savingsplan/1238a36-4cc8-4dd9-9cf7-937912341
                 <link>http://localhost:4000/aws-cost-and-usage-report-documentation</link>
                 <guid isPermaLink="true">http://localhost:4000/aws-cost-and-usage-report-documentation</guid>
                 
-                <category>Cloud</category>
+                <category>cloud</category>
                 
                 
             </item>
@@ -2269,9 +2269,9 @@ Number of m5.large hours = 10,000
                 <link>http://localhost:4000/complete-guide-to-aws-reservations</link>
                 <guid isPermaLink="true">http://localhost:4000/complete-guide-to-aws-reservations</guid>
                 
-                <category>Cloud</category>
+                <category>cloud</category>
                 
-                <category>DGAC</category>
+                <category>dgac</category>
                 
                 
             </item>
@@ -2324,9 +2324,9 @@ Number of m5.large hours = 10,000
                 <link>http://localhost:4000/developer-guide-to-aws-costs</link>
                 <guid isPermaLink="true">http://localhost:4000/developer-guide-to-aws-costs</guid>
                 
-                <category>Cloud</category>
+                <category>cloud</category>
                 
-                <category>DGAC</category>
+                <category>dgac</category>
                 
                 
             </item>

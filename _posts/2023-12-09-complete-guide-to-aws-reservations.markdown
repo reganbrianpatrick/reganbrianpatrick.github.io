@@ -6,7 +6,7 @@ date: 2023-12-09 12:00:00 +0300
 author: admin
 image: '/images/reservations.jpg'
 image_caption: 'A Complete Guide to AWS Reservations'
-tags: [Cloud, DGAC]
+tags: [cloud, dgac]
 featured: false
 ---
 In this overview of AWS Reservations, we will discuss the most popular reservation products: Compute Savings Plans, EC2 Savings Plans, EC2 Reserved Instances, and RDS Reserved Instances. In addition, we will mention the other reservation products offered by AWS and where you can find more information on those products.

@@ -6,7 +6,7 @@ date: 2023-12-13 12:00:00 +0300
 author: admin
 image: '/images/rds.jpg'
 image_caption: 'AWS Cost Analysis - Amazon RDS Costs'
-tags: [Cloud, DGAC]
+tags: [cloud, dgac]
 featured: false
 ---
 Amazon RDS is a managed database service that makes it easy to spin up, operate and scale relational databases to support any size production infrastructure. RDS is one of Amazon Web Services’ most utilized services and has a complicated billing structure encompassing instance running costs, data transfer costs, and provisioned IOPS and Storage. For more details about RDS, check out the AWS [documentation](https://docs.aws.amazon.com/rds/index.html).
