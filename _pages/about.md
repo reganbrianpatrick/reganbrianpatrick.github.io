@@ -9,7 +9,6 @@ image_caption:
 
 <div class="gallery-box">
   <div class="gallery">
-    <img src="/images/about.1.jpg" loading="lazy">
     <img src="/images/about.2.jpg" loading="lazy">
     <img src="/images/about.3.jpg" loading="lazy">
     <img src="/images/about.4.jpg" loading="lazy">
@@ -18,5 +17,6 @@ image_caption:
     <img src="/images/about.7.jpg" loading="lazy">
     <img src="/images/about.8.jpg" loading="lazy">
     <img src="/images/about.9.jpg" loading="lazy">
+    <img src="/images/about.10.jpg" loading="lazy">
   </div>
 </div>
