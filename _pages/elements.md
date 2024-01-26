@@ -110,7 +110,6 @@ li {
 ## Images
 
 ![Man]({{site.baseurl}}/images/21.jpg#wide)
-*Photo by [Luigi Estuye](https://unsplash.com/photos/HVK4t3leM1I) on [Unsplash](https://unsplash.com/)*
 
 <div class="gallery-box">
   <div class="gallery">
