@@ -17,7 +17,7 @@ Today, I'm sharing the unfortunate news that Strake will shut down on January 31
 
 I can't speak highly enough about the team at Strake. With their technical expertise, determination, and team values, these people will add tremendous value wherever they end up next. I'm providing links to everyone's LinkedIn profile below with their job title for anyone interested in adding great people to their team.
 
-If you have questions or want a reference for anyone, please [email me]([mailto:brian@eightlake.com](mailto:brian@eightlake.com)). 
+If you have questions or want a reference for anyone, please [email me](mailto:brian@eightlake.com). 
 
 [Niels Nielsen](https://www.linkedin.com/in/ACoAAAqmKQAB9KeqE_ZJYp5Uh_VVTBWsWwuxocE) - (Front-end, Typescript/React)
 
