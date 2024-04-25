@@ -2,14 +2,14 @@
 # Site Settings
 title: EightLake
 logo: # "/images/logo.jpeg"
-description: Test to see if the description comes up on the website.
+description: Strategic Advisors for every stage of your business.
 
 
 #-------------------------------
 # Author Global Settings
 author:
   author__name: Brian Regan
-  author__bio: EightLake is a team of specialists in FinOps, Finance, and SaaS Operations.
+  author__bio: SaaS Founder, Finance Professional, passionate about helping your business get to the next level.
   author__avatar: /images/lake-1.jpg
 
 
@@ -30,20 +30,19 @@ menu__settings:
 #-------------------------------
 # Hero Settings
 hero:
-  hero__title:
+  hero__title: Strategic Advisors for Every Stage of Your Business.
 
 
 #-------------------------------
 # Blog Settings
 blog:
-  blog__title: Read more
-  blog__description:
-
+  blog__title: Blog
+  blog__description: More research from the EightLake team.
 
 #-------------------------------
 # Recommended Tag Settings
 tag:
-  enable: true
+  enable: false
   tag__title: Recommended
   tag__name: Motivation
 
