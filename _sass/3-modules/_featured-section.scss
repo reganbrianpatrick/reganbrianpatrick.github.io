@@ -1,6 +1,6 @@
 /* Featured Section */
 .featured-section {
-  margin-bottom: 226px;
+  margin-bottom: 200px;
 
   @media (max-width: $desktop) {
     margin-bottom: 210px;
@@ -60,7 +60,7 @@
 .posts-slider {
   display: flex;
   flex-wrap: wrap;
-  margin-bottom: -162px;
+  margin-bottom: 50px;
 
   .article {
     user-select: none;
@@ -81,5 +81,5 @@
 }
 
 [aria-disabled="true"] {
-  opacity: 0.3;
+  opacity: 0.0;
 }
