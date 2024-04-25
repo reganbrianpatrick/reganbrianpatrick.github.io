@@ -3,9 +3,10 @@
   {% assign postCount = site.posts | size %}
   {% assign postsCovered = site.paginate | plus:offset %}
   {% if postsCovered < postCount %}
-  <div class="pagination">
+<!-- <div class="pagination">
     <button class="load-more-posts button button--primary">Load More</button>
   </div>
+-->
   {% endif %}
 </div>
 <!-- end pagination -->
