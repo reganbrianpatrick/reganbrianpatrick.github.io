@@ -37,7 +37,7 @@ hero:
 # Blog Settings
 blog:
   blog__title: Blog
-  blog__description: More research from the EightLake team.
+#  blog__description: More research from the EightLake team.
 
 #-------------------------------
 # Recommended Tag Settings

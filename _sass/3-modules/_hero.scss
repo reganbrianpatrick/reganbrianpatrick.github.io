@@ -6,8 +6,8 @@
   background-color: var(--dark);
 
   @media (max-width: $desktop) {
-    padding: 40px 0 0;
-    margin-bottom: 800px;
+    padding: 80px 0 0;
+    margin-bottom: 80px;
   }
 
   @media (max-width: $desktop) {
@@ -35,7 +35,7 @@
   margin-bottom: 0;
   font-size: 50px;
   font-weight: 600;
-  line-height: 1.4;
+  line-height: 1.15;
   color: var(--white);
 
   @media (max-width: $desktop) {

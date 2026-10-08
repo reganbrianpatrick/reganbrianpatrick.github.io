@@ -1,12 +1,12 @@
 /* Sections */
 .section__head {
   padding-top: 24px;
-  margin-bottom: 0px;
+  margin-bottom: 24px;
   border-top: 1px solid var(--border-alt-color);
 
   .section__title {
     margin-bottom: 0;
-    font-size: 44px;
+    font-size: 24px;
   }
 
   .section__description {
@@ -14,15 +14,11 @@
     margin-top: 10px;
     margin-bottom: 0;
     font-size: 0px;
-    line-height: 1.0;
+    line-height: 1.5;
     color: var(--text-alt-color);
   }
 
   @media (max-width: $desktop) {
-    .section__title {
-      font-size: 0px;
-    }
-
     .section__description {
       margin-top: 0px;
       font-size: 24px;
